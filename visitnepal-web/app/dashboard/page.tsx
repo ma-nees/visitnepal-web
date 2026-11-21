@@ -132,6 +132,19 @@ export default function DashboardPage() {
   };
 
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  // Keyboard shortcut: Ctrl+B or Cmd+B to toggle sidebar smoothly
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        setCollapsed((c) => !c);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   const [rightCollapsed, setRightCollapsed] = useState(false);
   const [isFullExpanded, setIsFullExpanded] = useState(false);
   const [expandedChannelId, setExpandedChannelId] = useState<string | null>(null);
@@ -528,7 +541,21 @@ export default function DashboardPage() {
       {/* ── TOP EDITORIAL HEADER BAR ─────────────────────────────────────── */}
       <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-3 bg-[#F8FAFD]/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         {/* Brand Logo & Back to Home */}
-        <div className="flex items-center gap-6 select-none">
+        <div className="flex items-center gap-3 sm:gap-6 select-none">
+          {/* Mobile Navigation Drawer Trigger */}
+          <button
+            onClick={() => setMobileSidebarOpen(true)}
+            className="md:hidden p-1.5 -ml-1 text-slate-500 hover:text-[#0552A2] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+            title="Open Navigation Menu"
+            aria-label="Open Navigation Menu"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative h-9 w-24">
               <Image
