@@ -4,7 +4,29 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Compass, ShieldCheck, Clock, Mountain, Sparkles } from 'lucide-react';
+import {
+  ArrowRight,
+  ChevronRight,
+  Compass,
+  Mountain,
+  Landmark,
+  Sparkles,
+  PawPrint,
+  Wind,
+  Utensils,
+  Car,
+} from 'lucide-react';
+
+const experienceIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+  trekking: Compass,
+  mountaineering: Mountain,
+  cultural: Landmark,
+  spiritual: Sparkles,
+  wildlife: PawPrint,
+  adventure: Wind,
+  food: Utensils,
+  roadtrips: Car,
+};
 
 interface Experience {
   id: string;
@@ -134,50 +156,84 @@ export default function ExperiencesSection() {
         </div>
 
         {/* Master Showcase: Split Editorial Discovery */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Left Column: Interactive Experience Directory */}
-          <div className="lg:col-span-5 flex flex-col gap-2.5">
-            {experiences.map((exp, index) => {
-              const isSelected = selectedExperience.id === exp.id;
-              return (
-                <button
-                  key={exp.id}
-                  onClick={() => setSelectedExperience(exp)}
-                  className={`text-left p-5 rounded-2xl transition-all duration-300 flex items-center justify-between cursor-pointer border ${isSelected
-                    ? 'bg-white border-[#0552A2] shadow-md -translate-x-1'
-                    : 'bg-white/60 border-transparent hover:bg-white hover:border-[#0552A2]/20'
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          {/* Left Column: Cohesive Experience Panel */}
+          <div className="lg:col-span-5 bg-white rounded-[24px] border border-[#0552A2]/10 shadow-[0_12px_36px_-12px_rgba(15,42,74,0.08)] overflow-hidden">
+            <div className="px-6 pt-5 pb-3.5 border-b border-[#0552A2]/8">
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#64748B]">
+                All Trips &amp; Experiences
+              </span>
+            </div>
+
+            <div className="divide-y divide-[#0552A2]/8">
+              {experiences.map((exp) => {
+                const isSelected = selectedExperience.id === exp.id;
+                const IconComponent = experienceIcons[exp.id] || Compass;
+
+                return (
+                  <button
+                    key={exp.id}
+                    onClick={() => setSelectedExperience(exp)}
+                    className={`w-full text-left px-5 sm:px-6 py-4 flex items-center justify-between gap-4 cursor-pointer transition-colors border-l-[3px] ${
+                      isSelected
+                        ? 'bg-[#F2F8FD] border-l-[#0552A2]'
+                        : 'bg-white border-l-transparent hover:bg-[#F8FBFF]'
                     }`}
-                >
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[#0552A2]">
-                      0{index + 1} • {exp.category}
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <span
+                        className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected
+                            ? 'bg-[#E3EFFB] text-[#0552A2]'
+                            : 'bg-[#F2F8FD] text-[#0552A2]'
+                        }`}
+                      >
+                        <IconComponent className="h-4.5 w-4.5" />
+                      </span>
+
+                      <div className="min-w-0">
+                        <span className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#64748B] block">
+                          {exp.category}
+                        </span>
+                        <span
+                          className={`text-[15px] sm:text-base font-bold block mt-0.5 truncate ${
+                            isSelected ? 'text-[#0552A2]' : 'text-[#17212B]'
+                          }`}
+                        >
+                          {exp.name}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition-colors ${
+                        isSelected
+                          ? 'bg-[#0552A2] text-white'
+                          : 'bg-[#F4F7FA] border border-[#0552A2]/8 text-[#334155]'
+                      }`}
+                    >
+                      <span>{exp.duration}</span>
+                      <ChevronRight className={`h-3.5 w-3.5 ${isSelected ? 'text-white/90' : 'text-[#64748B]'}`} />
                     </span>
-                    <span className={`text-base font-bold font-serif mt-0.5 ${isSelected ? 'text-[#0552A2]' : 'text-[#17212B]'}`}>
-                      {exp.name}
-                    </span>
-                  </div>
-                  <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isSelected ? 'bg-[#0552A2] text-white' : 'bg-white border border-zinc-200 text-[#4B5563]'
-                    }`}>
-                    {exp.duration}
-                  </span>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Right Column: Hero Stage with Live Visual & Details */}
+          {/* Right Column: Hero Feature Card */}
           <div className="lg:col-span-7 lg:sticky lg:top-28">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedExperience.id}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="bg-white rounded-3xl p-6 sm:p-10 border border-[#0552A2]/15 shadow-xl flex flex-col gap-6"
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="bg-white rounded-[24px] p-5 sm:p-7 border border-[#0552A2]/10 shadow-[0_14px_40px_-12px_rgba(15,42,74,0.1)] flex flex-col gap-6"
               >
                 {/* Visual Canvas */}
-                <div className="relative h-72 sm:h-96 w-full rounded-2xl overflow-hidden bg-[#17212B]">
+                <div className="relative h-72 sm:h-[400px] lg:h-[430px] w-full rounded-[18px] overflow-hidden bg-[#17212B]">
                   <Image
                     src={selectedExperience.imageUrl}
                     alt={selectedExperience.name}
@@ -186,63 +242,37 @@ export default function ExperiencesSection() {
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-                  <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
-                    <div>
-                      <span className="text-xs uppercase tracking-widest text-[#FDB716] font-bold block mb-1">
-                        {selectedExperience.category}
+                  <div className="absolute bottom-5 left-5 right-5 sm:bottom-7 sm:left-7 sm:right-7 flex items-end justify-between gap-4">
+                    <div className="min-w-0">
+                      <span className="text-[11px] uppercase tracking-[0.18em] text-[#FDB716] font-bold block mb-1.5">
+                        Featured Discovery
                       </span>
-                      <h3 className="text-3xl sm:text-4xl font-bold text-white font-serif leading-tight tracking-tight">
+                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-serif leading-tight tracking-tight">
                         {selectedExperience.name}
                       </h3>
-                    </div>
-                    <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
-                      {selectedExperience.difficulty}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Editorial Narrative */}
-                <div className="flex flex-col gap-4">
-                  <h4 className="text-sm uppercase tracking-wider font-bold text-[#0552A2]">
-                    {selectedExperience.subtitle}
-                  </h4>
-                  <p className="text-body text-[#4B5563] leading-relaxed">
-                    {selectedExperience.description}
-                  </p>
-
-                  {/* Highlights Pills */}
-                  <div>
-                    <span className="text-[11px] uppercase tracking-wider font-bold text-[#17212B] block mb-2">
-                      Key Itinerary Highlights:
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedExperience.highlights.map((h, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-xs text-[#0552A2] font-semibold shadow-xs"
-                        >
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* CTA Plan this Experience */}
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <div className="text-xs font-mono text-[#4B5563]">
-                      Recommended season: <span className="font-bold text-[#17212B]">Autumn & Spring</span>
                     </div>
 
                     <a
                       href="#plan-your-trip"
-                      className="btn-primary text-xs uppercase tracking-wider font-bold"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/45 hover:bg-black/65 border border-white/25 text-white text-xs font-semibold tracking-wide transition-colors shrink-0"
                     >
-                      <span>Customize This Experience</span>
-                      <ArrowRight className="h-4 w-4" />
+                      <span>Explore</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </a>
                   </div>
+                </div>
+
+                {/* Editorial Narrative */}
+                <div className="flex flex-col gap-3 px-1 pb-1">
+                  <div className="w-10 h-[2.5px] rounded-full bg-[#0552A2]" />
+                  <h4 className="text-xs uppercase tracking-[0.16em] font-bold text-[#0552A2] mt-1">
+                    {selectedExperience.subtitle}
+                  </h4>
+                  <p className="text-sm sm:text-[15px] text-[#475569] leading-relaxed">
+                    {selectedExperience.description}
+                  </p>
                 </div>
               </motion.div>
             </AnimatePresence>
