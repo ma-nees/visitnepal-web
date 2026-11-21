@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useTravelStore } from '@/store/useTravelStore';
@@ -240,6 +241,20 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
   const [difficultyFilter, setDifficultyFilter] = useState<string>('All');
   const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null);
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
+  const [bookedActivity, setBookedActivity] = useState<{ activity: ActivityItem; invoiceNo: string } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedActivity(null);
+        setBookedActivity(null);
+      }
+    };
+    if (selectedActivity || bookedActivity) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedActivity, bookedActivity]);
 
   // Filter activities
   const filteredActivities = useMemo(() => {
@@ -272,10 +287,11 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
       invoiceNo: inv
     });
 
+    setBookedActivity({ activity, invoiceNo: inv });
     setBookingSuccess(`Expedition confirmed! Added "${activity.title}" to your Bookings.`);
     setTimeout(() => {
       setBookingSuccess(null);
-    }, 3500);
+    }, 4000);
   };
 
   const getDifficultyBadge = (difficulty: string) => {
@@ -313,12 +329,12 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
     <div className="w-full text-left font-sans">
       {/* Toast Notification */}
       <AnimatePresence>
-        {bookingSuccess && (
+        {bookingSuccess && !bookedActivity && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-6 right-6 z-50 bg-[#0552A2] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-white/20"
+            className="fixed top-6 right-6 z-[90] bg-[#0552A2] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-white/20"
           >
             <div className="h-7 w-7 rounded-full bg-white/20 flex items-center justify-center shrink-0">
               <Check className="h-4 w-4 text-white" strokeWidth={3} />
@@ -328,6 +344,92 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
               <p className="text-[10px] text-white/80">View status anytime in your Bookings ledger.</p>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── EXPEDITION BOOKING CONFIRMED MODAL ────────────────────────────── */}
+      <AnimatePresence>
+        {bookedActivity && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 16 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-slate-200 text-center relative overflow-hidden"
+            >
+              {/* Top Accent Gradient Bar */}
+              <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-[#0552A2] via-emerald-500 to-[#0552A2]" />
+
+              {/* Animated Success Badge */}
+              <div className="h-14 w-14 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-600 flex items-center justify-center mx-auto mb-3.5 shadow-sm">
+                <Check className="h-7 w-7" strokeWidth={3} />
+              </div>
+
+              <span className="text-[10px] font-mono font-bold tracking-widest text-emerald-700 uppercase bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                Expedition Confirmed & Synced
+              </span>
+
+              <h3 className="text-lg sm:text-xl font-black text-[#17212B] mt-2.5 leading-snug">
+                {bookedActivity.activity.title}
+              </h3>
+
+              <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
+                Allocated and synced to your official Visit Nepal bookings ledger.
+              </p>
+
+              {/* Booking Summary Ticket */}
+              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/70 my-4 text-left flex flex-col gap-2.5 text-xs">
+                <div className="flex justify-between items-center pb-2 border-b border-slate-200/70">
+                  <span className="text-slate-400 font-mono text-[10px] uppercase">Invoice No</span>
+                  <span className="font-mono font-bold text-[#0552A2]">{bookedActivity.invoiceNo}</span>
+                </div>
+                <div className="flex justify-between items-center text-slate-600">
+                  <span>Destination</span>
+                  <span className="font-semibold text-[#17212B]">{bookedActivity.activity.region}</span>
+                </div>
+                <div className="flex justify-between items-center text-slate-600">
+                  <span>Duration</span>
+                  <span className="font-semibold text-[#17212B]">{bookedActivity.activity.duration}</span>
+                </div>
+                <div className="flex justify-between items-center text-slate-600">
+                  <span>Max Elevation</span>
+                  <span className="font-semibold text-[#17212B]">{bookedActivity.activity.maxAltitude}</span>
+                </div>
+                <div className="flex justify-between items-center pt-2.5 border-t border-slate-200/70">
+                  <span className="font-bold text-[#17212B]">Total Package</span>
+                  <span className="text-base font-bold text-[#0552A2]">
+                    ${bookedActivity.activity.estimatedCost}{' '}
+                    <span className="text-[10px] text-slate-400 font-normal">/ pax</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                <button
+                  onClick={() => {
+                    setBookedActivity(null);
+                    if (onNavigate) {
+                      onNavigate('home');
+                    } else {
+                      router.push('/dashboard?section=home');
+                    }
+                  }}
+                  className="flex-1 py-3 px-4 rounded-full bg-[#0552A2] hover:bg-[#043e7b] text-white text-xs font-bold shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-98"
+                >
+                  <span>View in My Bookings</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  onClick={() => setBookedActivity(null)}
+                  className="py-3 px-5 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition-all cursor-pointer"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
 
@@ -451,11 +553,12 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                 >
                   {/* Card Image Banner */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                    <img
+                    <Image
                       src={act.image}
                       alt={act.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
@@ -545,33 +648,39 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
       {/* ── DETAIL MODAL (Quick Specs & Direct Expedition Booking) ────────── */}
       <AnimatePresence>
         {selectedActivity && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div
+            onClick={() => setSelectedActivity(null)}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
+          >
             <motion.div
+              onClick={(e) => e.stopPropagation()}
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 flex flex-col text-left"
+              className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] shadow-2xl border border-slate-200 flex flex-col text-left overflow-hidden my-auto"
             >
               {/* Modal Cover Image */}
-              <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-900">
-                <img
+              <div className="relative h-40 sm:h-48 w-full overflow-hidden bg-slate-900 shrink-0">
+                <Image
                   src={selectedActivity.image}
                   alt={selectedActivity.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 672px"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
                 <button
                   onClick={() => setSelectedActivity(null)}
-                  className="absolute top-4 right-4 h-8 w-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors cursor-pointer"
+                  className="absolute top-3.5 right-3.5 h-8 w-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors cursor-pointer shadow-md"
                   aria-label="Close activity details"
                 >
                   <X className="h-4 w-4" />
                 </button>
 
-                <div className="absolute bottom-4 left-6 right-6 text-white">
-                  <div className="flex items-center gap-2 mb-1.5">
+                <div className="absolute bottom-3.5 left-5 right-5 text-white">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold">
                       {selectedActivity.category}
                     </span>
@@ -579,7 +688,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                       {selectedActivity.difficulty}
                     </span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-black">{selectedActivity.title}</h2>
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-black leading-tight">{selectedActivity.title}</h2>
                   <p className="text-xs text-white/90 mt-1 flex items-center gap-2">
                     <MapPin className="h-3.5 w-3.5 text-rose-400" />
                     <span>{selectedActivity.region}</span>
@@ -589,19 +698,19 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                 </div>
               </div>
 
-              {/* Modal Body */}
-              <div className="p-6 flex flex-col gap-6">
+              {/* Scrollable Modal Body */}
+              <div className="p-4 sm:p-5 md:p-6 flex-1 overflow-y-auto flex flex-col gap-4 sm:gap-5 scrollbar-thin">
                 <div>
                   <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0552A2] mb-1">
                     Expedition Overview
                   </h4>
-                  <p className="text-xs text-[#475569] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
                     {selectedActivity.description}
                   </p>
                 </div>
 
                 {/* Logistics Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-slate-50 p-3 rounded-2xl border border-slate-100">
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 block">Duration</span>
                     <span className="text-xs font-bold text-[#17212B] mt-0.5 block">{selectedActivity.duration}</span>
@@ -636,26 +745,35 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                 </div>
 
                 {/* Compliance & Requirements */}
-                <div className="border-t border-slate-100 pt-4 flex flex-col gap-2 text-xs">
-                  <div className="flex justify-between py-1 border-b border-slate-100 text-[#475569]">
+                <div className="border-t border-slate-100 pt-3 flex flex-col gap-1.5 text-xs">
+                  <div className="flex items-center justify-between py-1 border-b border-slate-100 text-[#475569]">
                     <span className="font-semibold text-[#17212B]">Guide Requirement:</span>
-                    <span>{selectedActivity.guideRequirement}</span>
+                    <span className="text-right text-[11px] sm:text-xs font-medium">{selectedActivity.guideRequirement}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-slate-100 text-[#475569]">
+                  <div className="flex items-center justify-between py-1 border-b border-slate-100 text-[#475569]">
                     <span className="font-semibold text-[#17212B]">Gear Profile:</span>
-                    <span>{selectedActivity.gearRequirement}</span>
+                    <span className="text-right text-[11px] sm:text-xs font-medium">{selectedActivity.gearRequirement}</span>
                   </div>
-                  <div className="flex justify-between py-1 text-[#475569]">
+                  <div className="flex items-center justify-between py-1 text-[#475569]">
                     <span className="font-semibold text-[#17212B]">Permits Included:</span>
-                    <span>{selectedActivity.permits.join(', ')}</span>
+                    <span className="text-right text-[11px] sm:text-xs font-mono text-[#0552A2] font-semibold">{selectedActivity.permits.join(', ')}</span>
                   </div>
                 </div>
+              </div>
 
-                {/* Modal Actions */}
-                <div className="pt-2 flex items-center justify-between gap-3 border-t border-slate-100">
+              {/* Fixed / Sticky Modal Action Footer */}
+              <div className="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200/80 flex items-center justify-between gap-3 shrink-0 rounded-b-3xl">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono text-slate-400">Total Estimated Tier</span>
+                  <span className="text-sm sm:text-base font-bold text-[#0552A2]">
+                    ${selectedActivity.estimatedCost}
+                    <span className="text-[10px] font-normal text-slate-500"> / pax</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
                   <button
                     onClick={() => setSelectedActivity(null)}
-                    className="px-5 py-2.5 rounded-full border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
+                    className="px-4 py-2 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-white hover:text-slate-900 transition-colors cursor-pointer"
                   >
                     Close
                   </button>
@@ -664,9 +782,9 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                       handleBook(selectedActivity);
                       setSelectedActivity(null);
                     }}
-                    className="px-6 py-2.5 rounded-full bg-[#0552A2] text-white text-xs font-bold hover:bg-[#043e7b] shadow-md transition-all cursor-pointer flex items-center gap-2"
+                    className="px-5 py-2 rounded-full bg-[#0552A2] hover:bg-[#043e7b] text-white text-xs font-bold shadow-md transition-all cursor-pointer flex items-center gap-1.5"
                   >
-                    <span>Book This Modality</span>
+                    <span>Book Expedition</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -689,25 +807,28 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
           </button>
 
           {/* Hero Banner */}
-          <div className="relative aspect-[21/9] sm:aspect-[24/9] w-full rounded-3xl overflow-hidden bg-slate-900 shadow-md">
-            <img
+          <div className="relative h-52 sm:h-60 md:h-64 lg:h-72 w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 shadow-md shrink-0">
+            <Image
               src={activeActivity.image}
               alt={activeActivity.title}
-              className="w-full h-full object-cover"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 text-white">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="bg-[#0552A2] px-3 py-1 rounded-full text-xs font-bold">
+            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-white">
+              <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
+                <span className="bg-[#0552A2] px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
                   {activeActivity.category}
                 </span>
-                <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold">
+                <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
                   {activeActivity.difficulty}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-4xl font-black">{activeActivity.title}</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight">{activeActivity.title}</h1>
               <p className="text-xs sm:text-sm text-white/90 mt-1 flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-[#EC1F27]" />
+                <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#EC1F27]" />
                 <span>{activeActivity.region}</span>
                 <span>•</span>
                 <span>Altitude: {activeActivity.maxAltitude}</span>
@@ -716,10 +837,10 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
           </div>
 
           {/* Details 2-Column Split */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8 flex flex-col gap-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+            <div className="xl:col-span-7 2xl:col-span-8 flex flex-col gap-5 sm:gap-6 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs">
               <div>
-                <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-[#0552A2] mb-1.5">
+                <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#0552A2] mb-1.5">
                   Expedition Narrative
                 </h3>
                 <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
@@ -728,7 +849,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
               </div>
 
               <div>
-                <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-slate-600 mb-2">
+                <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-600 mb-2">
                   Key Route Checkpoints
                 </h3>
                 <div className="flex flex-col gap-2">
@@ -741,7 +862,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                 </div>
               </div>
 
-              <div className="bg-blue-50/70 p-5 rounded-2xl border border-blue-200/70 flex flex-col gap-2">
+              <div className="bg-blue-50/70 p-4 sm:p-5 rounded-2xl border border-blue-200/70 flex flex-col gap-2">
                 <span className="text-[10px] font-mono font-bold text-[#0552A2] uppercase flex items-center gap-1.5">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   <span>High-Altitude Safety & Acclimatization Advisory</span>
@@ -753,37 +874,37 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
             </div>
 
             {/* Logistics Card Sidebar */}
-            <div className="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs flex flex-col gap-5">
+            <div className="xl:col-span-5 2xl:col-span-4 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs flex flex-col gap-4 sm:gap-5">
               <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-2">
                 Expedition Parameters
               </h3>
 
-              <div className="flex flex-col gap-3 text-xs">
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Duration:</span>
-                  <span className="font-bold text-[#17212B]">{activeActivity.duration}</span>
+              <div className="flex flex-col gap-2.5 text-xs">
+                <div className="flex items-center justify-between py-1 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 shrink-0">Duration:</span>
+                  <span className="font-bold text-[#17212B] text-right">{activeActivity.duration}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Optimal Window:</span>
-                  <span className="font-bold text-[#17212B]">{activeActivity.season}</span>
+                <div className="flex items-center justify-between py-1 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 shrink-0">Optimal Window:</span>
+                  <span className="font-bold text-[#17212B] text-right">{activeActivity.season}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Elevation:</span>
-                  <span className="font-bold text-[#17212B]">{activeActivity.maxAltitude}</span>
+                <div className="flex items-center justify-between py-1 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 shrink-0">Elevation:</span>
+                  <span className="font-bold text-[#17212B] text-right">{activeActivity.maxAltitude}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Guide Protocol:</span>
-                  <span className="font-bold text-[#17212B]">{activeActivity.guideRequirement}</span>
+                <div className="flex items-center justify-between py-1 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 shrink-0">Guide Protocol:</span>
+                  <span className="font-bold text-[#17212B] text-right">{activeActivity.guideRequirement}</span>
                 </div>
-                <div className="flex justify-between py-1">
-                  <span className="text-slate-500">Tier Estimate:</span>
-                  <span className="font-bold text-[#0552A2]">${activeActivity.estimatedCost} / pax</span>
+                <div className="flex items-center justify-between py-1 gap-2">
+                  <span className="text-slate-500 shrink-0">Tier Estimate:</span>
+                  <span className="font-bold text-[#0552A2] text-right">${activeActivity.estimatedCost} / pax</span>
                 </div>
               </div>
 
               <button
                 onClick={() => handleBook(activeActivity)}
-                className="w-full py-3.5 rounded-full bg-[#0552A2] text-white text-xs font-bold hover:bg-[#043e7b] shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
+                className="w-full py-3.5 rounded-full bg-[#0552A2] hover:bg-[#043e7b] text-white text-xs font-bold shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-2 active:scale-98"
               >
                 <span>Book This Modality</span>
                 <ArrowRight className="h-4 w-4" />
