@@ -22,6 +22,7 @@ import {
   Sparkles,
   ExternalLink,
   ChevronRight,
+  ChevronDown,
   TrendingUp,
   Heart,
   FileText,
@@ -56,6 +57,11 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
   const [wishlist, setWishlist] = useState<WishlistItem[]>(INITIAL_WISHLIST);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [activeRecCategory, setActiveRecCategory] = useState<string>('All');
+  const [activeTripFilter, setActiveTripFilter] = useState<'All' | 'Alpine' | 'Scenic' | 'Safari'>('All');
+  const [bookingFilter, setBookingFilter] = useState<'All' | 'Confirmed' | 'Upcoming' | 'Pending'>('All');
+  const [showAllBookings, setShowAllBookings] = useState(false);
+  const [showAllActivity, setShowAllActivity] = useState(false);
+  const [showAllDrafts, setShowAllDrafts] = useState(false);
 
   // Personalized Greeting
   const greeting = useMemo(() => {
@@ -91,10 +97,24 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
     }
   };
 
+  const filteredUpcomingTrips = useMemo(() => {
+    if (activeTripFilter === 'All') return UPCOMING_TRIPS;
+    return UPCOMING_TRIPS.filter((t) => t.category === activeTripFilter);
+  }, [activeTripFilter]);
+
   const filteredRecommendations = useMemo(() => {
     if (activeRecCategory === 'All') return RECOMMENDED_DESTINATIONS;
     return RECOMMENDED_DESTINATIONS.filter((r) => r.category === activeRecCategory);
   }, [activeRecCategory]);
+
+  const filteredBookings = useMemo(() => {
+    if (bookingFilter === 'All') return RECENT_BOOKINGS;
+    return RECENT_BOOKINGS.filter((b) => b.status === bookingFilter);
+  }, [bookingFilter]);
+
+  const displayedBookings = showAllBookings ? filteredBookings : filteredBookings.slice(0, 4);
+  const displayedDrafts = showAllDrafts ? DRAFT_TRIPS : DRAFT_TRIPS.slice(0, 3);
+  const displayedActivity = showAllActivity ? RECENT_ACTIVITY_LOG : RECENT_ACTIVITY_LOG.slice(0, 5);
 
   return (
     <div className="w-full space-y-8 pb-16 text-left">
@@ -138,13 +158,16 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-200/60">
                   Passport US98127398 Verified
                 </span>
+                <span className="text-[11px] font-mono text-[#0552A2] bg-blue-50 px-2.5 py-0.5 rounded-full font-semibold border border-blue-200/60">
+                  Tier: Explorer Gold
+                </span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">
                 {greeting}, {userName}.
               </h1>
               <p className="text-sm text-[#4B5563] mt-1 max-w-lg leading-relaxed">
-                Your next Himalayan journey begins here. You have <strong className="text-[#0552A2]">2 upcoming trips</strong> confirmed for December.
+                Your next Himalayan journey begins here. You have <strong className="text-[#0552A2]">{UPCOMING_TRIPS.length} confirmed expeditions</strong> lined up across Nepal.
               </p>
 
               {/* Action Buttons */}
@@ -169,14 +192,14 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
 
           {/* Right: Contextual Travel Telemetry Card */}
-          <div className="lg:w-72 shrink-0 bg-zinc-50/80 rounded-2xl p-4 border border-zinc-200/80 flex flex-col justify-between gap-3">
+          <div className="lg:w-80 shrink-0 bg-zinc-50/80 rounded-2xl p-4 border border-zinc-200/80 flex flex-col justify-between gap-3">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-[#0552A2] flex items-center gap-1.5">
                 <CloudSun className="h-3.5 w-3.5 text-amber-500" />
                 <span>Station Telemetry</span>
               </span>
-              <span className="text-[10px] font-mono text-zinc-500">
-                Pokhara, Nepal
+              <span className="text-[10px] font-mono text-zinc-500 font-semibold">
+                Pokhara, Nepal (822m)
               </span>
             </div>
 
@@ -185,14 +208,24 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 <span className="text-2xl font-bold font-serif text-[#17212B]">18°C</span>
                 <span className="text-xs text-[#4B5563] ml-2">Partly Cloudy</span>
               </div>
-              <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
+              <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200/60">
                 Window: Clear
               </span>
             </div>
 
-            <div className="pt-2 border-t border-zinc-200/60 flex items-center justify-between text-[11px] text-[#4B5563] font-mono">
-              <span>Elevation: 822m</span>
-              <span>Humidity: 62%</span>
+            <div className="pt-2 border-t border-zinc-200/60 grid grid-cols-3 gap-2 text-[10px] text-[#4B5563] font-mono text-center">
+              <div>
+                <span className="text-zinc-400 block">Wind</span>
+                <span className="font-bold text-[#17212B]">8 km/h NW</span>
+              </div>
+              <div>
+                <span className="text-zinc-400 block">Humidity</span>
+                <span className="font-bold text-[#17212B]">62%</span>
+              </div>
+              <div>
+                <span className="text-zinc-400 block">UV Index</span>
+                <span className="font-bold text-[#17212B]">Moderate</span>
+              </div>
             </div>
           </div>
         </div>
@@ -211,9 +244,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
               <Calendar className="h-4 w-4" />
             </div>
           </div>
-          <div className="text-3xl font-bold font-serif text-[#17212B]">2</div>
+          <div className="text-3xl font-bold font-serif text-[#17212B]">{UPCOMING_TRIPS.length}</div>
           <span className="text-[11px] text-emerald-600 font-semibold block mt-1">
-            Annapurna ABC in 21 days
+            Next: Annapurna ABC in 21d
           </span>
         </div>
 
@@ -271,32 +304,42 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
         <div className="lg:col-span-8 space-y-10">
           {/* 3.1 YOUR UPCOMING JOURNEYS */}
           <div>
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 gap-3">
               <div>
                 <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] block mb-0.5">
-                  Confirmed Itineraries
+                  Confirmed Itineraries ({filteredUpcomingTrips.length})
                 </span>
                 <h2 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B]">
                   Your Upcoming Journeys
                 </h2>
               </div>
-              <button
-                onClick={() => onNavigate?.('bookings')}
-                className="text-xs font-bold text-[#0552A2] hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                <span>View all itineraries</span>
-                <ChevronRight className="h-3.5 w-3.5" />
-              </button>
+
+              {/* Trip Category Filters */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                {(['All', 'Alpine', 'Scenic', 'Safari'] as const).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveTripFilter(cat)}
+                    className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-colors shrink-0 cursor-pointer ${
+                      activeTripFilter === cat
+                        ? 'bg-[#0552A2] text-white shadow-xs'
+                        : 'bg-zinc-100 text-[#4B5563] hover:bg-zinc-200'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="space-y-4">
-              {UPCOMING_TRIPS.map((trip) => (
+              {filteredUpcomingTrips.map((trip) => (
                 <div
                   key={trip.id}
                   className="group rounded-3xl bg-white border border-zinc-200/80 overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col md:flex-row"
                 >
                   {/* Trip Visual */}
-                  <div className="relative md:w-5/12 h-52 md:h-auto min-h-[200px] shrink-0 bg-[#17212B]">
+                  <div className="relative md:w-5/12 h-52 md:h-auto min-h-[220px] shrink-0 bg-[#17212B]">
                     <Image
                       src={trip.imageUrl}
                       alt={trip.title}
@@ -379,22 +422,30 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
             <div className="flex items-center justify-between mb-5">
               <div>
                 <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] block mb-0.5">
-                  In-Progress Trips
+                  In-Progress Trips ({DRAFT_TRIPS.length})
                 </span>
                 <h2 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B]">
                   Continue Planning
                 </h2>
               </div>
-              <button
-                onClick={() => onNavigate?.('customize')}
-                className="text-xs font-bold text-[#0552A2] hover:underline cursor-pointer"
-              >
-                + New Draft
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setShowAllDrafts(!showAllDrafts)}
+                  className="text-xs font-bold text-[#0552A2] hover:underline cursor-pointer"
+                >
+                  {showAllDrafts ? 'Show Less' : `View All (${DRAFT_TRIPS.length})`}
+                </button>
+                <button
+                  onClick={() => onNavigate?.('customize')}
+                  className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-[#0552A2] border border-blue-200/60 hover:bg-[#0552A2] hover:text-white transition-colors cursor-pointer"
+                >
+                  + New Draft
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {DRAFT_TRIPS.map((draft) => (
+              {displayedDrafts.map((draft) => (
                 <div
                   key={draft.id}
                   className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between gap-4"
@@ -452,7 +503,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 gap-3">
               <div>
                 <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] block mb-0.5">
-                  Curated For Your Profile
+                  Curated For Your Profile ({filteredRecommendations.length})
                 </span>
                 <h2 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B]">
                   Recommended For You
@@ -461,13 +512,13 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
               {/* Category Filter Pills */}
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-                {['All', 'Heritage', 'High Altitude', 'Wildlife', 'Hidden Gem'].map((cat) => (
+                {['All', 'Heritage', 'High Altitude', 'Wildlife', 'Scenic', 'Hidden Gem'].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveRecCategory(cat)}
                     className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-colors shrink-0 cursor-pointer ${
                       activeRecCategory === cat
-                        ? 'bg-[#0552A2] text-white'
+                        ? 'bg-[#0552A2] text-white shadow-xs'
                         : 'bg-zinc-100 text-[#4B5563] hover:bg-zinc-200'
                     }`}
                   >
@@ -670,20 +721,39 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
           {/* 4.2 MY BOOKINGS OVERVIEW */}
           <div className="p-6 rounded-3xl bg-white border border-zinc-200/80 shadow-xs">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
-                My Bookings
-              </h3>
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
+                  My Bookings ({filteredBookings.length})
+                </h3>
+              </div>
               <button
-                onClick={() => onNavigate?.('bookings')}
+                onClick={() => setShowAllBookings(!showAllBookings)}
                 className="text-[11px] font-bold text-[#0552A2] hover:underline cursor-pointer"
               >
-                View all ({RECENT_BOOKINGS.length})
+                {showAllBookings ? 'Show Less' : `View all (${RECENT_BOOKINGS.length})`}
               </button>
             </div>
 
+            {/* Status Filter Tabs */}
+            <div className="flex items-center gap-1 mb-3.5 border-b border-zinc-100 pb-2 overflow-x-auto scrollbar-none">
+              {(['All', 'Confirmed', 'Upcoming', 'Pending'] as const).map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setBookingFilter(s)}
+                  className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full transition-colors cursor-pointer shrink-0 ${
+                    bookingFilter === s
+                      ? 'bg-[#0552A2] text-white'
+                      : 'text-zinc-500 hover:bg-zinc-100'
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+
             <div className="space-y-3">
-              {RECENT_BOOKINGS.map((b) => (
+              {displayedBookings.map((b) => (
                 <div
                   key={b.id}
                   className="p-3.5 rounded-2xl bg-zinc-50/70 border border-zinc-200/60 flex flex-col gap-1.5"
@@ -692,7 +762,15 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                     <span className="text-[10px] font-mono uppercase font-bold text-[#0552A2]">
                       {b.type}
                     </span>
-                    <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                    <span
+                      className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                        b.status === 'Confirmed'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : b.status === 'Upcoming'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-amber-100 text-amber-800'
+                      }`}
+                    >
                       {b.status}
                     </span>
                   </div>
@@ -702,8 +780,13 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                   </h4>
 
                   <div className="flex items-center justify-between text-[11px] text-[#4B5563]">
+                    <span className="text-[10px] truncate max-w-[140px]">{b.destination}</span>
+                    <span className="font-mono font-semibold text-[#17212B] shrink-0">{b.cost}</span>
+                  </div>
+
+                  <div className="pt-1.5 border-t border-zinc-200/60 flex items-center justify-between text-[10px] text-zinc-400 font-mono">
                     <span>{b.date}</span>
-                    <span className="font-mono font-semibold text-[#17212B]">{b.cost}</span>
+                    <span className="text-zinc-500">{b.ref}</span>
                   </div>
                 </div>
               ))}
@@ -729,7 +812,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 Your wishlist is empty. Explore destinations to save your dreams!
               </p>
             ) : (
-              <div className="space-y-2.5">
+              <div className="space-y-2.5 max-h-[360px] overflow-y-auto pr-1 scrollbar-thin">
                 {wishlist.map((item) => (
                   <div
                     key={item.id}
@@ -773,12 +856,20 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
           {/* 4.4 RECENT TRAVEL ACTIVITY TIMELINE (NOT A SOCIAL FEED!) */}
           <div className="p-6 rounded-3xl bg-white border border-zinc-200/80 shadow-xs">
-            <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] mb-4">
-              Recent Travel Log
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
+                Recent Travel Log
+              </h3>
+              <button
+                onClick={() => setShowAllActivity(!showAllActivity)}
+                className="text-[11px] font-bold text-[#0552A2] hover:underline cursor-pointer"
+              >
+                {showAllActivity ? 'Show Less' : `View all (${RECENT_ACTIVITY_LOG.length})`}
+              </button>
+            </div>
 
             <div className="relative pl-5 border-l-2 border-zinc-200 space-y-4">
-              {RECENT_ACTIVITY_LOG.map((log) => (
+              {displayedActivity.map((log) => (
                 <div key={log.id} className="relative">
                   {/* Timeline dot */}
                   <div className="absolute -left-[27px] top-0.5 h-3.5 w-3.5 rounded-full bg-white border-2 border-[#0552A2]" />

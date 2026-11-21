@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { destinations, featuredDestinations, otherDestinations, Destination } from '@/lib/destinations';
-import { ArrowUpRight, MapPin, Compass } from 'lucide-react';
+import { destinations, Destination } from '@/lib/destinations';
+import { ArrowUpRight, MapPin, Compass, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -29,15 +29,49 @@ const itemVariants = {
 
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const filteredDestinations = useMemo(() => {
-    return destinations.filter(d => {
-      if (activeTab === 'mountains') return ['everest', 'annapurna', 'mustang'].includes(d.id);
-      if (activeTab === 'culture') return ['kathmandu', 'lumbini', 'mustang'].includes(d.id);
-      if (activeTab === 'wildlife') return ['chitwan', 'pokhara'].includes(d.id);
-      return true;
-    });
+  // Rotating pool of non-featured destinations from mockData
+  const rotatingPool = useMemo(() => {
+    const pool = destinations.slice(3);
+    if (activeTab === 'all') return pool;
+    const filtered = pool.filter((d) => d.category === activeTab);
+    return filtered.length > 0 ? filtered : pool;
   }, [activeTab]);
+
+  // Reset carousel index when category tab changes
+  useEffect(() => {
+    setCarouselIndex(0);
+  }, [activeTab]);
+
+  // Auto-rotation every 4 seconds when not paused by hover
+  useEffect(() => {
+    if (isPaused || rotatingPool.length <= 1) return;
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % rotatingPool.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isPaused, rotatingPool.length]);
+
+  const handlePrev = () => {
+    setCarouselIndex((prev) => (prev - 1 + rotatingPool.length) % rotatingPool.length);
+  };
+
+  const handleNext = () => {
+    setCarouselIndex((prev) => (prev + 1) % rotatingPool.length);
+  };
+
+  // Window of 4 visible destinations that dynamically slide
+  const visibleDestinations = useMemo(() => {
+    if (rotatingPool.length === 0) return [];
+    const count = Math.min(4, rotatingPool.length);
+    const result: Destination[] = [];
+    for (let i = 0; i < count; i++) {
+      result.push(rotatingPool[(carouselIndex + i) % rotatingPool.length]);
+    }
+    return result;
+  }, [rotatingPool, carouselIndex]);
 
   return (
     <section
@@ -47,7 +81,7 @@ export default function DestinationsSection() {
     >
       <div className="container">
         {/* Editorial Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-[#0552A2]/10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[#EC1F27]" />
@@ -165,50 +199,137 @@ export default function DestinationsSection() {
             </div>
           </div>
 
-          {/* Bottom Quad Editorial Grid: Kathmandu, Pokhara, Chitwan, Lumbini */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {destinations.slice(3).map((dest) => (
-              <motion.div
-                key={dest.id}
-                variants={itemVariants}
-                className="group flex flex-col rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
-              >
-                <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
-                  <Image
-                    src={dest.imageUrl}
-                    alt={dest.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          {/* Rotating Non-Featured Destinations Carousel */}
+          <div
+            className="pt-4"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {/* Carousel Navigation Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-200/80">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-[#0552A2]/10 text-[#0552A2]">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      isPaused ? 'bg-amber-500' : 'bg-[#0552A2] animate-pulse'
+                    }`}
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2]">
-                    {dest.region}
-                  </div>
+                  {isPaused ? 'Paused on Hover' : 'Auto-Rotating'}
+                </span>
+                <span className="text-xs text-[#4B5563] hidden sm:inline">
+                  {rotatingPool.length} Destinations Available
+                </span>
+              </div>
+
+              {/* Controls */}
+              <div className="flex items-center gap-2.5 self-end sm:self-auto">
+                <div className="text-xs font-mono text-zinc-600 bg-zinc-100 px-3 py-1.5 rounded-full border border-zinc-200">
+                  <span className="font-bold text-[#0552A2]">{carouselIndex + 1}</span>
+                  <span className="text-zinc-400 mx-1">/</span>
+                  <span>{rotatingPool.length}</span>
                 </div>
 
-                <div className="p-6 flex flex-col justify-between flex-1 gap-4">
-                  <div>
-                    <span className="text-[11px] font-mono text-[#0552A2] font-semibold block mb-1">
-                      {dest.altitude}
-                    </span>
-                    <h4 className="text-lg font-bold text-[#17212B] font-serif group-hover:text-[#0552A2] transition-colors">
-                      {dest.name}
-                    </h4>
-                    <p className="text-xs text-[#4B5563] mt-2 leading-relaxed line-clamp-3">
-                      {dest.shortDescription}
-                    </p>
-                  </div>
+                <button
+                  type="button"
+                  onClick={() => setIsPaused((p) => !p)}
+                  title={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
+                  aria-label={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
+                  className="p-2 rounded-full border border-zinc-300 bg-white hover:bg-zinc-50 text-zinc-700 transition-colors shadow-sm cursor-pointer"
+                >
+                  {isPaused ? (
+                    <Play className="h-3.5 w-3.5 fill-current" />
+                  ) : (
+                    <Pause className="h-3.5 w-3.5 fill-current" />
+                  )}
+                </button>
 
-                  <a
-                    href="#plan-your-trip"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0552A2] group-hover:underline pt-2 border-t border-[#0552A2]/10"
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  aria-label="Previous destination"
+                  className="p-2 rounded-full border border-zinc-300 bg-white hover:bg-[#0552A2] hover:text-white hover:border-[#0552A2] transition-colors shadow-sm cursor-pointer"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  aria-label="Next destination"
+                  className="p-2 rounded-full border border-zinc-300 bg-white hover:bg-[#0552A2] hover:text-white hover:border-[#0552A2] transition-colors shadow-sm cursor-pointer"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Rotating 4-Card Quad Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 min-h-[420px]">
+              <AnimatePresence mode="popLayout" initial={false}>
+                {visibleDestinations.map((dest) => (
+                  <motion.div
+                    key={dest.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="group flex flex-col rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40"
                   >
-                    <span>View Journey Details</span>
-                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+                    <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
+                      <Image
+                        src={dest.imageUrl}
+                        alt={dest.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 25vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2] shadow-sm">
+                        {dest.region}
+                      </div>
+                    </div>
+
+                    <div className="p-6 flex flex-col justify-between flex-1 gap-4">
+                      <div>
+                        <span className="text-[11px] font-mono text-[#0552A2] font-semibold block mb-1">
+                          {dest.altitude}
+                        </span>
+                        <h4 className="text-lg font-bold text-[#17212B] font-serif group-hover:text-[#0552A2] transition-colors line-clamp-1">
+                          {dest.name}
+                        </h4>
+                        <p className="text-xs text-[#4B5563] mt-2 leading-relaxed line-clamp-3">
+                          {dest.shortDescription}
+                        </p>
+                      </div>
+
+                      <a
+                        href="#plan-your-trip"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0552A2] group-hover:underline pt-2 border-t border-[#0552A2]/10"
+                      >
+                        <span>View Journey Details</span>
+                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </a>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* Interactive Progress Indicator Dots */}
+            <div className="flex justify-center items-center gap-1.5 mt-8">
+              {rotatingPool.map((dest, idx) => (
+                <button
+                  key={dest.id}
+                  onClick={() => setCarouselIndex(idx)}
+                  aria-label={`Jump to ${dest.name}`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    idx === carouselIndex
+                      ? 'w-7 bg-[#0552A2]'
+                      : 'w-2 bg-zinc-300 hover:bg-zinc-400'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
