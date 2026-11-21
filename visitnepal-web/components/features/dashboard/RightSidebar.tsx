@@ -68,14 +68,14 @@ export default function RightSidebar({
   const renderContent = (isMobile: boolean = false) => {
     if (rightSidebarTab === 'chat') {
       return (
-        <div className="flex flex-col flex-1 min-h-0 p-3.5 relative text-left">
+        <div className="flex flex-col flex-1 min-h-0 p-3 sm:p-3.5 relative text-left w-full overflow-hidden">
           {/* Header */}
-          <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md pb-2.5 mb-2 flex items-center justify-between border-b border-slate-100">
-            <span className="text-[11px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">
+          <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md pb-2 mb-2 flex items-center justify-between border-b border-slate-100 gap-2">
+            <span className="text-[11px] font-mono font-bold text-[#0552A2] uppercase tracking-wider truncate">
               {chatViewState === 'inbox' ? 'Expedition Dispatches' : 'Active Conversation'}
             </span>
 
-            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-200">
+            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-200 shrink-0">
               {!isMobile && (
                 <button
                   onClick={() => {
@@ -113,11 +113,11 @@ export default function RightSidebar({
                     onRightCollapsedChange(true);
                   }
                 }}
-                className="p-1 rounded-md text-slate-400 hover:text-slate-700 transition-colors cursor-pointer flex items-center justify-center"
-                style={{ width: '22px', height: '22px' }}
+                className="p-1.5 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                style={{ width: '26px', height: '26px' }}
                 title="Close / Collapse"
               >
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
@@ -258,19 +258,20 @@ export default function RightSidebar({
     <>
       {/* ── 1. DESKTOP PERSISTENT DRAWER (>= xl screens) ────────────────── */}
       <aside
-        className={`hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-white transition-all duration-300 overflow-hidden ${rightCollapsed ? 'w-0 border-l-0' : 'w-[256px] border-l border-slate-200'
-          }`}
+        className={`hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-white transition-all duration-300 overflow-hidden ${
+          rightCollapsed ? 'w-0 border-l-0' : 'border-l border-slate-200'
+        }`}
         style={{
           width: rightCollapsed
             ? '0px'
             : (isFullExpanded
               ? `calc(100vw - ${collapsed ? '54px' : '204px'})`
-              : '256px'),
+              : (rightSidebarTab === 'chat' ? '380px' : '310px')),
         }}
       >
         {/* Sidebar Content */}
         {!rightCollapsed && (
-          <div className="flex flex-col flex-1 min-h-0 text-left w-[256px]">
+          <div className="flex flex-col flex-1 min-h-0 text-left w-full">
             {renderContent(false)}
           </div>
         )}
@@ -287,7 +288,7 @@ export default function RightSidebar({
           />
 
           {/* Slide-over Drawer Panel */}
-          <div className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+          <div className="relative w-full sm:w-[420px] max-w-full sm:max-w-[92vw] bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
             <div className="flex-1 overflow-hidden flex flex-col min-h-0">
               {renderContent(true)}
             </div>

@@ -120,9 +120,9 @@ export default function InfoDetailPage() {
 
   const renderSingleChatView = (activeChan: typeof channels[0], showBackButton: boolean) => {
     return (
-      <div className="flex flex-col flex-1 min-h-0 px-1 py-1 text-left">
-        <div className="flex items-center justify-between border-b border-[var(--waffle)]/15 pb-2.5 mb-2.5 shrink-0">
-          <div className="flex items-center gap-2 min-w-0">
+      <div className="flex flex-col flex-1 min-h-0 w-full overflow-hidden px-1 py-1 text-left">
+        <div className="flex items-center justify-between border-b border-[var(--waffle)]/15 pb-2 mb-2 shrink-0 gap-2 w-full">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             {showBackButton && (
               <button 
                 onClick={() => setChatViewState('inbox')}
@@ -200,7 +200,7 @@ export default function InfoDetailPage() {
                         color: isMe ? 'white' : '#5C463C',
                         border: isMe ? 'none' : '1px solid rgba(194,147,103,0.15)'
                       }}
-                      className={`rounded-2xl px-3 py-2 text-[10px] leading-relaxed shadow-sm relative flex flex-col ${
+                      className={`rounded-2xl px-3 py-2 text-[10px] leading-relaxed shadow-sm relative flex flex-col break-words [overflow-wrap:anywhere] max-w-full ${
                         isMe ? 'rounded-tr-xs' : 'rounded-tl-xs'
                       }`}
                     >
@@ -285,7 +285,7 @@ export default function InfoDetailPage() {
           <div ref={chatEndRef} />
         </div>
 
-        <div className="shrink-0 flex items-center gap-2 pt-2 border-t border-[var(--waffle)]/15 mt-1">
+        <div className="shrink-0 flex items-center gap-1.5 sm:gap-2 pt-2 border-t border-[var(--waffle)]/15 mt-1 w-full min-w-0">
           <button
             onClick={() => handleActionAlert("Accessing media gallery to attach trip documents...", activeChan.name)}
             className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer shrink-0 border border-[var(--waffle)]/20"
@@ -309,7 +309,7 @@ export default function InfoDetailPage() {
               if (e.key === 'Enter') handleSendMessage();
             }}
             placeholder="Write message..."
-            className="flex-1 bg-white border border-[var(--waffle)]/35 rounded-full px-3.5 py-2 text-[10px] text-[var(--foreground)] placeholder-[#A89286]/60 focus:outline-none focus:border-[var(--caramel)]/50 transition-all shadow-inner"
+            className="flex-1 min-w-0 bg-white border border-[var(--waffle)]/35 rounded-full px-3.5 py-1.5 sm:py-2 text-[10px] sm:text-xs text-[var(--foreground)] placeholder-[#A89286]/60 focus:outline-none focus:border-[var(--caramel)]/50 transition-all shadow-inner"
           />
 
           {chatInput.trim() === '' ? (
