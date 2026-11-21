@@ -24,7 +24,7 @@ export default function InfoDetailPage() {
 
   // Shell UI Layout States
   const [collapsed, setCollapsed] = useState(false);
-  const [rightCollapsed, setRightCollapsed] = useState(false);
+  const [rightCollapsed, setRightCollapsed] = useState(true);
   const [isFullExpanded, setIsFullExpanded] = useState(false);
   const [expandedChannelId, setExpandedChannelId] = useState<string | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -530,6 +530,26 @@ export default function InfoDetailPage() {
           rightCollapsed={rightCollapsed}
           setRightCollapsed={setRightCollapsed}
         />
+
+        {/* Edge Toggle Tab to reopen Right Sidebar when collapsed on desktop & mobile */}
+        {rightCollapsed && (
+          <button
+            onClick={() => {
+              setRightCollapsed(false);
+              setRightSidebarTab('telemetry');
+            }}
+            className="flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-white border border-slate-200 border-r-0 rounded-l-xl px-2 py-3 shadow-md hover:shadow-lg hover:bg-blue-50/50 text-[#0552A2] transition-all cursor-pointer flex-col items-center gap-1.5 group select-none animate-in fade-in slide-in-from-right-2 duration-200 active:scale-95"
+            title="Open Himalayan Intel & Weather (Ctrl+I)"
+            aria-label="Open Himalayan Intel & Weather"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-0.5 transition-transform text-[#0552A2]">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#0552A2] [writing-mode:vertical-lr] rotate-180">
+              Intel
+            </span>
+          </button>
+        )}
 
         <RightSidebar
           rightCollapsed={rightCollapsed}

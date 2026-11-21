@@ -256,6 +256,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedActivity, bookedActivity]);
 
+
   // Filter activities
   const filteredActivities = useMemo(() => {
     return ACTIVITIES_LIST.filter((act) => {
@@ -435,7 +436,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
 
       {/* ── MAIN DIRECTORY VIEW (when activeId === 'activities') ───────────── */}
       {activeId === 'activities' && (
-        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-2">
+        <div className="flex flex-col gap-4 sm:gap-5 max-w-[1440px] w-full mx-auto py-1">
           {/* Header Banner */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-slate-200/70">
             <div>
@@ -510,8 +511,8 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${isActive
-                    ? 'bg-[#0552A2] text-white shadow-sm'
-                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300'
+                      ? 'bg-[#0552A2] text-white shadow-sm'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300'
                     }`}
                 >
                   {cat !== 'All' && getCategoryIcon(cat)}
@@ -796,7 +797,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
 
       {/* ── SPECIFIC DETAILED ACTIVITY SHEET (when URL is e.g. section=trekking) ─ */}
       {activeId !== 'activities' && (
-        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-2">
+        <div className="flex flex-col gap-4 sm:gap-5 max-w-[1440px] w-full mx-auto py-1">
           {/* Back button */}
           <button
             onClick={() => (onNavigate ? onNavigate('activities') : router.push('/dashboard?section=activities'))}
@@ -807,7 +808,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
           </button>
 
           {/* Hero Banner */}
-          <div className="relative h-52 sm:h-60 md:h-64 lg:h-72 w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 shadow-md shrink-0">
+          <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 shadow-md shrink-0">
             <Image
               src={activeActivity.image}
               alt={activeActivity.title}
@@ -837,8 +838,8 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
           </div>
 
           {/* Details 2-Column Split */}
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-            <div className="xl:col-span-7 2xl:col-span-8 flex flex-col gap-5 sm:gap-6 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-5 items-start">
+            <div className="xl:col-span-7 2xl:col-span-8 flex flex-col gap-4 sm:gap-5 bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs">
               <div>
                 <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#0552A2] mb-1.5">
                   Expedition Narrative
@@ -874,7 +875,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
             </div>
 
             {/* Logistics Card Sidebar */}
-            <div className="xl:col-span-5 2xl:col-span-4 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs flex flex-col gap-4 sm:gap-5">
+            <div className="xl:col-span-5 2xl:col-span-4 bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs flex flex-col gap-3.5 sm:gap-4">
               <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-2">
                 Expedition Parameters
               </h3>

@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏔️ Visit Nepal – Frontend Web Application
 
-## Getting Started
+The interactive, high-performance web frontend for the **Visit Nepal** digital tourism and expedition ecosystem, built with **Next.js 16 (Turbopack)**, **React 19**, **TypeScript**, and **Tailwind CSS v4**.
 
-First, run the development server:
+---
 
+## 🚀 Quick Start
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment (Optional)
+If running against the local backend server, create `.env.local`:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Start Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to explore.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧩 Key Architecture & Features
 
-To learn more about Next.js, take a look at the following resources:
+- **App Router (`app/`)**: Next.js 16 modular routing with dynamic routing (`/info/[slug]`, `/dashboard`, `/login`, etc.).
+- **Interactive Expedition Dashboard (`components/features/dashboard/`)**:
+  - `DashboardHome.tsx`: Upcoming journeys, customizer drafts, and recent booking ledger.
+  - `ActivitiesSection.tsx`: Expedition modalities directory (trekking, mountaineering, safari, culture, action).
+  - `DiscoverSection.tsx`: Exploration maps, attractions, and Top 5 destinations.
+  - `StaysSection.tsx`: Boutique mountain lodges, hotels, and transport reservations.
+  - `GuidesPermitsSection.tsx`: Verified guide rosters and official TIMS/conservation permits.
+  - `LeftSidebar.tsx` & `RightSidebar.tsx`: Collapsible navigation and live Himalayan telemetry / dispatch drawer.
+- **Expedition Telemetry**: Live weather, altitude warnings, and UV metrics for Khumbu, Pokhara, Kathmandu, and Chitwan.
+- **Global State (`store/useTravelStore.ts`)**: Fast, unified client state management with Zustand.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Scripts
 
-## Deploy on Vercel
+- `npm run dev`: Runs development server with Turbopack on `http://localhost:3000`.
+- `npm run build`: Compiles production build.
+- `npm run start`: Starts the built production server.
+- `npm run lint`: Runs ESLint checks.
+- `npx tsc --noEmit`: Runs full TypeScript type check.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*For full repository details, backend documentation, and database schema, see the [Root README](../README.md).*

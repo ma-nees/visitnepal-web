@@ -221,7 +221,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
   const displayedActivity = showAllActivity ? RECENT_ACTIVITY_LOG : RECENT_ACTIVITY_LOG.slice(0, 5);
 
   return (
-    <div className="w-full space-y-6 sm:space-y-8 pb-12 sm:pb-16 text-left">
+    <div className="w-full space-y-4 sm:space-y-6 pb-6 sm:pb-8 text-left">
       {/* Toast Notification */}
       <AnimatePresence>
         {toastMessage && (
@@ -240,7 +240,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 1: DASHBOARD WELCOME & CONTEXTUAL TELEMETRY BANNER
       ========================================================================= */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0B2240] via-[#0552A2] to-[#1D6FD6] text-white shadow-md p-4 sm:p-5 md:p-6">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0B2240] via-[#0552A2] to-[#1D6FD6] text-white shadow-md p-3.5 sm:p-4 md:p-5">
         <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#92C4EA]/15 blur-3xl" />
         <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-4 sm:gap-5">
           {/* Left: Personalized Greeting & Primary CTAs */}
@@ -414,9 +414,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 3: MAIN DUAL-COLUMN LAYOUT (PRIMARY FEED + CONTEXTUAL ASIDE)
       ========================================================================= */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 sm:gap-6 items-start">
         {/* ─── LEFT COLUMN (7 COLS on XL, 8 COLS on 2XL): TRIPS, PLANNING & RECOMMENDATIONS ───────── */}
-        <div className="xl:col-span-7 2xl:col-span-8 space-y-8 sm:space-y-10 min-w-0">
+        <div className="xl:col-span-7 2xl:col-span-8 space-y-6 sm:space-y-8 min-w-0">
           {/* 3.1 YOUR UPCOMING JOURNEYS */}
           <div>
             <div className="flex flex-wrap items-end justify-between mb-4 sm:mb-5 gap-3">
@@ -802,7 +802,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
         </div>
 
         {/* ─── RIGHT COLUMN (5 COLS on XL, 4 COLS on 2XL): QUICK ACTIONS, BOOKINGS & TIMELINE ─────── */}
-        <div className="xl:col-span-5 2xl:col-span-4 space-y-6 w-full min-w-0">
+        <div className="xl:col-span-5 2xl:col-span-4 space-y-4 sm:space-y-5 w-full min-w-0">
           {/* 4.1 QUICK ACTIONS */}
           <div className="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-xs">
             <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] mb-3">

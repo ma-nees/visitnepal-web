@@ -544,7 +544,7 @@ export default function DashboardPage() {
     <div className="dashboard-theme h-screen flex flex-col overflow-hidden relative bg-white text-[#17212B] font-sans">
 
       {/* ── TOP EDITORIAL HEADER BAR ─────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 flex items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 flex items-center justify-between px-3 sm:px-4 py-2 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         {/* Brand Logo & Back to Home */}
         <div className="flex items-center gap-3 sm:gap-6 select-none">
           {/* Mobile Navigation Drawer Trigger */}
@@ -795,7 +795,7 @@ export default function DashboardPage() {
               className="flex-1 flex flex-col min-w-0 relative bg-white transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
               {/* Context breadcrumb & Search toolbar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-white border-b border-slate-200/70 select-none relative z-10 gap-2 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-4 py-1.5 sm:py-2 bg-white border-b border-slate-200/70 select-none relative z-10 gap-2 sm:gap-3">
                 <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
                   <span className="uppercase tracking-wider font-semibold text-slate-500">{activeDetails.groupTitle}</span>
                   <span className="text-slate-300">/</span>
@@ -818,7 +818,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Main scrollable body */}
-              <main className="flex-1 overflow-y-auto p-3 sm:p-5 md:p-6 pb-20 md:pb-6 min-h-0 relative z-10 scrollbar-thin">
+              <main className="flex-1 overflow-y-auto p-2.5 sm:p-3.5 md:p-4 pb-16 md:pb-4 min-h-0 relative z-10 scrollbar-thin">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={active}
@@ -836,14 +836,14 @@ export default function DashboardPage() {
           )}
         </AnimatePresence>
 
-        {/* Edge Toggle Tab to reopen Right Sidebar when collapsed on desktop */}
+        {/* Edge Toggle Tab to reopen Right Sidebar when collapsed on desktop & mobile */}
         {rightCollapsed && (
           <button
             onClick={() => {
               setRightCollapsed(false);
               setRightSidebarTab('telemetry');
             }}
-            className="hidden xl:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-white border border-slate-200 border-r-0 rounded-l-xl px-2 py-3 shadow-md hover:shadow-lg hover:bg-blue-50/50 text-[#0552A2] transition-all cursor-pointer flex-col items-center gap-1.5 group select-none animate-in fade-in slide-in-from-right-2 duration-200"
+            className="flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-white border border-slate-200 border-r-0 rounded-l-xl px-2 py-3 shadow-md hover:shadow-lg hover:bg-blue-50/50 text-[#0552A2] transition-all cursor-pointer flex-col items-center gap-1.5 group select-none animate-in fade-in slide-in-from-right-2 duration-200 active:scale-95"
             title="Open Himalayan Intel & Weather (Ctrl+I)"
             aria-label="Open Himalayan Intel & Weather"
           >
