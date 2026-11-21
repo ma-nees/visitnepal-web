@@ -68,6 +68,19 @@ button,
 a,
 [role="button"] {
   touch-action: manipulation;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+}
+
+button:active:not(:disabled),
+a:active:not(:disabled),
+[role="button"]:active:not(:disabled) {
+  transform: scale(0.985);
 }
 
 /* ─── Broken Image Placeholder Suppression ────────────────────────────────── */
@@ -373,6 +386,31 @@ img[src=""] {
 .gpu-layer {
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+/* Smooth GPU-composited section/tab transition */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-section-enter {
+  animation: fadeSlideIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Off-screen rendering optimization for below-the-fold sections */
+#destinations,
+#experiences,
+#culture,
+#plan-your-trip {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
 }
 
 /* ─── Continuous Infinite Marquee ─────────────────────────────────────────── */
