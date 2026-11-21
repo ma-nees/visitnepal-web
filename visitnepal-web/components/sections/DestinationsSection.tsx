@@ -276,11 +276,10 @@ export default function DestinationsSection() {
                     setCarouselIndex(idx);
                   }}
                   aria-label={`Jump to ${dest.name}`}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === carouselIndex % rotatingPool.length
-                      ? 'w-7 bg-[#0552A2]'
-                      : 'w-2 bg-zinc-300 hover:bg-zinc-400'
-                  }`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === carouselIndex % rotatingPool.length
+                    ? 'w-7 bg-[#0552A2]'
+                    : 'w-2 bg-zinc-300 hover:bg-zinc-400'
+                    }`}
                 />
               ))}
             </div>
