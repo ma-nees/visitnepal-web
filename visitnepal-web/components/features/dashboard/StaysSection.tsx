@@ -140,7 +140,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-xl bg-[#FFFFFF] border border-[#92C4EA]/40 rounded-3xl p-6 shadow-xl relative text-left"
+              className="w-full max-w-xl bg-[#F8FAFD] border border-[#92C4EA]/40 rounded-3xl p-6 shadow-xl relative text-left"
             >
               <button 
                 onClick={() => setSelectedStay(null)}
@@ -174,7 +174,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
 
               {bookingSuccess && (
-                <div className="absolute inset-0 bg-[#FFFFFF]/95 rounded-3xl flex flex-col items-center justify-center text-center p-6">
+                <div className="absolute inset-0 bg-[#F8FAFD]/95 rounded-3xl flex flex-col items-center justify-center text-center p-6">
                   <span className="text-2xl mb-2">🎉</span>
                   <h4 className="text-sm font-bold text-[#17212B]">Room Booked Successfully!</h4>
                   <p className="text-xs text-[#475569] mt-1">Invoice pass and tickets generated in Bookings.</p>

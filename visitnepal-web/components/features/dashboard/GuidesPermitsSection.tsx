@@ -141,7 +141,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
 
           {hiredGuide && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-              <div className="bg-[#FFFFFF] border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center">
+              <div className="bg-[#F8FAFD] border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center">
                 <span className="text-2xl mb-1 block">🧗</span>
                 <h4 className="text-sm font-bold text-[#17212B]">Guide Application Recieved</h4>
                 <p className="text-xs text-[#475569] mt-1.5 leading-relaxed">
@@ -286,7 +286,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-[#FFFFFF] border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center w-full"
+                  className="bg-[#F8FAFD] border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center w-full"
                 >
                   <div className="flex flex-col items-center gap-3">
                     <span className="h-6 w-6 rounded-full border-2 border-t-transparent border-[#0552A2] animate-spin" />

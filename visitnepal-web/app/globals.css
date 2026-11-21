@@ -95,6 +95,37 @@ body {
   height: 0 !important;
 }
 
+/* ─── Dashboard Non-Glacier-White Theme Overrides ─────────────────────────── */
+.dashboard-theme {
+  --color-glacier-white: #F4F8FC;
+  --color-surface: #F8FAFD;
+  --color-surface-muted: #EDF3F9;
+  background-color: #EDF3F9 !important;
+}
+
+/* Eliminate stark glacier white from all dashboard surfaces, sidebars & cards */
+.dashboard-theme .bg-white,
+.dashboard-theme .bg-\[\#FFFFFF\],
+.dashboard-theme .bg-\[\#ffffff\] {
+  background-color: #F8FAFD !important;
+}
+
+.dashboard-theme .bg-white\/95 {
+  background-color: rgba(248, 250, 253, 0.95) !important;
+}
+
+.dashboard-theme .bg-white\/90 {
+  background-color: rgba(248, 250, 253, 0.9) !important;
+}
+
+.dashboard-theme .bg-white\/80 {
+  background-color: rgba(248, 250, 253, 0.8) !important;
+}
+
+.dashboard-theme .bg-white\/60 {
+  background-color: rgba(248, 250, 253, 0.6) !important;
+}
+
 /* Typography Scale */
 .text-heading-1 {
   font-family: var(--font-heading);
