@@ -232,18 +232,18 @@ export default function RightSidebar({
         ) : (
           /* ── TELEMETRY & INTEL SECTION ───────────────────────────── */
           !rightCollapsed ? (
-            <div className="flex flex-col flex-1 min-h-0 p-4 gap-4 overflow-y-auto scrollbar-thin">
+            <div className="flex flex-col flex-1 min-h-0 overflow-y-auto scrollbar-thin">
               {/* Header */}
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#0552A2]/10">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[11px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">
-                    Himalayan Intel & Weather
+                  <span className="text-[11px] font-semibold text-[#0552A2] uppercase tracking-[0.14em]">
+                    Himalayan Intel &amp; Weather
                   </span>
                 </div>
                 <button
                   onClick={() => onRightCollapsedChange(true)}
-                  className="p-1 rounded-md text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-[#0552A2] hover:bg-[#F2F8FD] transition-colors cursor-pointer"
                   title="Collapse"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -252,29 +252,39 @@ export default function RightSidebar({
                 </button>
               </div>
 
-              {/* Weather Telemetry */}
-              <WeatherTelemetry rightCollapsed={false} weather={weather} />
-
-              {/* Geographic Locator Map */}
-              <div className="bg-[#F8FAFC] border border-slate-200/80 rounded-2xl p-3 flex flex-col gap-2 relative overflow-hidden">
-                <div className="flex items-center justify-between z-10 relative">
-                  <span className="text-[10px] font-mono font-bold text-slate-600 uppercase tracking-wider">Topographic Map</span>
-                  <span className="text-[9px] font-mono text-[#0552A2] font-semibold">27.7172° N, 85.3240° E</span>
+              <div className="divide-y divide-[#0552A2]/10">
+                {/* Weather Telemetry */}
+                <div className="px-5 py-4">
+                  <WeatherTelemetry rightCollapsed={false} weather={weather} />
                 </div>
-                <div className="h-36 w-full rounded-xl overflow-hidden relative border border-slate-200/50 bg-white">
-                  <NepalBackgroundMap isSidebar={true} />
+
+                {/* Geographic Locator Map */}
+                <div className="px-5 py-4 flex flex-col gap-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-[0.14em]">
+                      Topographic Map
+                    </span>
+                    <span className="text-[10px] font-mono text-[#0552A2] font-semibold">
+                      27.7172° N, 85.3240° E
+                    </span>
+                  </div>
+                  <div className="h-36 w-full rounded-[14px] overflow-hidden relative bg-[#F8FBFF]">
+                    <NepalBackgroundMap isSidebar={true} />
+                  </div>
+                </div>
+
+                {/* Co-Planner Hub */}
+                <div className="px-5 py-4">
+                  <CoPlannerHub
+                    calendarMarks={calendarMarks}
+                    onCalendarMarksChange={onCalendarMarksChange}
+                    userNote={userNote}
+                    onUserNoteChange={onUserNoteChange}
+                    companyNote={companyNote}
+                    onCompanyNoteChange={onCompanyNoteChange}
+                  />
                 </div>
               </div>
-
-              {/* Co-Planner Hub */}
-              <CoPlannerHub
-                calendarMarks={calendarMarks}
-                onCalendarMarksChange={onCalendarMarksChange}
-                userNote={userNote}
-                onUserNoteChange={onUserNoteChange}
-                companyNote={companyNote}
-                onCompanyNoteChange={onCompanyNoteChange}
-              />
             </div>
           ) : null
         )}

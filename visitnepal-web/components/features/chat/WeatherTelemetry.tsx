@@ -26,28 +26,42 @@ export default function WeatherTelemetry({ rightCollapsed, weather }: WeatherTel
   }
 
   return (
-    <div className="bg-[#F2F8FD] p-4 rounded-2xl border border-[#92C4EA]/30 flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">Himalayan Telemetry</span>
-        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+        <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-[0.14em]">
+          Himalayan Telemetry
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-medium text-[#64748B]">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          Live 10m Sync
+        </span>
       </div>
-      <h4 className="text-sm font-bold text-[#17212B]">{weather.region}</h4>
-      
-      <div className="grid grid-cols-2 gap-2 mt-1 font-mono text-[10px]">
-        <div className="bg-white p-2 rounded-xl border border-slate-200/60">
-          <span className="text-slate-400 block text-[9px] uppercase tracking-wider font-semibold">Base Temp</span>
-          <span className="font-bold text-base text-[#0552A2]">{weather.temp}</span>
+
+      <h4 className="text-[15px] font-bold text-[#17212B] leading-snug">{weather.region}</h4>
+
+      <div className="grid grid-cols-2 gap-4 pt-1">
+        <div>
+          <span className="text-[10px] uppercase tracking-wider font-medium text-[#64748B] block">
+            Base Temp
+          </span>
+          <span className="text-2xl font-bold tracking-tight text-[#0552A2] mt-0.5 block leading-none">
+            {weather.temp}
+          </span>
         </div>
-        <div className="bg-white p-2 rounded-xl border border-slate-200/60">
-          <span className="text-slate-400 block text-[9px] uppercase tracking-wider font-semibold">Conditions</span>
-          <span className="font-bold text-xs text-slate-700 mt-1 block">{weather.status}</span>
+        <div>
+          <span className="text-[10px] uppercase tracking-wider font-medium text-[#64748B] block">
+            Conditions
+          </span>
+          <span className="text-sm font-semibold text-[#17212B] mt-1 block leading-snug">
+            {weather.status}
+          </span>
         </div>
       </div>
-      <div className="border-t border-[#92C4EA]/25 pt-2 mt-0.5 flex items-center justify-between">
-        <span className="inline-block text-[9px] font-bold font-mono text-[#0552A2] uppercase bg-white px-2.5 py-1 rounded-md border border-[#92C4EA]/40">
+
+      <div className="pt-1">
+        <span className="inline-flex items-center text-[10px] font-semibold text-[#0552A2] bg-[#F2F8FD] px-2.5 py-1 rounded-full">
           {weather.alert}
         </span>
-        <span className="text-[9px] font-mono text-slate-400">Live 10m Sync</span>
       </div>
     </div>
   );

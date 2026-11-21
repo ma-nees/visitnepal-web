@@ -136,11 +136,12 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 1: DASHBOARD WELCOME & CONTEXTUAL TELEMETRY BANNER
       ========================================================================= */}
-      <div className="relative overflow-hidden rounded-3xl bg-white border border-zinc-200/80 shadow-xs p-6 sm:p-8">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B2240] via-[#0552A2] to-[#1D6FD6] text-white shadow-[0_16px_40px_-14px_rgba(5,82,162,0.45)] p-6 sm:p-8">
+        <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#92C4EA]/20 blur-3xl" />
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           {/* Left: Personalized Greeting & Primary CTAs */}
           <div className="flex items-start gap-5">
-            <div className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-full overflow-hidden shrink-0 border-2 border-[#0552A2]/20 shadow-sm">
+            <div className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-full overflow-hidden shrink-0 border-2 border-white/40 shadow-md">
               <Image
                 src={currentUser?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200'}
                 alt={userName}
@@ -151,30 +152,30 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
             <div>
               <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
-                <span className="text-xs font-bold text-[#0552A2] uppercase tracking-wider font-mono">
+                <span className="text-xs font-bold text-[#92C4EA] uppercase tracking-wider font-mono">
                   Visit Nepal Personal Portal
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-200/60">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="text-[11px] font-mono text-emerald-100 bg-emerald-500/20 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-400/30">
                   Passport US98127398 Verified
                 </span>
-                <span className="text-[11px] font-mono text-[#0552A2] bg-blue-50 px-2.5 py-0.5 rounded-full font-semibold border border-blue-200/60">
+                <span className="text-[11px] font-mono text-[#FDB716] bg-[#FDB716]/15 px-2.5 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
                   Tier: Explorer Gold
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold font-serif text-white tracking-tight">
                 {greeting}, {userName}.
               </h1>
-              <p className="text-sm text-[#4B5563] mt-1 max-w-lg leading-relaxed">
-                Your next Himalayan journey begins here. You have <strong className="text-[#0552A2]">{UPCOMING_TRIPS.length} confirmed expeditions</strong> lined up across Nepal.
+              <p className="text-sm text-white/85 mt-1 max-w-lg leading-relaxed">
+                Your next Himalayan journey begins here. You have <strong className="text-[#FDB716]">{UPCOMING_TRIPS.length} confirmed expeditions</strong> lined up across Nepal.
               </p>
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3 mt-4 flex-wrap">
                 <button
                   onClick={() => onNavigate?.('customize')}
-                  className="px-5 py-2.5 rounded-full bg-[#0552A2] text-white text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-[#043e7b] hover:shadow-md flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 rounded-full bg-white text-[#0552A2] text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-[#F2F8FD] hover:shadow-md flex items-center gap-2 cursor-pointer"
                 >
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   <span>Plan a New Trip</span>
@@ -182,7 +183,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
                 <button
                   onClick={() => onNavigate?.('explore')}
-                  className="px-5 py-2.5 rounded-full bg-white border border-zinc-200 text-[#17212B] text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:border-[#0552A2] hover:text-[#0552A2] flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 rounded-full bg-white/10 border border-white/25 text-white text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-white/20 flex items-center gap-2 cursor-pointer"
                 >
                   <Compass className="h-3.5 w-3.5" />
                   <span>Explore Destinations</span>
