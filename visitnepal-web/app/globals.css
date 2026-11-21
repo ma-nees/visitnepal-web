@@ -10,13 +10,15 @@
   --color-foreground: #17212B;
   --color-muted: #4B5563;
   --color-muted-light: #9CA3AF;
-  --color-surface-muted: #F2F8FD;
+  --color-surface-muted: #FFFFFF;
   --color-surface: #FFFFFF;
   --color-border: rgba(5, 82, 162, 0.1);
   --color-border-subtle: rgba(23, 33, 43, 0.08);
 
-  --font-heading: var(--font-playfair), "DM Serif Display", Georgia, serif;
-  --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-oswald), "Oswald", sans-serif;
+  --font-serif: var(--font-oswald), "Oswald", sans-serif;
+  --font-sans: var(--font-noto-sans), "Noto Sans", sans-serif;
+  --font-condensed: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 @theme {
@@ -29,13 +31,15 @@
   --color-foreground: #17212B;
   --color-muted: #4B5563;
   --color-muted-light: #9CA3AF;
-  --color-surface-muted: #F2F8FD;
+  --color-surface-muted: #FFFFFF;
   --color-surface: #FFFFFF;
   --color-border: rgba(5, 82, 162, 0.1);
   --color-border-subtle: rgba(23, 33, 43, 0.08);
 
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-serif: var(--font-oswald), "Oswald", sans-serif;
+  --font-heading: var(--font-oswald), "Oswald", sans-serif;
+  --font-sans: var(--font-noto-sans), "Noto Sans", sans-serif;
+  --font-condensed: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 html,

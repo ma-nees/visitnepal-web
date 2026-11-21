@@ -75,22 +75,22 @@ const SocialIcon = ({ name }: { name: string }) => {
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground text-glacier-white pt-16 pb-8" role="contentinfo">
+    <footer className="bg-white text-[#17212B] border-t border-zinc-200 pt-16 pb-8" role="contentinfo">
       <div className="container">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <Logo variant="white" size="lg" className="mb-4" />
-            <p className="text-body-sm text-muted-light leading-relaxed max-w-xs">
+            <Logo variant="default" size="lg" className="mb-4" />
+            <p className="text-body-sm text-[#5A6578] leading-relaxed max-w-xs">
               Discover the extraordinary landscapes, ancient cultures, and unforgettable journeys of Nepal.
             </p>
           </div>
 
           <nav aria-label="Explore">
-            <h3 className="text-caption text-golden-yellow mb-4">Explore</h3>
+            <h3 className="text-caption text-[#0552A2] font-black uppercase tracking-wider mb-4">Explore</h3>
             <ul className="space-y-3" role="list">
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-body-sm text-muted-light hover:text-glacier-white transition-colors">
+                  <Link href={link.href} className="text-body-sm text-[#5A6578] hover:text-[#0552A2] transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -99,11 +99,11 @@ export default function Footer() {
           </nav>
 
           <nav aria-label="Destinations">
-            <h3 className="text-caption text-golden-yellow mb-4">Destinations</h3>
+            <h3 className="text-caption text-[#0552A2] font-black uppercase tracking-wider mb-4">Destinations</h3>
             <ul className="space-y-3" role="list">
               {footerLinks.destinations.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-body-sm text-muted-light hover:text-glacier-white transition-colors">
+                  <Link href={link.href} className="text-body-sm text-[#5A6578] hover:text-[#0552A2] transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -112,11 +112,11 @@ export default function Footer() {
           </nav>
 
           <nav aria-label="Travel Resources">
-            <h3 className="text-caption text-golden-yellow mb-4">Travel Resources</h3>
+            <h3 className="text-caption text-[#0552A2] font-black uppercase tracking-wider mb-4">Travel Resources</h3>
             <ul className="space-y-3" role="list">
               {footerLinks.resources.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-body-sm text-muted-light hover:text-glacier-white transition-colors">
+                  <Link href={link.href} className="text-body-sm text-[#5A6578] hover:text-[#0552A2] transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -125,11 +125,11 @@ export default function Footer() {
           </nav>
 
           <nav aria-label="Connect">
-            <h3 className="text-caption text-golden-yellow mb-4">Connect</h3>
+            <h3 className="text-caption text-[#0552A2] font-black uppercase tracking-wider mb-4">Connect</h3>
             <ul className="space-y-3" role="list">
               {footerLinks.connect.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-body-sm text-muted-light hover:text-glacier-white transition-colors">
+                  <Link href={link.href} className="text-body-sm text-[#5A6578] hover:text-[#0552A2] transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -142,7 +142,7 @@ export default function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-light hover:text-golden-yellow transition-colors"
+                      className="text-[#7A8699] hover:text-[#0552A2] transition-colors"
                       aria-label={social.label}
                     >
                       <SocialIcon name={social.icon} />
@@ -154,14 +154,14 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-caption text-muted-light">
+        <div className="pt-8 border-t border-zinc-100 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-caption text-[#7A8699]">
             © {new Date().getFullYear()} Visit Nepal. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-caption text-muted-light">
-            <Link href="#privacy" className="hover:text-glacier-white transition-colors">Privacy Policy</Link>
-            <Link href="#terms" className="hover:text-glacier-white transition-colors">Terms of Service</Link>
-            <Link href="#cookies" className="hover:text-glacier-white transition-colors">Cookie Policy</Link>
+          <div className="flex items-center gap-6 text-caption text-[#7A8699]">
+            <Link href="#privacy" className="hover:text-[#0552A2] transition-colors">Privacy Policy</Link>
+            <Link href="#terms" className="hover:text-[#0552A2] transition-colors">Terms of Service</Link>
+            <Link href="#cookies" className="hover:text-[#0552A2] transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>

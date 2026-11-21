@@ -62,14 +62,12 @@ export default function Navigation() {
           >
             <div className="relative h-10 w-28 sm:h-12 sm:w-36 transition-transform duration-300 group-hover:scale-[1.02]">
               <Image
-                src="/logo.png"
+                src={scrolled ? "/logo.png" : "/logo-white.png"}
                 alt="Visit Nepal Official Logo"
                 fill
                 priority
                 unoptimized
-                className={`object-contain transition-all duration-300 ${
-                  scrolled ? 'brightness-100' : 'brightness-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]'
-                }`}
+                className="object-contain transition-all duration-300"
               />
             </div>
           </Link>
@@ -141,7 +139,7 @@ export default function Navigation() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`p-2 rounded-xl transition-colors ${
-                scrolled ? 'text-[#17212B] hover:bg-[#F2F8FD]' : 'text-white hover:bg-white/10'
+                scrolled ? 'text-[#17212B] hover:bg-zinc-100' : 'text-white hover:bg-white/10'
               }`}
               aria-label="Toggle navigation menu"
             >
@@ -183,7 +181,7 @@ export default function Navigation() {
                       router.push('/login');
                     }
                   }}
-                  className="w-full py-3 rounded-full border border-[#0552A2]/30 text-[#0552A2] text-xs uppercase tracking-wider font-bold hover:bg-[#F2F8FD]"
+                  className="w-full py-3 rounded-full border border-[#0552A2]/30 text-[#0552A2] text-xs uppercase tracking-wider font-bold hover:bg-zinc-100"
                 >
                   {currentUser?.loggedIn && currentUser?.otpVerified ? 'Go to Dashboard' : 'Sign In / Account'}
                 </button>

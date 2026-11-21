@@ -40,7 +40,7 @@ export default function DestinationsSection() {
   return (
     <section
       id="destinations"
-      className="py-24 md:py-32 bg-white scroll-mt-12 text-[#17212B]"
+      className="pt-14 md:pt-18 pb-10 md:pb-14 bg-white scroll-mt-12 text-[#17212B]"
       aria-labelledby="destinations-heading"
     >
       <div className="container">
@@ -72,7 +72,7 @@ export default function DestinationsSection() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`text-xs uppercase tracking-wider font-semibold px-4 py-2 rounded-full transition-all duration-200 cursor-pointer ${activeTab === tab.id
                   ? 'bg-[#0552A2] text-white shadow-sm'
-                  : 'bg-[#F2F8FD] text-[#17212B] hover:bg-[#0552A2]/10'
+                  : 'bg-white border border-zinc-200 text-[#17212B] hover:border-[#0552A2]'
                   }`}
               >
                 {tab.label}
@@ -169,7 +169,7 @@ export default function DestinationsSection() {
               <motion.div
                 key={dest.id}
                 variants={itemVariants}
-                className="group flex flex-col rounded-3xl overflow-hidden bg-[#F2F8FD] border border-[#0552A2]/10 transition-all duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
+                className="group flex flex-col rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
               >
                 <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                   <Image

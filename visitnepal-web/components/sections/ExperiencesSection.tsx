@@ -115,7 +115,7 @@ export default function ExperiencesSection() {
   return (
     <section
       id="experiences"
-      className="py-24 md:py-32 bg-[#F2F8FD] scroll-mt-12 text-[#17212B]"
+      className="pt-10 md:pt-14 pb-12 md:pb-16 bg-white scroll-mt-12 text-[#17212B]"
       aria-labelledby="experiences-heading"
     >
       <div className="container">
@@ -156,7 +156,7 @@ export default function ExperiencesSection() {
                       {exp.name}
                     </span>
                   </div>
-                  <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isSelected ? 'bg-[#0552A2] text-white' : 'bg-[#F2F8FD] text-[#4B5563]'
+                  <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isSelected ? 'bg-[#0552A2] text-white' : 'bg-white border border-zinc-200 text-[#4B5563]'
                     }`}>
                     {exp.duration}
                   </span>
@@ -222,7 +222,7 @@ export default function ExperiencesSection() {
                       {selectedExperience.highlights.map((h, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1.5 rounded-full bg-[#F2F8FD] border border-[#0552A2]/15 text-xs text-[#0552A2] font-semibold"
+                          className="px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-xs text-[#0552A2] font-semibold shadow-xs"
                         >
                           {h}
                         </span>

@@ -130,7 +130,7 @@ export default function PlanYourTripSection() {
   return (
     <section
       id="plan-your-trip"
-      className="py-24 md:py-32 bg-white text-[#17212B] scroll-mt-12"
+      className="pt-20 md:pt-28 pb-6 md:pb-8 bg-white text-[#17212B] scroll-mt-12"
       aria-labelledby="plan-heading"
     >
       <div className="container">
@@ -158,7 +158,7 @@ export default function PlanYourTripSection() {
                 className={`flex items-center gap-2 whitespace-nowrap text-xs font-semibold py-1 px-2.5 rounded-full transition-colors cursor-pointer ${idx === activeStep
                   ? 'bg-[#0552A2] text-white'
                   : idx < activeStep
-                    ? 'text-[#0552A2] hover:bg-[#F2F8FD]'
+                    ? 'text-[#0552A2] hover:bg-blue-50/50'
                     : 'text-[#9CA3AF] hover:text-[#4B5563]'
                   }`}
               >
@@ -170,7 +170,7 @@ export default function PlanYourTripSection() {
               </button>
             ))}
           </div>
-          <div className="h-1.5 w-full bg-[#F2F8FD] rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
             <div
               className="h-full bg-[#0552A2] transition-all duration-300 ease-out"
               style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
@@ -179,7 +179,7 @@ export default function PlanYourTripSection() {
         </div>
 
         {/* Main Step Canvas */}
-        <div className="max-w-4xl mx-auto bg-[#F2F8FD] rounded-3xl p-6 sm:p-10 border border-[#0552A2]/15 shadow-sm">
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 sm:p-10 border border-zinc-200 shadow-md">
           {/* Step 1: Destinations */}
           {activeStep === 0 && (
             <div className="flex flex-col gap-6">
@@ -451,10 +451,10 @@ export default function PlanYourTripSection() {
         </div>
 
         {/* Essential Travel Tips Drawer */}
-        <div className="max-w-4xl mx-auto mt-12">
+        <div className="max-w-4xl mx-auto mt-8">
           <button
             onClick={() => setShowTips(!showTips)}
-            className="w-full p-5 rounded-2xl bg-[#F2F8FD] border border-[#0552A2]/15 flex items-center justify-between text-left cursor-pointer hover:bg-[#e8f3fb] transition-colors"
+            className="w-full p-5 rounded-2xl bg-white border border-zinc-200 flex items-center justify-between text-left cursor-pointer hover:border-[#0552A2]/30 transition-colors shadow-xs"
           >
             <div className="flex items-center gap-3">
               <ShieldCheck className="h-5 w-5 text-[#0552A2]" />
@@ -467,28 +467,28 @@ export default function PlanYourTripSection() {
             </span>
           </button>
 
-          <AnimatePresence>
-            {showTips && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="p-6 bg-white rounded-2xl border border-t-0 border-[#0552A2]/15 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-[#4B5563] leading-relaxed">
-                  {travelTips.map((tip, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5">
-                      <span className="h-4 w-4 rounded-full bg-[#0552A2]/10 text-[#0552A2] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
-                        {idx + 1}
-                      </span>
-                      <span>{tip}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        <AnimatePresence>
+          {showTips && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="p-6 bg-white rounded-2xl border border-t-0 border-[#0552A2]/15 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-[#4B5563] leading-relaxed">
+                {travelTips.map((tip, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5">
+                    <span className="h-4 w-4 rounded-full bg-[#0552A2]/10 text-[#0552A2] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
+                      {idx + 1}
+                    </span>
+                    <span>{tip}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         </div>
       </div>
     </section>

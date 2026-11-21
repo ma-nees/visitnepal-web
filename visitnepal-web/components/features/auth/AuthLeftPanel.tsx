@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import NepalBackgroundMap from '@/components/features/chat/NepalBackgroundMap';
 
 interface AuthLeftPanelProps {
@@ -19,8 +20,16 @@ export default function AuthLeftPanel({
       />
       <div className="absolute inset-0 bg-black/40 pointer-events-none" />
       
-      {/* Placeholder layout spacer */}
-      <div className="relative z-20 h-8 w-2" />
+      {/* Official Brand Logo */}
+      <div className="relative z-20 flex items-center gap-3">
+        <Link href="/" className="inline-block transition-transform duration-200 hover:scale-105">
+          <img
+            src="/logo-white.png"
+            alt="Visit Nepal Official Logo"
+            className="h-11 md:h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          />
+        </Link>
+      </div>
 
       {/* Centered Nepal Map Vector */}
       <div className="absolute inset-0 z-10 flex items-center justify-center p-8 pointer-events-none scale-105">
