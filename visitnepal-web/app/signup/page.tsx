@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTravelStore, UserRole } from '@/store/useTravelStore';
 import { User, Mail, ArrowRight } from 'lucide-react';
@@ -93,9 +94,15 @@ export default function SignupPage() {
           animate="visible"
           className="w-full flex flex-col gap-6 relative z-10"
         >
-          {/* Shared Pill Badge */}
-          <motion.div variants={itemVariants}>
-            <AuthPillBadge label="Expedition Registry" />
+          {/* Brand Logo Header */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3">
+            <Link href="/" className="inline-block transition-transform duration-200 hover:scale-105">
+              <img
+                src="/logo.png"
+                alt="Visit Nepal Official Logo"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </Link>
           </motion.div>
 
           <motion.div variants={itemVariants} className="flex flex-col gap-2">

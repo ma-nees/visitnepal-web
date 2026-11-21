@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 export interface NavItem {
   id: string;
   label: string;
-  icon: string;
+  icon: LucideIcon | React.ComponentType<{ size?: number; className?: string }> | string;
   badge?: string;
 }
 
@@ -63,7 +64,11 @@ function SidebarItem({
           isActive ? 'text-[#0552A2] opacity-100' : 'text-slate-400 group-hover:text-slate-600'
         }`}
       >
-        <Icon d={icon} size={17} />
+        {typeof icon === 'string' ? (
+          <Icon d={icon} size={17} />
+        ) : (
+          React.createElement(icon, { size: 17, className: 'shrink-0' })
+        )}
       </span>
 
       {!collapsed && (
@@ -146,13 +151,13 @@ export default function LeftSidebar({
 }: LeftSidebarProps) {
   return (
     <aside
-      className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 transition-all duration-300 z-20 ${
+      className={`hidden md:flex flex-col shrink-0 h-full select-none bg-[#F6FAFD] border-r border-slate-200 transition-all duration-300 z-20 ${
         collapsed ? 'w-16' : 'w-60'
       }`}
     >
       {/* Collapse / Expand Toggle Button */}
       <div
-        className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-3 py-2.5 flex items-center ${
+        className={`sticky top-0 z-30 bg-[#F6FAFD]/95 backdrop-blur-md border-b border-slate-100 px-3 py-2.5 flex items-center ${
           collapsed ? 'justify-center' : 'justify-between'
         }`}
       >

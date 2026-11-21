@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTravelStore } from '@/store/useTravelStore';
 import { Mail, Lock, Eye, EyeOff, Compass } from 'lucide-react';
@@ -90,8 +91,16 @@ export default function LoginPage() {
           animate="visible"
           className="w-full flex flex-col gap-6 relative z-10"
         >
-          {/* Shared Pill Tag */}
-
+          {/* Brand Logo Header */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3">
+            <Link href="/" className="inline-block transition-transform duration-200 hover:scale-105">
+              <img
+                src="/logo.png"
+                alt="Visit Nepal Official Logo"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </Link>
+          </motion.div>
 
           <motion.div variants={itemVariants} className="flex flex-col gap-2">
             <h1 className="text-4xl sm:text-5xl font-black text-[#1A1208] tracking-tight leading-tight">

@@ -1,31 +1,53 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import DiscoverSection from '@/components/features/dashboard/DiscoverSection';
+import DashboardHome from '@/components/features/dashboard/DashboardHome';
+import ActivitiesSection from '@/components/features/dashboard/ActivitiesSection';
 import LeftSidebar from '@/components/features/dashboard/LeftSidebar';
 import RightSidebar from '@/components/features/dashboard/RightSidebar';
+import InfoDetailPanel from '@/components/features/info/InfoDetailPanel';
+import StaysSection from '@/components/features/dashboard/StaysSection';
+import GuidesPermitsSection from '@/components/features/dashboard/GuidesPermitsSection';
+import AccountSection from '@/components/features/dashboard/AccountSection';
+import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
-
-const DiscoverSection = dynamic(() => import('@/components/features/dashboard/DiscoverSection'));
-const ActivitiesSection = dynamic(() => import('@/components/features/dashboard/ActivitiesSection'));
-const InfoDetailPanel = dynamic(() => import('@/components/features/info/InfoDetailPanel'));
-const StaysSection = dynamic(() => import('@/components/features/dashboard/StaysSection'));
-const GuidesPermitsSection = dynamic(() => import('@/components/features/dashboard/GuidesPermitsSection'));
-const AccountSection = dynamic(() => import('@/components/features/dashboard/AccountSection'));
-const HostSection = dynamic(() => import('@/components/features/dashboard/HostSection'));
-
-// ─── Icon primitives (inline SVG) ─────────────────────────────────────────────
-const Icon = ({ d, size = 16 }: { d: string; size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d={d} />
-  </svg>
-);
+import {
+  Home,
+  SlidersHorizontal,
+  Compass,
+  Flame,
+  Landmark,
+  Trophy,
+  Activity,
+  Mountain,
+  MountainSnow,
+  PawPrint,
+  Sparkles,
+  Leaf,
+  Zap,
+  Hotel,
+  Car,
+  UserCheck,
+  TicketCheck,
+  UserPlus,
+  Building2,
+  MapPinPlus,
+  ShieldCheck,
+  MessageSquare,
+  LucideIcon,
+} from 'lucide-react';
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
-type NavItem = { label: string; icon: string; id: string; badge?: string };
+type NavItem = {
+  label: string;
+  icon: LucideIcon | React.ComponentType<{ size?: number; className?: string }> | string;
+  id: string;
+  badge?: string
+};
 type NavGroup = { title: string; items: NavItem[] };
 
 // ─── Sidebar Data ─────────────────────────────────────────────────────────────
@@ -33,47 +55,47 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: 'Discover',
     items: [
-      { id: 'home',        label: 'Home',            icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
-      { id: 'customize',   label: 'Customize Trip',  icon: 'M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z' },
-      { id: 'explore',     label: 'Explore',         icon: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z' },
-      { id: 'popular',     label: 'Popular',         icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
-      { id: 'attractions', label: 'Attractions',     icon: 'M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z' },
-      { id: 'top5',        label: 'Top 5 Destinations', icon: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' },
+      { id: 'home', label: 'Home', icon: Home },
+      { id: 'customize', label: 'Customize Trip', icon: SlidersHorizontal },
+      { id: 'explore', label: 'Explore', icon: Compass },
+      { id: 'popular', label: 'Popular', icon: Flame },
+      { id: 'attractions', label: 'Attractions', icon: Landmark },
+      { id: 'top5', label: 'Top 5 Destinations', icon: Trophy },
     ],
   },
   {
     title: 'Activities & Travel',
     items: [
-      { id: 'activities',     label: 'Activities',          icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
-      { id: 'trekking',       label: 'Trekking',            icon: 'M3 17l4-8 4 4 4-6 4 10' },
-      { id: 'mountaineering', label: 'Mountaineering',      icon: 'M8 3l4 8 5-5 5 13H2L8 3z' },
-      { id: 'wildlife',       label: 'Wildlife',            icon: 'M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z' },
-      { id: 'cultural',       label: 'Cultural & Religious',  icon: 'M12 22V12M12 12C12 12 7 9 7 4a5 5 0 0110 0c0 5-5 8-5 8z' },
-      { id: 'ecotourism',     label: 'Eco Tourism',         icon: 'M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z' },
-      { id: 'adventure',      label: 'Adventure',           icon: 'M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z' },
+      { id: 'activities', label: 'Activities', icon: Activity },
+      { id: 'trekking', label: 'Trekking', icon: Mountain },
+      { id: 'mountaineering', label: 'Mountaineering', icon: MountainSnow },
+      { id: 'wildlife', label: 'Wildlife', icon: PawPrint },
+      { id: 'cultural', label: 'Cultural & Religious', icon: Sparkles },
+      { id: 'ecotourism', label: 'Eco Tourism', icon: Leaf },
+      { id: 'adventure', label: 'Adventure', icon: Zap },
     ],
   },
   {
     title: 'Stays & Transport',
     items: [
-      { id: 'hotels',        label: 'Hotels',          icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
-      { id: 'transportation', label: 'Transportation', icon: 'M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-3' },
+      { id: 'hotels', label: 'Hotels', icon: Hotel },
+      { id: 'transportation', label: 'Transportation', icon: Car },
     ],
   },
   {
     title: 'Guides & Permits',
     items: [
-      { id: 'guides',  label: 'Guides',  icon: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2' },
-      { id: 'permits', label: 'Permits', icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
+      { id: 'guides', label: 'Guides', icon: UserCheck },
+      { id: 'permits', label: 'Permits', icon: TicketCheck },
     ],
   },
   {
     title: 'Host & List',
     items: [
-      { id: 'becomehost',     label: 'Become a Host',        icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
-      { id: 'listproperty',   label: 'List Your Property',   icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
-      { id: 'listattraction', label: 'List an Attraction',   icon: 'M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z' },
-      { id: 'listpermit',     label: 'Permit Authority',     icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
+      { id: 'becomehost', label: 'Become a Host', icon: UserPlus },
+      { id: 'listproperty', label: 'List Your Property', icon: Building2 },
+      { id: 'listattraction', label: 'List an Attraction', icon: MapPinPlus },
+      { id: 'listpermit', label: 'Permit Authority', icon: ShieldCheck },
     ],
   },
 ];
@@ -118,7 +140,7 @@ export default function DashboardPage() {
   const [rightSidebarTab, setRightSidebarTab] = useState<'telemetry' | 'chat'>('telemetry');
   const [chatViewState, setChatViewState] = useState<'inbox' | 'conversation'>('inbox');
   const [chatInput, setChatInput] = useState('');
-  
+
   // Messenger states
   const [floatingChatOpen, setFloatingChatOpen] = useState(false);
   const [calendarMarks, setCalendarMarks] = useState<Record<string, boolean>>({});
@@ -127,15 +149,15 @@ export default function DashboardPage() {
   const [reactions, setReactions] = useState<Record<string, string>>({});
   const [actionAlert, setActionAlert] = useState<{ message: string; contactName: string; visible: boolean }>({ message: '', contactName: '', visible: false });
 
-  const { 
-    currentUser, 
-    channels, 
-    activeChannelId, 
-    setActiveChannelId, 
-    sendMessage, 
-    sendVoiceMessage, 
-    toggleTranslation, 
-    setTyping 
+  const {
+    currentUser,
+    channels,
+    activeChannelId,
+    setActiveChannelId,
+    sendMessage,
+    sendVoiceMessage,
+    toggleTranslation,
+    setTyping
   } = useTravelStore();
 
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -222,13 +244,13 @@ export default function DashboardPage() {
     const userMsg = chatInput;
     sendMessage(activeChannelId, userMsg, 'user');
     setChatInput('');
-    
+
     // Responses from providers
     setTimeout(() => {
       setTyping(activeChannelId, true);
       setTimeout(() => {
         setTyping(activeChannelId, false);
-        
+
         let replyText = "Namaste! Connecting to the central station in Kathmandu. We will assist your journey shortly.";
         if (activeChannelId === 'ch-ai') {
           replyText = `Sherpa AI Assistant: I've verified coordinates for "${userMsg}". The trail conditions are favorable with stable atmospheric readings across the central ranges.`;
@@ -244,7 +266,10 @@ export default function DashboardPage() {
 
   // Group resolver helper to know which Section view component to render
   const renderActiveSection = () => {
-    if (['home', 'explore', 'popular', 'attractions', 'top5'].includes(active)) {
+    if (active === 'home') {
+      return <DashboardHome onNavigate={handleActiveChange} />;
+    }
+    if (['explore', 'popular', 'attractions', 'top5'].includes(active)) {
       return <DiscoverSection activeId={active} onNavigate={handleActiveChange} />;
     }
     if (['activities', 'trekking', 'mountaineering', 'wildlife', 'cultural', 'ecotourism', 'adventure'].includes(active)) {
@@ -262,7 +287,7 @@ export default function DashboardPage() {
     if (['becomehost', 'listproperty', 'listattraction', 'listpermit'].includes(active)) {
       return <HostSection activeId={active} />;
     }
-    return <DiscoverSection activeId="home" />;
+    return <DashboardHome onNavigate={handleActiveChange} />;
   };
 
   const renderSingleChatView = (activeChan: typeof channels[0], showBackButton: boolean) => {
@@ -271,13 +296,13 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2.5 shrink-0">
           <div className="flex items-center gap-2.5 min-w-0">
             {showBackButton && (
-              <button 
+              <button
                 onClick={() => setChatViewState('inbox')}
                 className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0"
                 title="Back to Inbox"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                  <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
                 </svg>
               </button>
             )}
@@ -302,7 +327,7 @@ export default function DashboardPage() {
               title="Voice Call"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
             </button>
             <button
@@ -339,17 +364,16 @@ export default function DashboardPage() {
                 )}
                 <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                   <div className="relative group">
-                    <div 
-                      className={`rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-xs relative flex flex-col ${
-                        isMe 
-                          ? 'bg-[#0552A2] text-white rounded-tr-xs' 
-                          : 'bg-white text-[#17212B] border border-slate-200/90 rounded-tl-xs'
-                      }`}
+                    <div
+                      className={`rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-xs relative flex flex-col ${isMe
+                        ? 'bg-[#0552A2] text-white rounded-tr-xs'
+                        : 'bg-white text-[#17212B] border border-slate-200/90 rounded-tl-xs'
+                        }`}
                     >
                       {msg.isVoice ? (
                         <div className="flex items-center gap-2 py-0.5 select-none">
                           <button className={`h-6 w-6 rounded-full flex items-center justify-center cursor-pointer shrink-0 shadow-xs ${isMe ? 'bg-white text-[#0552A2]' : 'bg-[#0552A2] text-white'}`}>
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21" /></svg>
                           </button>
                           <div className="flex items-center gap-0.5 h-4">
                             <span className={`h-2 w-[2px] rounded animate-pulse ${isMe ? 'bg-white/50' : 'bg-[#0552A2]/40'}`} />
@@ -373,10 +397,10 @@ export default function DashboardPage() {
                       ) : (
                         <span>{msg.text}</span>
                       )}
-                      
+
                       <div className="flex items-center justify-between gap-3 mt-1.5 shrink-0 select-none">
                         {!isMe && !msg.translatedText && !msg.isVoice && (
-                          <button 
+                          <button
                             onClick={() => toggleTranslation(activeChan.id, msg.id)}
                             className="text-[9px] font-mono font-bold text-[#0552A2] hover:underline uppercase cursor-pointer leading-none"
                           >
@@ -395,7 +419,7 @@ export default function DashboardPage() {
                       )}
                     </div>
 
-                    <div 
+                    <div
                       className="absolute top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-md border border-slate-200 rounded-full px-2 py-0.5 scale-90"
                       style={isMe ? { right: 'calc(100% + 6px)' } : { left: 'calc(100% + 6px)' }}
                     >
@@ -414,7 +438,7 @@ export default function DashboardPage() {
               </div>
             );
           })}
-          
+
           {activeChan.typing && (
             <div className="flex items-end gap-2 max-w-[85%] self-start flex-row animate-pulse">
               <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
@@ -433,8 +457,8 @@ export default function DashboardPage() {
           {(activeChan.id === 'ch-ai'
             ? ['Everest Weather', 'Permit Status', 'Buddhist Monasteries', 'Altitude Plan']
             : activeChan.id === 'ch-g1'
-            ? ['Oxygen Status', 'Meet at Pokhara', 'Gear Checklist', 'Safety Beacon']
-            : ['Lodge Tea Service', 'Heater Parameters', 'Helicopter Transfer', 'Room Amenities']
+              ? ['Oxygen Status', 'Meet at Pokhara', 'Gear Checklist', 'Safety Beacon']
+              : ['Lodge Tea Service', 'Heater Parameters', 'Helicopter Transfer', 'Room Amenities']
           ).map((chip) => (
             <button
               key={chip}
@@ -453,7 +477,7 @@ export default function DashboardPage() {
             className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0 border border-slate-200"
             title="Attach Document"
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
           </button>
 
           <button
@@ -461,7 +485,7 @@ export default function DashboardPage() {
             className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0 border border-slate-200"
             title="Send audio note"
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></svg>
           </button>
 
           <input
@@ -488,7 +512,7 @@ export default function DashboardPage() {
               className="h-8 w-8 rounded-full flex items-center justify-center bg-[#0552A2] text-white hover:bg-[#044080] cursor-pointer transition-colors shrink-0 shadow-xs"
               title="Send Message"
             >
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
             </button>
           )}
         </div>
@@ -499,20 +523,20 @@ export default function DashboardPage() {
   const activeChannelObj = channels.find(c => c.id === activeChannelId) || channels[0];
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden relative bg-[#FFFFFF] text-[#17212B] font-sans">
+    <div className="dashboard-theme h-screen flex flex-col overflow-hidden relative bg-[#EDF3F9] text-[#17212B] font-sans">
 
       {/* ── TOP EDITORIAL HEADER BAR ─────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-3 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-3 bg-[#F8FAFD]/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         {/* Brand Logo & Back to Home */}
         <div className="flex items-center gap-6 select-none">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative h-9 w-24">
-              <Image 
-                src="/logo.png" 
-                alt="Visit Nepal Official Logo" 
-                fill 
-                className="object-contain" 
-                unoptimized 
+              <Image
+                src="/logo.png"
+                alt="Visit Nepal Official Logo"
+                fill
+                className="object-contain"
+                unoptimized
                 priority
               />
             </div>
@@ -521,12 +545,12 @@ export default function DashboardPage() {
             </span>
           </Link>
 
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-[#0552A2] transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
             </svg>
             <span>Return to Site</span>
           </Link>
@@ -547,15 +571,14 @@ export default function DashboardPage() {
               setRightCollapsed(false);
               setRightSidebarTab(rightSidebarTab === 'telemetry' ? 'chat' : 'telemetry');
             }}
-            className={`p-2 rounded-xl transition-colors cursor-pointer flex items-center justify-center relative ${
-              rightSidebarTab === 'telemetry' && !rightCollapsed
-                ? 'bg-[#0552A2]/10 text-[#0552A2]'
-                : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
-            }`}
+            className={`p-2 rounded-xl transition-colors cursor-pointer flex items-center justify-center relative ${rightSidebarTab === 'telemetry' && !rightCollapsed
+              ? 'bg-[#0552A2]/10 text-[#0552A2]'
+              : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
+              }`}
             title="Himalayan Weather & Telemetry"
           >
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
             </svg>
           </button>
 
@@ -569,11 +592,10 @@ export default function DashboardPage() {
                 setRightCollapsed(false);
               }
             }}
-            className={`p-2 rounded-xl transition-colors cursor-pointer relative flex items-center justify-center ${
-              rightSidebarTab === 'chat' && !rightCollapsed
-                ? 'bg-[#0552A2]/10 text-[#0552A2]'
-                : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
-            }`}
+            className={`p-2 rounded-xl transition-colors cursor-pointer relative flex items-center justify-center ${rightSidebarTab === 'chat' && !rightCollapsed
+              ? 'bg-[#0552A2]/10 text-[#0552A2]'
+              : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
+              }`}
             title="Expedition Dispatches"
           >
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -600,10 +622,10 @@ export default function DashboardPage() {
               className="h-9 w-9 rounded-full overflow-hidden border-2 border-[#0552A2]/40 hover:border-[#0552A2] transition-colors cursor-pointer shadow-xs flex items-center justify-center relative"
               title="Account Menu"
             >
-              <img 
-                src={currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400'} 
-                alt={currentUser?.name || 'Traveler'} 
-                className="h-full w-full object-cover" 
+              <img
+                src={currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400'}
+                alt={currentUser?.name || 'Traveler'}
+                className="h-full w-full object-cover"
               />
             </button>
           </div>
@@ -620,7 +642,7 @@ export default function DashboardPage() {
                 </span>
               </div>
 
-              <button 
+              <button
                 onClick={() => { setActive('customize'); setProfileDropdownOpen(false); }}
                 className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
               >
@@ -630,16 +652,16 @@ export default function DashboardPage() {
                 <span>Customize Trip</span>
               </button>
 
-              <button 
+              <button
                 onClick={() => { setActive('bookings'); setProfileDropdownOpen(false); }}
                 className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center justify-between font-medium cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
                   </svg>
                   <span>My Bookings</span>
                 </div>
@@ -648,7 +670,7 @@ export default function DashboardPage() {
                 </span>
               </button>
 
-              <button 
+              <button
                 onClick={() => { setActive('pasttrips'); setProfileDropdownOpen(false); }}
                 className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
               >
@@ -663,7 +685,7 @@ export default function DashboardPage() {
 
               <div className="border-t border-slate-100 my-1" />
 
-              <button 
+              <button
                 onClick={() => {
                   useTravelStore.getState().logoutUser();
                   router.push('/login');
@@ -697,16 +719,16 @@ export default function DashboardPage() {
 
         {/* ── MAIN CONTENT CANVAS ───────────────────────────────────────── */}
         {['everest', 'pokhara', 'kathmandu', 'chitwan', 'mustang'].includes(active) ? (
-          <InfoDetailPanel 
-            slug={active} 
-            onBack={() => handleActiveChange(previousActive)} 
-            rightCollapsed={rightCollapsed} 
-            setRightCollapsed={setRightCollapsed} 
+          <InfoDetailPanel
+            slug={active}
+            onBack={() => handleActiveChange(previousActive)}
+            rightCollapsed={rightCollapsed}
+            setRightCollapsed={setRightCollapsed}
           />
         ) : (
-          <div className="flex-1 flex flex-col min-w-0 relative bg-slate-50/50">
+          <div className="flex-1 flex flex-col min-w-0 relative bg-[#EDF3F9]">
             {/* Context breadcrumb & Search toolbar */}
-            <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-slate-200/70 select-none relative z-10">
+            <div className="flex items-center justify-between px-6 py-3 bg-[#F8FAFD] border-b border-slate-200/70 select-none relative z-10">
               <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
                 <span className="uppercase tracking-wider font-semibold text-slate-500">{activeDetails.groupTitle}</span>
                 <span className="text-slate-300">/</span>
@@ -720,8 +742,8 @@ export default function DashboardPage() {
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
                 </span>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Search destinations, guides, stays..."
                   className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-9 pr-4 py-1.5 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
                 />
@@ -768,7 +790,7 @@ export default function DashboardPage() {
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200] max-w-sm w-full px-4 animate-in fade-in slide-in-from-top-6 duration-300">
           <div className="p-4 bg-white border-2 border-[#0552A2] rounded-2xl shadow-xl flex items-center gap-3">
             <div className="h-9 w-9 rounded-full bg-[#F2F8FD] text-[#0552A2] flex items-center justify-center text-lg animate-pulse">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
             </div>
             <div className="flex-1 min-w-0 text-left">
               <h5 className="text-[10px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">Expedition Dispatch</h5>
@@ -799,14 +821,14 @@ export default function DashboardPage() {
                         <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block mt-1">{activeChan.role}</span>
                       </div>
                     </div>
-                    
+
                     <button
                       onClick={() => setFloatingChatOpen(false)}
                       className="h-7 w-7 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-50 flex items-center justify-center cursor-pointer transition-colors"
                       title="Close"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                       </svg>
                     </button>
                   </div>
@@ -818,11 +840,10 @@ export default function DashboardPage() {
                         <button
                           key={ch.id}
                           onClick={() => setActiveChannelId(ch.id)}
-                          className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all shrink-0 cursor-pointer ${
-                            isActive
-                              ? 'bg-[#0552A2] text-white shadow-xs'
-                              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
-                          }`}
+                          className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all shrink-0 cursor-pointer ${isActive
+                            ? 'bg-[#0552A2] text-white shadow-xs'
+                            : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                            }`}
                         >
                           {ch.id === 'ch-ai' ? 'Sherpa AI' : ch.id === 'ch-g1' ? 'Nima Sherpa' : 'Shangri-La'}
                         </button>
@@ -838,11 +859,10 @@ export default function DashboardPage() {
                           {!isMe && (
                             <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
                           )}
-                          <div className={`rounded-2xl px-3 py-2 text-xs leading-relaxed shadow-xs ${
-                            isMe 
-                              ? 'bg-[#0552A2] text-white rounded-tr-xs' 
-                              : 'bg-white text-[#17212B] border border-slate-200 rounded-tl-xs'
-                          }`}>
+                          <div className={`rounded-2xl px-3 py-2 text-xs leading-relaxed shadow-xs ${isMe
+                            ? 'bg-[#0552A2] text-white rounded-tr-xs'
+                            : 'bg-white text-[#17212B] border border-slate-200 rounded-tl-xs'
+                            }`}>
                             <p>{msg.text}</p>
                             <span className={`text-[8px] font-mono mt-1 block text-right ${isMe ? 'text-white/70' : 'text-slate-400'}`}>
                               {msg.timestamp}
@@ -868,7 +888,7 @@ export default function DashboardPage() {
                       onClick={handleSendMessage}
                       className="h-8 w-8 rounded-full flex items-center justify-center bg-[#0552A2] text-white cursor-pointer active:scale-95 transition-all shrink-0 shadow-xs"
                     >
-                      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
                     </button>
                   </div>
                 </>
@@ -887,7 +907,7 @@ export default function DashboardPage() {
         >
           {floatingChatOpen ? (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           ) : (
             <div className="relative flex items-center justify-center">
@@ -904,53 +924,48 @@ export default function DashboardPage() {
 
       {/* ── MOBILE BOTTOM NAVIGATION ───────────────────────────────────────── */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex items-center justify-around shadow-lg">
-        <button 
+        <button
           onClick={() => handleActiveChange('home')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
-            active === 'home' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
-          }`}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${active === 'home' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
+            }`}
         >
-          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={19} />
+          <Home size={19} />
           <span className="text-[10px] font-mono">Home</span>
         </button>
-        <button 
+        <button
           onClick={() => handleActiveChange('explore')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
-            active === 'explore' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
-          }`}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${active === 'explore' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
+            }`}
         >
-          <Icon d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" size={19} />
+          <Compass size={19} />
           <span className="text-[10px] font-mono">Explore</span>
         </button>
-        <button 
+        <button
           onClick={() => {
             setActiveChannelId('ch-ai');
             setFloatingChatOpen(o => !o);
           }}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors relative ${
-            floatingChatOpen ? 'text-[#0552A2] font-bold' : 'text-slate-400'
-          }`}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors relative ${floatingChatOpen ? 'text-[#0552A2] font-bold' : 'text-slate-400'
+            }`}
         >
-          <Icon d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" size={19} />
+          <MessageSquare size={19} />
           <span className="absolute top-1 right-3 h-2 w-2 rounded-full bg-[#EC1F27]" />
           <span className="text-[10px] font-mono">Dispatch</span>
         </button>
-        <button 
+        <button
           onClick={() => handleActiveChange('hotels')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
-            active === 'hotels' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
-          }`}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${active === 'hotels' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
+            }`}
         >
-          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={19} />
+          <Hotel size={19} />
           <span className="text-[10px] font-mono">Stays</span>
         </button>
-        <button 
+        <button
           onClick={() => handleActiveChange('customize')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
-            active === 'customize' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
-          }`}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${active === 'customize' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
+            }`}
         >
-          <Icon d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" size={19} />
+          <SlidersHorizontal size={19} />
           <span className="text-[10px] font-mono">Customizer</span>
         </button>
       </div>

@@ -1,24 +1,48 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { destinations } from '@/lib/destinations';
-import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import { destinations, featuredDestinations, otherDestinations, Destination } from '@/lib/destinations';
+import { ArrowUpRight, MapPin, Compass } from 'lucide-react';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
 
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
 
-  const filteredDestinations = destinations.filter(d => {
-    if (activeTab === 'mountains') return ['everest', 'annapurna', 'mustang'].includes(d.id);
-    if (activeTab === 'culture') return ['kathmandu', 'lumbini', 'mustang'].includes(d.id);
-    if (activeTab === 'wildlife') return ['chitwan', 'pokhara'].includes(d.id);
-    return true;
-  });
+  const filteredDestinations = useMemo(() => {
+    return destinations.filter(d => {
+      if (activeTab === 'mountains') return ['everest', 'annapurna', 'mustang'].includes(d.id);
+      if (activeTab === 'culture') return ['kathmandu', 'lumbini', 'mustang'].includes(d.id);
+      if (activeTab === 'wildlife') return ['chitwan', 'pokhara'].includes(d.id);
+      return true;
+    });
+  }, [activeTab]);
 
   return (
     <section
       id="destinations"
-      className="py-24 md:py-32 bg-white scroll-mt-12 text-[#17212B]"
+      className="pt-14 md:pt-18 pb-10 md:pb-14 bg-white scroll-mt-12 text-[#17212B]"
       aria-labelledby="destinations-heading"
     >
       <div className="container">
@@ -50,7 +74,7 @@ export default function DestinationsSection() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`text-xs uppercase tracking-wider font-semibold px-4 py-2 rounded-full transition-all duration-200 cursor-pointer ${activeTab === tab.id
                   ? 'bg-[#0552A2] text-white shadow-sm'
-                  : 'bg-[#F2F8FD] text-[#17212B] hover:bg-[#0552A2]/10'
+                  : 'bg-white border border-zinc-200 text-[#17212B] hover:border-[#0552A2]'
                   }`}
               >
                 {tab.label}
@@ -60,17 +84,22 @@ export default function DestinationsSection() {
         </div>
 
         {/* Asymmetrical Editorial Composition */}
-        <div className="space-y-12">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="space-y-12"
+        >
           {/* Top Hero Duo: Large Edge Feature + Complementary Column */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Lead Destination Feature (Everest) */}
-            <div className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[460px] lg:min-h-[540px] flex flex-col justify-end p-8 sm:p-12">
+            <motion.div variants={itemVariants} className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[460px] lg:min-h-[540px] flex flex-col justify-end p-8 sm:p-12">
               <Image
                 src={destinations[0].imageUrl}
                 alt={destinations[0].name}
                 fill
                 loading="lazy"
-                decoding="async"
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-85"
               />
@@ -101,21 +130,20 @@ export default function DestinationsSection() {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Side Editorial Stack (Annapurna & Upper Mustang) */}
             <div className="lg:col-span-4 flex flex-col gap-8">
               {[destinations[1], destinations[2]].map((dest) => (
-                <div
+                <motion.div
                   key={dest.id}
+                  variants={itemVariants}
                   className="flex-1 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[250px] p-6 sm:p-8 flex flex-col justify-end"
                 >
                   <Image
                     src={dest.imageUrl}
                     alt={dest.name}
                     fill
-                    loading="lazy"
-                    decoding="async"
                     sizes="(max-width: 1024px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-85"
                   />
@@ -132,7 +160,7 @@ export default function DestinationsSection() {
                       {dest.shortDescription}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -140,21 +168,20 @@ export default function DestinationsSection() {
           {/* Bottom Quad Editorial Grid: Kathmandu, Pokhara, Chitwan, Lumbini */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {destinations.slice(3).map((dest) => (
-              <div
+              <motion.div
                 key={dest.id}
-                className="group flex flex-col rounded-3xl overflow-hidden bg-[#F2F8FD] border border-[#0552A2]/10 transition-[box-shadow,border-color] duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
+                variants={itemVariants}
+                className="group flex flex-col rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
               >
                 <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                   <Image
                     src={dest.imageUrl}
                     alt={dest.name}
                     fill
-                    loading="lazy"
-                    decoding="async"
                     sizes="(max-width: 768px) 100vw, 25vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4 bg-white/95 sm:bg-white/90 sm:backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2]">
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2]">
                     {dest.region}
                   </div>
                 </div>
@@ -180,10 +207,10 @@ export default function DestinationsSection() {
                     <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

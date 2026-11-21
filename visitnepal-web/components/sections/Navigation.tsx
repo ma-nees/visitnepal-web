@@ -5,18 +5,34 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTravelStore } from '@/store/useTravelStore';
-import { Menu, X, ArrowUpRight, User } from '@/components/ui/Icons';
+import { Menu, X, ArrowUpRight, Compass, User } from '@/components/ui/Icons';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navigation() {
   const router = useRouter();
-  const { currentUser } = useTravelStore();
+  const currentUser = useTravelStore((state) => state.currentUser);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+    let isScrolled = window.scrollY > 40;
+    setScrolled(isScrolled);
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const nextScrolled = window.scrollY > 40;
+          if (nextScrolled !== isScrolled) {
+            isScrolled = nextScrolled;
+            setScrolled(nextScrolled);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -41,9 +57,9 @@ export default function Navigation() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,padding,box-shadow,border-color] duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           scrolled
-            ? 'bg-white/98 sm:bg-white/95 sm:backdrop-blur-md shadow-[0_4px_24px_rgba(5,82,162,0.08)] py-3 border-b border-[#0552A2]/10'
+            ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(5,82,162,0.08)] py-3 border-b border-[#0552A2]/10'
             : 'bg-gradient-to-b from-black/60 via-black/25 to-transparent py-5 sm:py-6'
         }`}
       >
@@ -61,13 +77,12 @@ export default function Navigation() {
           >
             <div className="relative h-10 w-28 sm:h-12 sm:w-36 transition-transform duration-300 group-hover:scale-[1.02]">
               <Image
-                src="/logo.png"
+                src={scrolled ? "/logo.png" : "/logo-white.png"}
                 alt="Visit Nepal Official Logo"
                 fill
-                sizes="(max-width: 640px) 112px, 144px"
-                className={`object-contain transition-[filter] duration-300 ${
-                  scrolled ? 'brightness-100' : 'brightness-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]'
-                }`}
+                priority
+                unoptimized
+                className="object-contain transition-all duration-300"
               />
             </div>
           </Link>
@@ -86,7 +101,7 @@ export default function Navigation() {
                 }`}
               >
                 <span>{link.label}</span>
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#0552A2] scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0552A2] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -138,11 +153,10 @@ export default function Navigation() {
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl transition-colors ${
-                scrolled ? 'text-[#17212B] hover:bg-[#F2F8FD]' : 'text-white hover:bg-white/10'
+              className={`p-2 rounded-xl transition-colors ${
+                scrolled ? 'text-[#17212B] hover:bg-zinc-100' : 'text-white hover:bg-white/10'
               }`}
               aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -151,47 +165,53 @@ export default function Navigation() {
       </header>
 
       {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div
-          className="fixed inset-x-0 top-[60px] z-40 bg-white/98 sm:backdrop-blur-xl border-b border-[#0552A2]/10 shadow-2xl p-6 lg:hidden transition-transform duration-200 ease-out"
-        >
-          <nav className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm uppercase tracking-wider font-bold text-[#17212B] hover:text-[#0552A2] py-2.5 min-h-[44px] border-b border-gray-100 flex items-center justify-between"
-              >
-                <span>{link.label}</span>
-                <ArrowUpRight className="h-4 w-4 text-[#0552A2]" />
-              </a>
-            ))}
-            <div className="pt-2 flex flex-col gap-3">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (currentUser?.loggedIn && currentUser?.otpVerified) {
-                    router.push('/dashboard');
-                  } else {
-                    router.push('/login');
-                  }
-                }}
-                className="w-full py-3 min-h-[44px] rounded-full border border-[#0552A2]/30 text-[#0552A2] text-xs uppercase tracking-wider font-bold hover:bg-[#F2F8FD]"
-              >
-                {currentUser?.loggedIn && currentUser?.otpVerified ? 'Go to Dashboard' : 'Sign In / Account'}
-              </button>
-              <a
-                href="#plan-your-trip"
-                onClick={(e) => handleNavClick(e, '#plan-your-trip')}
-                className="w-full py-3 min-h-[44px] rounded-full bg-[#0552A2] text-white text-xs uppercase tracking-wider font-bold text-center shadow-md hover:bg-[#043e7b]"
-              >
-                Plan Your Trip
-              </a>
-            </div>
-          </nav>
-        </div>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="fixed inset-x-0 top-[60px] z-40 bg-white/98 backdrop-blur-xl border-b border-[#0552A2]/10 shadow-2xl p-6 lg:hidden"
+          >
+            <nav className="flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-sm uppercase tracking-wider font-bold text-[#17212B] hover:text-[#0552A2] py-2 border-b border-gray-100 flex items-center justify-between"
+                >
+                  <span>{link.label}</span>
+                  <ArrowUpRight className="h-4 w-4 text-[#0552A2]" />
+                </a>
+              ))}
+              <div className="pt-2 flex flex-col gap-3">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (currentUser?.loggedIn && currentUser?.otpVerified) {
+                      router.push('/dashboard');
+                    } else {
+                      router.push('/login');
+                    }
+                  }}
+                  className="w-full py-3 rounded-full border border-[#0552A2]/30 text-[#0552A2] text-xs uppercase tracking-wider font-bold hover:bg-zinc-100"
+                >
+                  {currentUser?.loggedIn && currentUser?.otpVerified ? 'Go to Dashboard' : 'Sign In / Account'}
+                </button>
+                <a
+                  href="#plan-your-trip"
+                  onClick={(e) => handleNavClick(e, '#plan-your-trip')}
+                  className="w-full py-3 rounded-full bg-[#0552A2] text-white text-xs uppercase tracking-wider font-bold text-center shadow-md hover:bg-[#043e7b]"
+                >
+                  Plan Your Trip
+                </a>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

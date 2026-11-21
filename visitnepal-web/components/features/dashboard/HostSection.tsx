@@ -239,7 +239,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
             >
-              <div className="bg-[#FFFFFF] border border-[#92C4EA]/40 p-5 rounded-3xl text-center shadow-xl">
+              <div className="bg-[#F8FAFD] border border-[#92C4EA]/40 p-5 rounded-3xl text-center shadow-xl">
                 <span className="text-2xl mb-1 block">📝</span>
                 <h4 className="text-sm font-bold text-[#17212B]">{successMsg}</h4>
                 <p className="text-[10px] text-[#475569] mt-1">Audit verification queue updated.</p>

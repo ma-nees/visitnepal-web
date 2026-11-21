@@ -67,7 +67,7 @@ export default function RightSidebar({
 
   return (
     <aside
-      className="hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-white border-l border-slate-200 transition-all duration-300"
+      className="hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-[#F6FAFD] border-l border-slate-200 transition-all duration-300"
       style={{
         width: rightCollapsed 
           ? '56px' 

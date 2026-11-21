@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, Compass, ShieldCheck, Clock, Mountain, Sparkles } from 'lucide-react';
 
 interface Experience {
   id: string;
@@ -114,7 +115,7 @@ export default function ExperiencesSection() {
   return (
     <section
       id="experiences"
-      className="py-24 md:py-32 bg-[#F2F8FD] scroll-mt-12 text-[#17212B]"
+      className="pt-10 md:pt-14 pb-12 md:pb-16 bg-white scroll-mt-12 text-[#17212B]"
       aria-labelledby="experiences-heading"
     >
       <div className="container">
@@ -142,7 +143,7 @@ export default function ExperiencesSection() {
                 <button
                   key={exp.id}
                   onClick={() => setSelectedExperience(exp)}
-                  className={`text-left p-5 rounded-2xl transition-[background-color,border-color,box-shadow,transform] duration-300 flex items-center justify-between cursor-pointer border ${isSelected
+                  className={`text-left p-5 rounded-2xl transition-all duration-300 flex items-center justify-between cursor-pointer border ${isSelected
                     ? 'bg-white border-[#0552A2] shadow-md -translate-x-1'
                     : 'bg-white/60 border-transparent hover:bg-white hover:border-[#0552A2]/20'
                     }`}
@@ -155,7 +156,7 @@ export default function ExperiencesSection() {
                       {exp.name}
                     </span>
                   </div>
-                  <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isSelected ? 'bg-[#0552A2] text-white' : 'bg-[#F2F8FD] text-[#4B5563]'
+                  <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isSelected ? 'bg-[#0552A2] text-white' : 'bg-white border border-zinc-200 text-[#4B5563]'
                     }`}>
                     {exp.duration}
                   </span>
@@ -182,8 +183,6 @@ export default function ExperiencesSection() {
                     alt={selectedExperience.name}
                     fill
                     loading="lazy"
-                    decoding="async"
-                    quality={75}
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
                   />
@@ -198,7 +197,7 @@ export default function ExperiencesSection() {
                         {selectedExperience.name}
                       </h3>
                     </div>
-                    <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-black/40 sm:bg-white/20 sm:backdrop-blur-md text-white border border-white/30">
+                    <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
                       {selectedExperience.difficulty}
                     </span>
                   </div>
@@ -222,7 +221,7 @@ export default function ExperiencesSection() {
                       {selectedExperience.highlights.map((h, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1.5 rounded-full bg-[#F2F8FD] border border-[#0552A2]/15 text-xs text-[#0552A2] font-semibold"
+                          className="px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-xs text-[#0552A2] font-semibold shadow-xs"
                         >
                           {h}
                         </span>

@@ -19,9 +19,9 @@ const sizeClasses = {
 };
 
 const variantMap = {
-  default: '/logo-transparent.webp',
-  white: '/logo-white.webp',
-  dark: '/logo-transparent.webp',
+  default: '/logo.png',
+  white: '/logo-white.png',
+  dark: '/logo.png',
 };
 
 export default function Logo({ variant = 'default', size = 'md', className = '', onClick }: LogoProps) {

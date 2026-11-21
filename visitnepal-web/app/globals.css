@@ -10,13 +10,15 @@
   --color-foreground: #17212B;
   --color-muted: #4B5563;
   --color-muted-light: #9CA3AF;
-  --color-surface-muted: #F2F8FD;
+  --color-surface-muted: #FFFFFF;
   --color-surface: #FFFFFF;
   --color-border: rgba(5, 82, 162, 0.1);
   --color-border-subtle: rgba(23, 33, 43, 0.08);
 
-  --font-heading: var(--font-playfair), "DM Serif Display", Georgia, serif;
-  --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-oswald), "Oswald", sans-serif;
+  --font-serif: var(--font-oswald), "Oswald", sans-serif;
+  --font-sans: var(--font-noto-sans), "Noto Sans", sans-serif;
+  --font-condensed: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 @theme {
@@ -29,13 +31,15 @@
   --color-foreground: #17212B;
   --color-muted: #4B5563;
   --color-muted-light: #9CA3AF;
-  --color-surface-muted: #F2F8FD;
+  --color-surface-muted: #FFFFFF;
   --color-surface: #FFFFFF;
   --color-border: rgba(5, 82, 162, 0.1);
   --color-border-subtle: rgba(23, 33, 43, 0.08);
 
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-serif: var(--font-oswald), "Oswald", sans-serif;
+  --font-heading: var(--font-oswald), "Oswald", sans-serif;
+  --font-sans: var(--font-noto-sans), "Noto Sans", sans-serif;
+  --font-condensed: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 html,
@@ -47,12 +51,86 @@ body {
   font-family: var(--font-sans);
   overflow-x: clip;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 button,
 a,
 [role="button"] {
   touch-action: manipulation;
+}
+
+/* ─── Global Scrollbar Removal (Entire Website) ───────────────────────────── */
+/* Hide scrollbar for Chrome, Safari, Edge, Opera, and all WebKit browsers */
+*::-webkit-scrollbar,
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+*::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+*::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+
+/* Hide scrollbar for Firefox, IE, and standard compliant engines */
+*,
+*::before,
+*::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.scrollbar-thin,
+.scrollbar-none {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.scrollbar-thin::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* ─── Dashboard Non-Glacier-White Theme Overrides ─────────────────────────── */
+.dashboard-theme {
+  --color-glacier-white: #F4F8FC;
+  --color-surface: #F8FAFD;
+  --color-surface-muted: #EDF3F9;
+  background-color: #EDF3F9 !important;
+}
+
+/* Eliminate stark glacier white from all dashboard surfaces, sidebars & cards */
+.dashboard-theme .bg-white,
+.dashboard-theme .bg-\[\#FFFFFF\],
+.dashboard-theme .bg-\[\#ffffff\] {
+  background-color: #F8FAFD !important;
+}
+
+.dashboard-theme .bg-white\/95 {
+  background-color: rgba(248, 250, 253, 0.95) !important;
+}
+
+.dashboard-theme .bg-white\/90 {
+  background-color: rgba(248, 250, 253, 0.9) !important;
+}
+
+.dashboard-theme .bg-white\/80 {
+  background-color: rgba(248, 250, 253, 0.8) !important;
+}
+
+.dashboard-theme .bg-white\/60 {
+  background-color: rgba(248, 250, 253, 0.6) !important;
 }
 
 /* Typography Scale */
@@ -263,4 +341,20 @@ a,
 
 .aspect-portrait {
   aspect-ratio: 3 / 4;
+}
+
+/* Accessibility & Performance: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hardware acceleration optimization */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }

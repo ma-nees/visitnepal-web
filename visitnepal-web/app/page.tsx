@@ -11,9 +11,14 @@ const ExperiencesSection = dynamic(() => import('@/components/sections/Experienc
   loading: () => <section id="experiences" className="py-24 md:py-32 bg-[#F2F8FD] min-h-[720px]" aria-hidden="true" />,
 });
 
-const PlanYourTripSection = dynamic(() => import('@/components/sections/PlanYourTripSection'), {
-  loading: () => <section id="plan-your-trip" className="py-24 md:py-32 bg-white min-h-[680px]" aria-hidden="true" />,
-});
+// Code-split below-the-fold interactive console so it does not block initial hydration
+const PlanYourTripSection = dynamic(
+  () => import('@/components/sections/PlanYourTripSection'),
+  {
+    ssr: true,
+    loading: () => <section id="plan-your-trip" className="py-24 md:py-32 bg-white min-h-[680px]" aria-hidden="true" />,
+  }
+);
 
 export default function LandingPage() {
   return (
@@ -36,7 +41,7 @@ export default function LandingPage() {
       {/* Culture & Living Heritage */}
       <CultureSection />
 
-      {/* Interactive Plan Your Trip Console */}
+      {/* Interactive Plan Your Trip Console (Code-split) */}
       <PlanYourTripSection />
 
       {/* Official Tourism Board Footer */}

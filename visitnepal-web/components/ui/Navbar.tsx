@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useTravelStore } from '@/store/useTravelStore';
 import { Sparkles, User, LogOut, MessageSquare, Calendar, Database, ShieldAlert, Clock, Cloud } from 'lucide-react';
 
@@ -34,21 +35,16 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
       <div className="mx-auto flex max-w-[1536px] items-center justify-between rounded-2xl glass-panel px-4 sm:px-6 py-3 neon-border-cyan backdrop-blur-md">
         
         {/* Brand Logo & Portal Tag */}
-        <div 
-          className="flex cursor-pointer items-center gap-3"
-          onClick={() => setActiveSection('home')}
+        <Link 
+          href="/"
+          className="flex cursor-pointer items-center gap-3 transition-transform duration-200 hover:scale-105"
         >
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-            <span className="font-sans text-xl font-black text-white tracking-widest">N</span>
-            <div className="absolute inset-0 animate-pulse-glow rounded-xl bg-cyan-400 opacity-20"></div>
-          </div>
-          <div>
-            <h1 className="bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text font-sans text-lg font-bold tracking-wider text-transparent">
-              VISIT NEPAL <span className="text-xs font-black text-purple-400 tracking-widest">3.0</span>
-            </h1>
-            <p className="text-[9px] uppercase tracking-widest text-zinc-400">Futuristic Travel Ecosystem</p>
-          </div>
-        </div>
+          <img
+            src="/logo.png"
+            alt="Visit Nepal Official Logo"
+            className="h-9 md:h-10 w-auto object-contain"
+          />
+        </Link>
 
         {/* Dynamic Center Info: System Status / Time */}
         <div className="hidden items-center gap-6 md:flex">

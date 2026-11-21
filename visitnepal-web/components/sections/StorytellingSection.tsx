@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { ArrowRight } from '@/components/ui/Icons';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 const storyMoments = [
   {
@@ -36,7 +37,7 @@ export default function StorytellingSection() {
   return (
     <section
       id="storytelling"
-      className="py-24 md:py-32 bg-white text-[#17212B] scroll-mt-12"
+      className="pt-16 md:pt-20 pb-12 md:pb-16 bg-white text-[#17212B] scroll-mt-12"
       aria-labelledby="storytelling-heading"
     >
       <div className="container">
@@ -63,9 +64,8 @@ export default function StorytellingSection() {
             return (
               <div
                 key={moment.id}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${
-                  isReversed ? 'lg:flex-row-reverse' : ''
-                }`}
+                className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${isReversed ? 'lg:flex-row-reverse' : ''
+                  }`}
               >
                 {/* Visual Frame */}
                 <div className={`lg:col-span-7 ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
@@ -75,14 +75,13 @@ export default function StorytellingSection() {
                       alt={moment.title}
                       fill
                       loading="lazy"
-                      decoding="async"
                       sizes="(max-width: 1024px) 100vw, 58vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-104"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                    
+
                     {/* Corner Tag */}
-                    <div className="absolute bottom-6 left-6 bg-white/95 sm:backdrop-blur-md px-4 py-2 rounded-2xl shadow-md border border-white/40">
+                    <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-2 rounded-2xl shadow-md border border-white/40">
                       <span className="text-xs font-mono font-bold text-[#0552A2] uppercase block">
                         {moment.stat}
                       </span>
@@ -118,25 +117,6 @@ export default function StorytellingSection() {
               </div>
             );
           })}
-        </div>
-
-        {/* Brand Quote Box */}
-        <div className="mt-24 p-10 sm:p-14 rounded-3xl bg-[#F2F8FD] border border-[#0552A2]/15 flex flex-col md:flex-row items-center justify-between gap-8 text-left">
-          <div className="max-w-2xl">
-            <span className="text-xs uppercase tracking-widest text-[#0552A2] font-bold block mb-2">
-              National Tourism Ethos
-            </span>
-            <p className="text-xl sm:text-2xl font-serif font-bold text-[#17212B] leading-snug">
-              “In Nepal, the trail is not merely distance covered — it is an inner transformation witnessed by the mountains.”
-            </p>
-          </div>
-          <a
-            href="#plan-your-trip"
-            className="btn-primary text-xs uppercase tracking-wider shrink-0"
-          >
-            <span>Plan Your Journey</span>
-            <ArrowRight className="h-4 w-4" />
-          </a>
         </div>
       </div>
     </section>
