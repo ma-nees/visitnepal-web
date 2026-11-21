@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,7 +15,9 @@ export default function Footer() {
                 src="/logo.png"
                 alt="Visit Nepal Official Logo"
                 fill
-                unoptimized
+                loading="lazy"
+                decoding="async"
+                sizes="160px"
                 className="object-contain brightness-125"
               />
             </div>

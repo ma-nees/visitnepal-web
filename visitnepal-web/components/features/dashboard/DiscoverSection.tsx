@@ -544,7 +544,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               </AnimatePresence>
             </div>
           ) : (
-            <div className="flex flex-col gap-8 max-w-4xl mx-auto py-4">
+            <div className="flex flex-col gap-8 max-w-[1440px] w-full mx-auto py-4">
               <motion.div variants={itemVariants} className="flex flex-col gap-3">
                 <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                   Welcome to Nepal
@@ -889,7 +889,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
         {/* ── EXPLORE VIEW ──────────────────────────────────────────────── */}
         {activeId === 'explore' && (
-          <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+          <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
             <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Explore Destinations
@@ -924,7 +924,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
         {/* ── POPULAR VIEW ──────────────────────────────────────────────── */}
         {activeId === 'popular' && (
-          <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+          <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
             <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Trending Travels
@@ -961,7 +961,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
         {/* ── ATTRACTIONS VIEW ──────────────────────────────────────────── */}
         {activeId === 'attractions' && (
-          <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+          <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
             <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Sightseeing Matrix
@@ -991,7 +991,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
         {/* ── TOP 5 DESTINATIONS VIEW ─────────────────────────────────────── */}
         {activeId === 'top5' && (
-          <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+          <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
             <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Curated Gold Tier

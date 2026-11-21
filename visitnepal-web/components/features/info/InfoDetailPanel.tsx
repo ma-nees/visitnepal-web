@@ -295,8 +295,8 @@ export default function InfoDetailPanel({
       </div>
 
       {/* Main Scroll Content Area */}
-      <main className="flex-1 overflow-y-auto p-6 md:p-10 min-h-0 relative z-10 text-left">
-        <div className="max-w-4xl mx-auto flex flex-col gap-8 pb-16">
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-10 min-h-0 relative z-10 text-left">
+        <div className="max-w-[1440px] w-full mx-auto flex flex-col gap-8 pb-16">
           
           {/* Cover Image Spotlight Frame */}
           <motion.div

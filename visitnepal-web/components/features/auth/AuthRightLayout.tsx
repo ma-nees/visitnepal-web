@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import NepalBackgroundMap from '@/components/features/chat/NepalBackgroundMap';
 
 interface AuthRightLayoutProps {
@@ -10,9 +11,13 @@ export default function AuthRightLayout({ children }: AuthRightLayoutProps) {
     <div className="flex-1 h-full overflow-y-auto bg-[#FAF9F5] relative z-10">
       {/* Mobile Background Map (drawn inside behind form) */}
       <div className="absolute inset-0 z-0 lg:hidden block overflow-hidden">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200"
-          className="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-luminosity pointer-events-none select-none"
+          fill
+          loading="lazy"
+          decoding="async"
+          sizes="100vw"
+          className="object-cover opacity-15 mix-blend-luminosity pointer-events-none select-none"
           alt=""
         />
         <div className="absolute inset-0 bg-[#FAF9F5]/90 pointer-events-none" />

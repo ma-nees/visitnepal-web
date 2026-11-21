@@ -1,9 +1,5 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight } from '@/components/ui/Icons';
 
 const storyMoments = [
@@ -78,13 +74,15 @@ export default function StorytellingSection() {
                       src={moment.imageUrl}
                       alt={moment.title}
                       fill
+                      loading="lazy"
+                      decoding="async"
                       sizes="(max-width: 1024px) 100vw, 58vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-104"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     
                     {/* Corner Tag */}
-                    <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-2 rounded-2xl shadow-md border border-white/40">
+                    <div className="absolute bottom-6 left-6 bg-white/95 sm:backdrop-blur-md px-4 py-2 rounded-2xl shadow-md border border-white/40">
                       <span className="text-xs font-mono font-bold text-[#0552A2] uppercase block">
                         {moment.stat}
                       </span>

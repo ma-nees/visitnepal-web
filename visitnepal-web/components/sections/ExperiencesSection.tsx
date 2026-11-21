@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, Compass, ShieldCheck, Clock, Mountain, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface Experience {
   id: string;
@@ -143,7 +142,7 @@ export default function ExperiencesSection() {
                 <button
                   key={exp.id}
                   onClick={() => setSelectedExperience(exp)}
-                  className={`text-left p-5 rounded-2xl transition-all duration-300 flex items-center justify-between cursor-pointer border ${isSelected
+                  className={`text-left p-5 rounded-2xl transition-[background-color,border-color,box-shadow,transform] duration-300 flex items-center justify-between cursor-pointer border ${isSelected
                     ? 'bg-white border-[#0552A2] shadow-md -translate-x-1'
                     : 'bg-white/60 border-transparent hover:bg-white hover:border-[#0552A2]/20'
                     }`}
@@ -182,8 +181,9 @@ export default function ExperiencesSection() {
                     src={selectedExperience.imageUrl}
                     alt={selectedExperience.name}
                     fill
-                    priority
-                    quality={90}
+                    loading="lazy"
+                    decoding="async"
+                    quality={75}
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
                   />
@@ -198,7 +198,7 @@ export default function ExperiencesSection() {
                         {selectedExperience.name}
                       </h3>
                     </div>
-                    <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
+                    <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-black/40 sm:bg-white/20 sm:backdrop-blur-md text-white border border-white/30">
                       {selectedExperience.difficulty}
                     </span>
                   </div>

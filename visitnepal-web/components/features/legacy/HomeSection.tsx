@@ -226,7 +226,7 @@ export default function HomeSection() {
       </section>
 
       {/* Cybernetic Telemetry Live Stats Grid */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 max-w-7xl mx-auto w-full">
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 max-w-[1536px] mx-auto w-full">
         
         <div className="glass-panel p-4 rounded-xl neon-border-purple text-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 h-10 w-10 bg-purple-500/5 rounded-full blur-xl group-hover:bg-purple-500/10"></div>
@@ -276,7 +276,7 @@ export default function HomeSection() {
       </section>
 
       {/* Trending Adventures Section */}
-      <section className="max-w-7xl mx-auto w-full px-4 flex flex-col gap-6">
+      <section className="max-w-[1536px] mx-auto w-full px-4 flex flex-col gap-6">
         <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-purple-400" />
@@ -345,7 +345,7 @@ export default function HomeSection() {
       </section>
 
       {/* ── Community Feed ─────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto w-full px-4 flex flex-col gap-6">
+      <section className="max-w-[1536px] mx-auto w-full px-4 flex flex-col gap-6">
         {/* Section header */}
         <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
           <div className="flex items-center gap-2">

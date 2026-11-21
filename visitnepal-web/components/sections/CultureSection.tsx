@@ -1,10 +1,5 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, Sparkles, Calendar, Landmark } from '@/components/ui/Icons';
 
 interface HeritageSite {
   id: string;
@@ -109,17 +104,19 @@ export default function CultureSection() {
           {heritageSites.map((site) => (
             <div
               key={site.id}
-              className="group bg-white rounded-3xl overflow-hidden border border-[#0552A2]/10 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="group bg-white rounded-3xl overflow-hidden border border-[#0552A2]/10 shadow-sm hover:shadow-xl transition-[box-shadow,border-color] duration-300 flex flex-col justify-between"
             >
               <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                 <Image
                   src={site.imageUrl}
                   alt={site.name}
                   fill
+                  loading="lazy"
+                  decoding="async"
                   sizes="(max-width: 768px) 100vw, 25vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#EC1F27] flex items-center gap-1">
+                <div className="absolute top-4 left-4 bg-white/95 sm:bg-white/90 sm:backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#EC1F27] flex items-center gap-1">
                   <span>UNESCO {site.year}</span>
                 </div>
               </div>

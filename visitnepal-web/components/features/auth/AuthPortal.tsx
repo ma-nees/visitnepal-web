@@ -445,7 +445,7 @@ export default function AuthPortal({ onSuccess }: AuthPortalProps) {
             transition={{ duration: 0.4 }}
             className="w-full h-full flex items-center justify-center p-6 md:p-12 lg:p-16 bg-[#FCF9F2]"
           >
-            <div className="w-full max-w-5xl bg-[#FAF8F5] border border-[#3D2D27]/8 rounded-3xl overflow-hidden shadow-xl flex flex-col h-[560px]">
+            <div className="w-full max-w-[1440px] bg-[#FAF8F5] border border-[#3D2D27]/8 rounded-3xl overflow-hidden shadow-xl flex flex-col h-[560px]">
               {/* Mail Client Header */}
               <div className="bg-white border-b border-[#3D2D27]/8 px-5 py-3.5 flex items-center justify-between shrink-0 font-mono text-[10px]">
                 <div className="flex items-center gap-2">

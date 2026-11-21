@@ -1,14 +1,19 @@
-'use client';
-
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Navigation from '@/components/sections/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
 import StorytellingSection from '@/components/sections/StorytellingSection';
 import DestinationsSection from '@/components/sections/DestinationsSection';
-import ExperiencesSection from '@/components/sections/ExperiencesSection';
 import CultureSection from '@/components/sections/CultureSection';
-import PlanYourTripSection from '@/components/sections/PlanYourTripSection';
 import Footer from '@/components/sections/Footer';
+
+const ExperiencesSection = dynamic(() => import('@/components/sections/ExperiencesSection'), {
+  loading: () => <section id="experiences" className="py-24 md:py-32 bg-[#F2F8FD] min-h-[720px]" aria-hidden="true" />,
+});
+
+const PlanYourTripSection = dynamic(() => import('@/components/sections/PlanYourTripSection'), {
+  loading: () => <section id="plan-your-trip" className="py-24 md:py-32 bg-white min-h-[680px]" aria-hidden="true" />,
+});
 
 export default function LandingPage() {
   return (

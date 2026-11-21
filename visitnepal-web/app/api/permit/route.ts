@@ -33,7 +33,12 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       data: mockPermits,
-    }, { status: 200 });
+    }, {
+      status: 200,
+      headers: {
+        'Cache-Control': 'private, no-store',
+      },
+    });
   } catch (error: any) {
     return NextResponse.json({
       success: false,

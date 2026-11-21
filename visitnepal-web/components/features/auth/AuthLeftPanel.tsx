@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import NepalBackgroundMap from '@/components/features/chat/NepalBackgroundMap';
 
 interface AuthLeftPanelProps {
@@ -12,10 +13,14 @@ export default function AuthLeftPanel({
 }: AuthLeftPanelProps) {
   return (
     <div className="hidden lg:flex lg:w-[48%] h-full bg-[#130E0A] flex-shrink-0 flex-col justify-between overflow-hidden relative z-10 p-10 select-none">
-      <img
+      <Image
         src={imageSrc}
         alt={imageAlt}
-        className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-luminosity pointer-events-none"
+        fill
+        loading="lazy"
+        decoding="async"
+        sizes="48vw"
+        className="object-cover opacity-25 mix-blend-luminosity pointer-events-none"
       />
       <div className="absolute inset-0 bg-black/40 pointer-events-none" />
       

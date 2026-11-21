@@ -94,7 +94,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
     >
       {/* ── MAIN ACTIVITIES DIRECTORY (ALL) ──────────────────────────────── */}
       {activeId === 'activities' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Expedition Catalog
@@ -127,7 +127,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
 
       {/* ── SPECIFIC DETAILED ACTIVITY ───────────────────────────────────── */}
       {activeId !== 'activities' && (
-        <div className="flex flex-col gap-8 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-8 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-3">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               {activeActivity.difficulty} • {activeActivity.duration}

@@ -31,7 +31,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full px-6 py-4">
-      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl glass-panel px-6 py-3 neon-border-cyan backdrop-blur-md">
+      <div className="mx-auto flex max-w-[1536px] items-center justify-between rounded-2xl glass-panel px-4 sm:px-6 py-3 neon-border-cyan backdrop-blur-md">
         
         {/* Brand Logo & Portal Tag */}
         <div 

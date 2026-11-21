@@ -1,31 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
-import { destinations, featuredDestinations, otherDestinations, Destination } from '@/lib/destinations';
-import { ArrowUpRight, MapPin, Compass } from 'lucide-react';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
+import { destinations } from '@/lib/destinations';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
@@ -82,22 +60,17 @@ export default function DestinationsSection() {
         </div>
 
         {/* Asymmetrical Editorial Composition */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="space-y-12"
-        >
+        <div className="space-y-12">
           {/* Top Hero Duo: Large Edge Feature + Complementary Column */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Lead Destination Feature (Everest) */}
-            <motion.div variants={itemVariants} className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[460px] lg:min-h-[540px] flex flex-col justify-end p-8 sm:p-12">
+            <div className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[460px] lg:min-h-[540px] flex flex-col justify-end p-8 sm:p-12">
               <Image
                 src={destinations[0].imageUrl}
                 alt={destinations[0].name}
                 fill
-                priority
+                loading="lazy"
+                decoding="async"
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-85"
               />
@@ -128,20 +101,21 @@ export default function DestinationsSection() {
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Side Editorial Stack (Annapurna & Upper Mustang) */}
             <div className="lg:col-span-4 flex flex-col gap-8">
               {[destinations[1], destinations[2]].map((dest) => (
-                <motion.div
+                <div
                   key={dest.id}
-                  variants={itemVariants}
                   className="flex-1 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[250px] p-6 sm:p-8 flex flex-col justify-end"
                 >
                   <Image
                     src={dest.imageUrl}
                     alt={dest.name}
                     fill
+                    loading="lazy"
+                    decoding="async"
                     sizes="(max-width: 1024px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-85"
                   />
@@ -158,7 +132,7 @@ export default function DestinationsSection() {
                       {dest.shortDescription}
                     </p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -166,20 +140,21 @@ export default function DestinationsSection() {
           {/* Bottom Quad Editorial Grid: Kathmandu, Pokhara, Chitwan, Lumbini */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {destinations.slice(3).map((dest) => (
-              <motion.div
+              <div
                 key={dest.id}
-                variants={itemVariants}
-                className="group flex flex-col rounded-3xl overflow-hidden bg-[#F2F8FD] border border-[#0552A2]/10 transition-all duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
+                className="group flex flex-col rounded-3xl overflow-hidden bg-[#F2F8FD] border border-[#0552A2]/10 transition-[box-shadow,border-color] duration-300 hover:shadow-lg hover:border-[#0552A2]/30"
               >
                 <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                   <Image
                     src={dest.imageUrl}
                     alt={dest.name}
                     fill
+                    loading="lazy"
+                    decoding="async"
                     sizes="(max-width: 768px) 100vw, 25vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2]">
+                  <div className="absolute top-4 left-4 bg-white/95 sm:bg-white/90 sm:backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2]">
                     {dest.region}
                   </div>
                 </div>
@@ -205,10 +180,10 @@ export default function DestinationsSection() {
                     <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

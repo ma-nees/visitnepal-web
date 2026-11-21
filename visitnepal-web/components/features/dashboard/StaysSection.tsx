@@ -60,7 +60,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
     >
       {/* ── HOTELS & LODGING DIRECTORIES ────────────────────────────────── */}
       {activeId !== 'transportation' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Boutique Lodging List
@@ -100,7 +100,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
 
       {/* ── TRANSPORTATION VIEW ────────────────────────────────────────── */}
       {activeId === 'transportation' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Transit Systems

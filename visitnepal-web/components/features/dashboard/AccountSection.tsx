@@ -91,7 +91,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
     >
       {/* ── LOGIN SECTION ────────────────────────────────────────────── */}
       {activeId === 'login' && (
-        <div className={currentUser ? "max-w-4xl mx-auto py-6" : "max-w-sm mx-auto py-8"}>
+        <div className={currentUser ? "max-w-[1440px] w-full mx-auto py-6" : "max-w-sm mx-auto py-8"}>
           {currentUser ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
               
@@ -284,7 +284,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
 
       {/* ── BOOKINGS SECTION ─────────────────────────────────────────── */}
       {activeId === 'bookings' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Confirmed Vouchers
@@ -328,7 +328,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
 
       {/* ── PAST TRIPS SECTION ────────────────────────────────────────── */}
       {activeId === 'pasttrips' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Historical Ledger
@@ -354,7 +354,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
 
       {/* ── MESSAGES SECTION ──────────────────────────────────────────── */}
       {activeId === 'messages' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Communication Terminal
@@ -443,7 +443,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
 
       {/* ── CUSTOMIZE SECTION ─────────────────────────────────────────── */}
       {activeId === 'customize' && (
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
+        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               AI Travel Synthesizer

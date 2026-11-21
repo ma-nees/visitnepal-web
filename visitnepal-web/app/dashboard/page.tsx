@@ -1,19 +1,21 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import DiscoverSection from '@/components/features/dashboard/DiscoverSection';
-import ActivitiesSection from '@/components/features/dashboard/ActivitiesSection';
 import LeftSidebar from '@/components/features/dashboard/LeftSidebar';
 import RightSidebar from '@/components/features/dashboard/RightSidebar';
-import InfoDetailPanel from '@/components/features/info/InfoDetailPanel';
-import StaysSection from '@/components/features/dashboard/StaysSection';
-import GuidesPermitsSection from '@/components/features/dashboard/GuidesPermitsSection';
-import AccountSection from '@/components/features/dashboard/AccountSection';
-import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
+
+const DiscoverSection = dynamic(() => import('@/components/features/dashboard/DiscoverSection'));
+const ActivitiesSection = dynamic(() => import('@/components/features/dashboard/ActivitiesSection'));
+const InfoDetailPanel = dynamic(() => import('@/components/features/info/InfoDetailPanel'));
+const StaysSection = dynamic(() => import('@/components/features/dashboard/StaysSection'));
+const GuidesPermitsSection = dynamic(() => import('@/components/features/dashboard/GuidesPermitsSection'));
+const AccountSection = dynamic(() => import('@/components/features/dashboard/AccountSection'));
+const HostSection = dynamic(() => import('@/components/features/dashboard/HostSection'));
 
 // ─── Icon primitives (inline SVG) ─────────────────────────────────────────────
 const Icon = ({ d, size = 16 }: { d: string; size?: number }) => (
@@ -727,7 +729,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Main scrollable body */}
-            <main className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0 relative z-10 scrollbar-thin">
+            <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 min-h-0 relative z-10 scrollbar-thin">
               {renderActiveSection()}
             </main>
           </div>

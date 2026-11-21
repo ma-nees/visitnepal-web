@@ -45,7 +45,14 @@ body {
   background-color: var(--color-glacier-white);
   color: var(--color-foreground);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
+}
+
+button,
+a,
+[role="button"] {
+  touch-action: manipulation;
 }
 
 /* Typography Scale */
@@ -130,7 +137,7 @@ body {
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 4px 14px rgba(5, 82, 162, 0.22);
   text-decoration: none;
   cursor: pointer;
@@ -159,7 +166,7 @@ body {
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
   text-decoration: none;
   cursor: pointer;
 }
@@ -181,7 +188,7 @@ body {
   border-radius: 9999px;
   font-size: 0.8125rem;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   cursor: pointer;
 }
 
@@ -212,17 +219,31 @@ body {
 /* Layout Utilities */
 .container {
   width: 100%;
-  max-width: 82rem;
+  max-width: 96rem;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
   .container {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 
