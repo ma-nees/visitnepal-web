@@ -57,10 +57,10 @@ export default function Navigation() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,padding,box-shadow,border-color] duration-300 ease-in-out ${
           scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(5,82,162,0.08)] py-3 border-b border-[#0552A2]/10'
-            : 'bg-gradient-to-b from-black/60 via-black/25 to-transparent py-5 sm:py-6'
+            : 'bg-transparent py-5 sm:py-6'
         }`}
       >
         <div className="container flex items-center justify-between">
@@ -80,9 +80,11 @@ export default function Navigation() {
                 src={scrolled ? "/logo.png" : "/logo-white.png"}
                 alt="Visit Nepal Official Logo"
                 fill
-                priority
                 unoptimized
-                className="object-contain transition-all duration-300"
+                sizes="(max-width: 640px) 112px, 144px"
+                className={`object-contain transition-all duration-300 ${
+                  scrolled ? '' : 'drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]'
+                }`}
               />
             </div>
           </Link>

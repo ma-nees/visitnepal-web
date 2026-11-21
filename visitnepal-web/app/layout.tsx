@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Oswald, Noto_Sans, Roboto_Condensed } from "next/font/google";
+import { Oswald, Noto_Sans, Roboto_Condensed, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -26,6 +26,14 @@ const robotoCondensed = Roboto_Condensed({
   preload: true,
 });
 
+const dancingScript = Dancing_Script({
+  variable: "--font-script",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["600", "700"],
+  preload: true,
+});
+
 export const metadata: Metadata = {
   title: "Visit Nepal — Naturally Nepal | Official Tourism Portal",
   description: "Somewhere between earth and heaven. Discover extraordinary Himalayan landscapes, ancient UNESCO heritage, and unforgettable journeys across Nepal.",
@@ -44,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${oswald.variable} ${notoSans.variable} ${robotoCondensed.variable} h-full antialiased scroll-smooth`}
+      className={`${oswald.variable} ${notoSans.variable} ${robotoCondensed.variable} ${dancingScript.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-[#FFFFFF] text-[#17212B] font-sans selection:bg-[#0552A2] selection:text-white">
         {children}
