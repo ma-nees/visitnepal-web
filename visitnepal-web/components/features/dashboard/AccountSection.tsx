@@ -443,132 +443,208 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
 
       {/* ── CUSTOMIZE SECTION ─────────────────────────────────────────── */}
       {activeId === 'customize' && (
-        <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
-          <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
-              AI Travel Synthesizer
-            </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Calibrate Custom Itinerary</h2>
-            <p className="text-xs text-[#475569]">Input your preferred regional coordinates, group size, and altitude difficulty parameters.</p>
+        <div className="flex flex-col gap-6 sm:gap-8 max-w-[1440px] w-full mx-auto py-4">
+          {/* Himalayan Blue Banner Header */}
+          <motion.div
+            variants={itemVariants}
+            className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0B2240] via-[#0552A2] to-[#1D6FD6] text-white p-6 sm:p-8 shadow-[0_14px_36px_-12px_rgba(5,82,162,0.4)] flex flex-col lg:flex-row lg:items-center justify-between gap-5"
+          >
+            <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#92C4EA]/20 blur-3xl" />
+            <div className="relative z-10 flex flex-col gap-2">
+              <span className="text-[11px] font-semibold tracking-[0.18em] text-[#92C4EA] uppercase">
+                AI Travel Synthesizer
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif tracking-tight text-white">
+                Calibrate Custom Itinerary
+              </h2>
+              <p className="text-sm text-white/80 max-w-xl leading-relaxed">
+                Input your preferred regional coordinates, trek duration, and altitude difficulty parameters to synthesize a tailored Himalayan route.
+              </p>
+            </div>
+
+            <div className="relative z-10 flex flex-wrap items-center gap-2">
+              <span className="px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-xs font-semibold text-white">
+                {customPreferences.preferredRegion}
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-xs font-semibold text-white">
+                {customPreferences.duration} Days
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full bg-[#FDB716]/20 border border-[#FDB716]/35 text-xs font-semibold text-[#FDB716] capitalize">
+                {customPreferences.difficulty}
+              </span>
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
             {/* Parameters */}
-            <motion.div 
-              variants={itemVariants} 
-              className="bg-[var(--card-bg)] border border-[#92C4EA]/35 p-5 rounded-2xl flex flex-col gap-4 shadow-sm"
+            <motion.div
+              variants={itemVariants}
+              className="lg:col-span-6 bg-white border border-[#0552A2]/12 p-6 sm:p-8 rounded-[22px] flex flex-col justify-between gap-6 shadow-[0_8px_28px_-8px_rgba(15,42,74,0.08)]"
             >
-              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-[#92C4EA]/20 pb-2">
-                Itinerary Parameters
-              </h3>
-
-              <div className="flex flex-col gap-3 font-mono text-[10px] text-left">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex flex-col gap-1">
-                    <label className="uppercase text-[#64748B]">Target Region</label>
-                    <select 
-                      value={customPreferences.preferredRegion}
-                      onChange={e => setCustomPreference('preferredRegion', e.target.value)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs"
-                    >
-                      <option value="Everest">Everest (Khumbu)</option>
-                      <option value="Annapurna">Annapurna Valley</option>
-                      <option value="Mustang">Mustang Desert</option>
-                    </select>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="uppercase text-[#64748B]">Trek Duration</label>
-                    <input 
-                      type="number" 
-                      min="3" 
-                      max="30"
-                      value={customPreferences.duration}
-                      onChange={e => setCustomPreference('duration', parseInt(e.target.value))}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs"
-                    />
-                  </div>
+              <div>
+                <div className="flex items-center justify-between border-b border-[#0552A2]/10 pb-3.5 mb-5">
+                  <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[#0552A2]">
+                    Itinerary Parameters
+                  </h3>
+                  <span className="text-[11px] font-medium text-[#64748B]">Step 1 of 2</span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex flex-col gap-1">
-                    <label className="uppercase text-[#64748B]">Difficulty Tier</label>
-                    <select 
-                      value={customPreferences.difficulty}
-                      onChange={e => setCustomPreference('difficulty', e.target.value)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs"
-                    >
-                      <option value="easy">Easy (Valley Walk)</option>
-                      <option value="moderate">Moderate (Teahouse Loop)</option>
-                      <option value="challenging">Challenging (High Pass)</option>
-                    </select>
+                <div className="flex flex-col gap-5 text-left">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
+                        Target Region
+                      </label>
+                      <select
+                        value={customPreferences.preferredRegion}
+                        onChange={e => setCustomPreference('preferredRegion', e.target.value)}
+                        className="bg-[#F8FBFF] border border-[#0552A2]/15 focus:border-[#0552A2] focus:outline-none px-4 py-3 rounded-[14px] text-sm font-medium text-[#17212B]"
+                      >
+                        <option value="Everest">Everest (Khumbu)</option>
+                        <option value="Annapurna">Annapurna Valley</option>
+                        <option value="Mustang">Mustang Desert</option>
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
+                        Trek Duration (Days)
+                      </label>
+                      <input
+                        type="number"
+                        min="3"
+                        max="30"
+                        value={customPreferences.duration}
+                        onChange={e => setCustomPreference('duration', parseInt(e.target.value))}
+                        className="bg-[#F8FBFF] border border-[#0552A2]/15 focus:border-[#0552A2] focus:outline-none px-4 py-3 rounded-[14px] text-sm font-medium text-[#17212B]"
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="uppercase text-[#64748B]">Pricing Bracket</label>
-                    <select 
-                      value={customPreferences.budget}
-                      onChange={e => setCustomPreference('budget', e.target.value)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs"
-                    >
-                      <option value="budget">Classic ($450)</option>
-                      <option value="premium">Premium ($1200)</option>
-                      <option value="luxury">Luxury ($3500)</option>
-                    </select>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
+                        Difficulty Tier
+                      </label>
+                      <select
+                        value={customPreferences.difficulty}
+                        onChange={e => setCustomPreference('difficulty', e.target.value)}
+                        className="bg-[#F8FBFF] border border-[#0552A2]/15 focus:border-[#0552A2] focus:outline-none px-4 py-3 rounded-[14px] text-sm font-medium text-[#17212B]"
+                      >
+                        <option value="easy">Easy (Valley Walk)</option>
+                        <option value="moderate">Moderate (Teahouse Loop)</option>
+                        <option value="challenging">Challenging (High Pass)</option>
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
+                        Pricing Bracket
+                      </label>
+                      <select
+                        value={customPreferences.budget}
+                        onChange={e => setCustomPreference('budget', e.target.value)}
+                        className="bg-[#F8FBFF] border border-[#0552A2]/15 focus:border-[#0552A2] focus:outline-none px-4 py-3 rounded-[14px] text-sm font-medium text-[#17212B]"
+                      >
+                        <option value="budget">Classic ($450)</option>
+                        <option value="premium">Premium ($1200)</option>
+                        <option value="luxury">Luxury ($3500)</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-
-                <button 
-                  onClick={handleSynthesize}
-                  className="bg-[#0552A2] hover:bg-[#B08156] text-white py-2.5 rounded-xl font-bold uppercase tracking-widest mt-2 cursor-pointer transition-colors"
-                >
-                  {isSynthesizing ? 'Synthesizing Path...' : 'Launch AI Pathfinder'}
-                </button>
               </div>
+
+              <button
+                onClick={handleSynthesize}
+                className="w-full bg-[#0552A2] hover:bg-[#043e7b] text-white py-3.5 rounded-[14px] text-xs font-bold uppercase tracking-[0.16em] cursor-pointer transition-colors shadow-[0_8px_20px_-6px_rgba(5,82,162,0.4)]"
+              >
+                {isSynthesizing ? 'Synthesizing Path...' : 'Launch AI Pathfinder'}
+              </button>
             </motion.div>
 
             {/* Results Output */}
-            <motion.div variants={itemVariants} className="flex flex-col gap-4">
-              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-[#92C4EA]/20 pb-2">
-                Generated Itinerary Output
-              </h3>
+            <motion.div
+              variants={itemVariants}
+              className="lg:col-span-6 bg-[#F2F8FD]/75 border border-[#0552A2]/12 p-6 sm:p-8 rounded-[22px] flex flex-col gap-5 min-h-[360px]"
+            >
+              <div className="flex items-center justify-between border-b border-[#0552A2]/10 pb-3.5">
+                <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[#0552A2]">
+                  Generated Itinerary Output
+                </h3>
+                <span className="text-[11px] font-medium text-[#64748B]">
+                  {generatedItinerary ? 'Route Ready' : 'Awaiting Calibration'}
+                </span>
+              </div>
 
               <AnimatePresence mode="wait">
                 {isSynthesizing ? (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="bg-[#F2F8FD]/20 border border-[#92C4EA]/20 h-48 rounded-2xl flex flex-col items-center justify-center text-center font-mono text-[10px] text-[#64748B]"
+                    className="flex-1 flex flex-col items-center justify-center text-center py-10"
                   >
-                    <span className="h-6 w-6 border-2 border-t-transparent border-[#0552A2] rounded-full animate-spin mb-2" />
-                    <span>Mapping altitudes & trail nodes...</span>
+                    <span className="h-8 w-8 border-2 border-t-transparent border-[#0552A2] rounded-full animate-spin mb-3" />
+                    <span className="text-sm font-semibold text-[#17212B]">Mapping altitudes &amp; trail nodes...</span>
+                    <span className="text-xs text-[#64748B] mt-1">Calculating acclimatization checkpoints</span>
                   </motion.div>
                 ) : generatedItinerary ? (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
-                    className="bg-[#F2F8FD] p-5 rounded-2xl border border-[#92C4EA]/35 flex flex-col gap-4 text-xs"
+                    className="bg-white p-5 sm:p-6 rounded-[18px] border border-[#0552A2]/12 shadow-xs flex flex-col gap-4 flex-1"
                   >
-                    <div>
-                      <h4 className="font-bold text-sm text-[#17212B]">{generatedItinerary.title}</h4>
-                      <span className="text-[9px] font-mono text-[#0552A2] uppercase font-bold">
-                        Difficulty: {generatedItinerary.difficulty} • Estimate: ${generatedItinerary.costEstimate} USD
+                    <div className="flex flex-wrap items-start justify-between gap-2 pb-3 border-b border-[#0552A2]/10">
+                      <div>
+                        <h4 className="font-bold text-base sm:text-lg font-serif text-[#17212B]">{generatedItinerary.title}</h4>
+                        <span className="text-xs font-medium text-[#64748B]">
+                          Difficulty: <strong className="text-[#0552A2] capitalize">{generatedItinerary.difficulty}</strong>
+                        </span>
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-[#F2F8FD] text-[#0552A2] text-xs font-bold">
+                        Est. ${generatedItinerary.costEstimate} USD
                       </span>
                     </div>
 
-                    <div className="flex flex-col gap-2.5 border-t border-[#92C4EA]/20 pt-3">
+                    <div className="flex flex-col gap-3">
                       {generatedItinerary.days.map((day: any) => (
-                        <div key={day.day} className="flex justify-between items-start font-mono text-[10px]">
-                          <span className="text-[#0552A2] font-bold shrink-0 w-12">Day 0{day.day}</span>
-                          <span className="flex-1 text-[#475569] text-[11px] font-sans px-2 leading-relaxed">{day.activity}</span>
-                          <span className="text-[#64748B] shrink-0 text-right">{day.alt}</span>
+                        <div key={day.day} className="flex items-start gap-3 text-xs">
+                          <span className="px-2.5 py-1 rounded-full bg-[#0552A2] text-white font-bold shrink-0 text-[10px]">
+                            Day 0{day.day}
+                          </span>
+                          <span className="flex-1 text-[#334155] text-xs sm:text-sm leading-relaxed">{day.activity}</span>
+                          <span className="text-[#64748B] font-mono shrink-0 text-[11px]">{day.alt}</span>
                         </div>
                       ))}
                     </div>
                   </motion.div>
                 ) : (
-                  <div className="bg-[#F2F8FD]/10 border border-dashed border-[#92C4EA]/30 h-48 rounded-2xl flex items-center justify-center text-center p-6 font-mono text-[10px] text-[#64748B]">
-                    Configure parameters and trigger the pathfinder to calculate custom Himalayan loops.
+                  <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-8 gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-white border border-[#0552A2]/12 text-[#0552A2] flex items-center justify-center shadow-xs">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+                      </svg>
+                    </div>
+                    <div className="max-w-sm">
+                      <p className="text-sm font-semibold text-[#17212B]">
+                        Ready to Synthesize Your Himalayan Loop
+                      </p>
+                      <p className="text-xs text-[#64748B] mt-1 leading-relaxed">
+                        Configure your region, duration, difficulty, and budget on the left, then launch the pathfinder to generate a day-by-day route.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                      <span className="px-3 py-1 rounded-full bg-white border border-[#0552A2]/10 text-[11px] font-medium text-[#0552A2]">
+                        Route Mapping
+                      </span>
+                      <span className="px-3 py-1 rounded-full bg-white border border-[#0552A2]/10 text-[11px] font-medium text-[#0552A2]">
+                        Altitude Profile
+                      </span>
+                      <span className="px-3 py-1 rounded-full bg-white border border-[#0552A2]/10 text-[11px] font-medium text-[#0552A2]">
+                        Cost Estimate
+                      </span>
+                    </div>
                   </div>
                 )}
               </AnimatePresence>
