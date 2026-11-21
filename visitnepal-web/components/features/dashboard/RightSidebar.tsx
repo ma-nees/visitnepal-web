@@ -76,18 +76,60 @@ export default function RightSidebar({
             : '360px'),
       }}
     >
-      {/* Collapse Toggle (Only when collapsed) */}
+      {/* Collapse Toggle + Collapsed People Avatar Rail (Only when collapsed) */}
       {rightCollapsed && (
-        <div className="flex flex-col items-center gap-2 py-4 border-b border-slate-100">
-          <button
-            onClick={() => { onRightCollapsedChange(false); onIsFullExpandedChange(false); }}
-            className="p-2 rounded-xl text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
-            title="Expand Intelligence Drawer"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
+        <div className="flex flex-col items-center flex-1 min-h-0">
+          <div className="flex flex-col items-center gap-2 py-4 border-b border-slate-100 w-full">
+            <button
+              onClick={() => { onRightCollapsedChange(false); onIsFullExpandedChange(false); }}
+              className="p-2 rounded-xl text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+              title="Expand Drawer"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="flex flex-col items-center gap-3.5 py-4 overflow-y-auto w-full scrollbar-thin">
+            {channels.map((chan) => {
+              const isAi = chan.id === 'ch-ai';
+              const isActive = activeChannelId === chan.id;
+              return (
+                <button
+                  key={chan.id}
+                  onClick={() => {
+                    onRightSidebarTabChange('chat');
+                    onActiveChannelIdChange(chan.id);
+                    onChatViewStateChange('conversation');
+                    onRightCollapsedChange(false);
+                    onIsFullExpandedChange(false);
+                  }}
+                  title={chan.name}
+                  className="relative group cursor-pointer focus:outline-none"
+                >
+                  <div
+                    className={`h-10 w-10 rounded-full overflow-hidden border transition-all ${
+                      isActive
+                        ? 'border-[#0552A2] ring-2 ring-[#0552A2]/25'
+                        : 'border-slate-200 group-hover:border-[#0552A2] group-hover:scale-105'
+                    }`}
+                  >
+                    <img
+                      src={chan.avatar}
+                      alt={chan.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <span
+                    className={`absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white ${
+                      isAi ? 'bg-[#0552A2]' : 'bg-emerald-500'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
 

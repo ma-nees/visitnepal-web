@@ -103,37 +103,56 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
             <p className="text-xs text-[#475569]">Hire native Himalayan navigators certified for high altitude routes, wildlife tracking, and translation support.</p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {guides.map(guide => (
-              <div 
+              <div
                 key={guide.id}
-                className="bg-[var(--card-bg)] border border-[#92C4EA]/35 rounded-2xl p-5 flex flex-col justify-between hover:border-[#0552A2]/50 transition-all duration-300 shadow-[0_4px_12px_rgba(61,45,39,0.01)]"
+                className="group bg-white border border-[#0552A2]/12 rounded-[22px] overflow-hidden flex flex-col justify-between shadow-[0_8px_24px_-8px_rgba(15,42,74,0.08)] hover:border-[#0552A2]/35 hover:shadow-[0_14px_32px_-8px_rgba(5,82,162,0.14)] transition-all duration-300"
               >
-                <div className="flex gap-4">
-                  <img src={guide.avatar} alt={guide.name} className="w-16 h-16 object-cover rounded-xl border border-[#92C4EA]/30 shrink-0" />
-                  <div className="flex-1 flex flex-col gap-1">
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-sm font-bold text-[#17212B]">{guide.name}</h3>
-                      <span className="text-[9px] font-mono font-bold text-[#0552A2] uppercase">
-                        ★ {guide.rating} ({guide.experience} yrs)
-                      </span>
-                    </div>
-                    <span className="text-[9px] font-mono text-zinc-500 uppercase">{guide.type} Master</span>
-                    <p className="text-xs text-[#475569] leading-relaxed line-clamp-2 mt-1.5">{guide.bio}</p>
-                  </div>
+                {/* Edge-to-Edge Portrait Header */}
+                <div className="relative h-56 w-full overflow-hidden bg-[#17212B]">
+                  <img
+                    src={guide.avatar}
+                    alt={guide.name}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+
+                  <span className="absolute top-3.5 right-3.5 bg-white rounded-full px-3 py-1 text-xs font-bold text-[#17212B] shadow-sm">
+                    ★ {guide.rating} · {guide.experience} yrs
+                  </span>
+
+                  <span className="absolute bottom-3.5 left-4 bg-[#0552A2] text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
+                    {guide.type} Master
+                  </span>
                 </div>
 
-                <div className="flex justify-between items-center mt-5 border-t border-[#92C4EA]/15 pt-3">
-                  <div className="text-xs font-mono">
-                    <span className="text-[#64748B] block text-[9px] uppercase">Service Rate</span>
-                    <span className="font-bold text-[#17212B]">${guide.pricePerDay}/day</span>
+                {/* Card Body */}
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 gap-5">
+                  <div>
+                    <h3 className="text-xl font-bold font-serif text-[#17212B] group-hover:text-[#0552A2] transition-colors">
+                      {guide.name}
+                    </h3>
+                    <p className="text-sm text-[#475569] leading-relaxed mt-2">
+                      {guide.bio}
+                    </p>
                   </div>
-                  <button 
-                    onClick={() => handleHireGuide(guide)}
-                    className="bg-[#0552A2] text-white text-[10px] font-mono font-bold px-3.5 py-2 rounded-lg hover:bg-[#B08156] transition-colors cursor-pointer"
-                  >
-                    Hire Guide
-                  </button>
+
+                  <div className="flex justify-between items-center pt-4 border-t border-[#0552A2]/10">
+                    <div>
+                      <span className="text-[11px] font-medium text-[#64748B] block">Service Rate</span>
+                      <div className="flex items-baseline gap-0.5 mt-0.5">
+                        <span className="text-xl font-bold tracking-tight text-[#17212B]">${guide.pricePerDay}</span>
+                        <span className="text-xs text-[#64748B] font-medium">/day</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleHireGuide(guide)}
+                      className="bg-[#0552A2] text-white text-xs font-bold tracking-wide px-5 py-2.5 rounded-full hover:bg-[#043e7b] transition-colors cursor-pointer shadow-xs"
+                    >
+                      Hire Guide
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
