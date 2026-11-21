@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import heroImage from '../../public/hero-himalayan-peaks.png';
+import heroImage from '../../public/hero-himalayan-peaks.webp';
 
 export default function HeroSection() {
   return (

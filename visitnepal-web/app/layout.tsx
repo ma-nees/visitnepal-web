@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Oswald, Noto_Sans, Roboto_Condensed, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
@@ -8,6 +8,7 @@ const oswald = Oswald({
   display: "swap",
   weight: ["400", "600", "700"],
   preload: true,
+  adjustFontFallback: true,
 });
 
 const notoSans = Noto_Sans({
@@ -16,6 +17,7 @@ const notoSans = Noto_Sans({
   display: "swap",
   weight: ["400", "500", "600", "700"],
   preload: true,
+  adjustFontFallback: true,
 });
 
 const robotoCondensed = Roboto_Condensed({
@@ -24,6 +26,7 @@ const robotoCondensed = Roboto_Condensed({
   display: "swap",
   weight: ["400", "700"],
   preload: true,
+  adjustFontFallback: true,
 });
 
 const dancingScript = Dancing_Script({
@@ -32,7 +35,15 @@ const dancingScript = Dancing_Script({
   display: "swap",
   weight: ["600", "700"],
   preload: true,
+  adjustFontFallback: true,
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0552A2",
+};
 
 export const metadata: Metadata = {
   title: "Visit Nepal — Naturally Nepal | Official Tourism Portal",
