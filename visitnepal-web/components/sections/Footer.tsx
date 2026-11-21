@@ -32,12 +32,12 @@ export default function Footer() {
                 <p className="text-[#5A6578] text-xs sm:text-sm leading-relaxed">
                   Naturally Nepal — Once is Not Enough. Dedicated to promoting sustainable Himalayan travel, authentic cultural heritage, and safe alpine expeditions across Nepal.
                 </p>
-                <div className="flex items-center gap-2 mt-2">
+                {/* <div className="flex items-center gap-2 mt-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#EC1F27] animate-pulse shrink-0" />
                   <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#0552A2] font-bold truncate">
                     Official Nepal Tourism Board
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
