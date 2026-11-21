@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
+import DashboardHome from './DashboardHome';
 import { 
   MapPin, 
   ArrowLeft, 
