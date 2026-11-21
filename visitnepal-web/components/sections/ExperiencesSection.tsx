@@ -193,7 +193,7 @@ export default function ExperiencesSection() {
                       <span className="text-xs uppercase tracking-widest text-[#FDB716] font-bold block mb-1">
                         {selectedExperience.category}
                       </span>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white font-serif">
+                      <h3 className="text-3xl sm:text-4xl font-bold text-white font-serif leading-tight tracking-tight">
                         {selectedExperience.name}
                       </h3>
                     </div>

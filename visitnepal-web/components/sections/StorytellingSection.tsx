@@ -61,19 +61,18 @@ export default function StorytellingSection() {
         </div>
 
         {/* Magazine-Spread Editorial Story Rows */}
-        <div className="space-y-24">
+        <div className="space-y-20 lg:space-y-28">
           {storyMoments.map((moment, index) => {
             const isReversed = index % 2 === 1;
             const StatIcon = moment.Icon;
             return (
               <div
                 key={moment.id}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${isReversed ? 'lg:flex-row-reverse' : ''
-                  }`}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
               >
                 {/* Visual Frame */}
                 <div className={`lg:col-span-7 ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                  <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-[#17212B] shadow-lg group">
+                  <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-[#17212B] shadow-[0_14px_40px_-12px_rgba(15,42,74,0.22)] group">
                     <Image
                       src={moment.imageUrl}
                       alt={moment.title}
@@ -82,7 +81,7 @@ export default function StorytellingSection() {
                       sizes="(max-width: 1024px) 100vw, 58vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-104"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
 
                     {/* Floating Statistic Card */}
                     <div className="absolute bottom-4 left-4 bg-white rounded-[14px] px-3 py-2 border border-[#0552A2]/10 shadow-[0_6px_18px_-5px_rgba(15,42,74,0.16)] flex items-center gap-2.5">
@@ -102,24 +101,34 @@ export default function StorytellingSection() {
                 </div>
 
                 {/* Editorial Copy Block */}
-                <div className={`lg:col-span-5 flex flex-col gap-4 ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
-                  <span className="text-xs uppercase tracking-widest font-bold text-[#0552A2]">
-                    {moment.tag}
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] leading-tight">
+                <div className={`lg:col-span-5 flex flex-col gap-5 ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold tracking-wider text-[#EC1F27]">
+                      0{index + 1}
+                    </span>
+                    <span className="w-6 h-[1.5px] bg-[#0552A2]/30" aria-hidden="true" />
+                    <span className="text-xs uppercase tracking-[0.18em] font-bold text-[#0552A2]">
+                      {moment.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold font-serif text-[#17212B] leading-[1.12] tracking-tight">
                     {moment.title}
                   </h3>
-                  <div className="w-12 h-0.5 bg-[#FDB716]" />
-                  <p className="text-body text-[#4B5563] leading-relaxed">
+
+                  <div className="w-14 h-1 rounded-full bg-[#FDB716]" />
+
+                  <p className="text-base sm:text-[17px] text-[#475569] leading-relaxed">
                     {moment.text}
                   </p>
-                  <div className="pt-2">
+
+                  <div className="pt-1">
                     <a
                       href="#experiences"
-                      className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-[#0552A2] hover:text-[#EC1F27] transition-colors"
+                      className="inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.14em] font-bold text-[#0552A2] hover:text-[#043e7b] px-5 py-2.5 rounded-full bg-[#F2F8FD] hover:bg-[#E4F0FA] border border-[#0552A2]/12 transition-colors w-fit group/cta"
                     >
                       <span>Discover the Journey</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/cta:translate-x-0.5" />
                     </a>
                   </div>
                 </div>

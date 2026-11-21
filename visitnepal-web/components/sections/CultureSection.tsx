@@ -184,7 +184,7 @@ export default function CultureSection() {
               <span className="text-xs uppercase font-mono tracking-wider font-bold text-[#0552A2] block mb-1">
                 Sacred Monuments
               </span>
-              <h3 className="text-2xl font-bold font-serif text-[#17212B]">
+              <h3 className="text-3xl sm:text-4xl font-bold font-serif text-[#17212B] tracking-tight">
                 UNESCO World Heritage Sanctuaries
               </h3>
             </div>
@@ -294,7 +294,7 @@ export default function CultureSection() {
                   Living Seasonal Calendar
                 </span>
               </div>
-              <h3 className="text-2xl sm:text-4xl font-bold font-serif text-[#17212B]">
+              <h3 className="text-3xl sm:text-4xl font-bold font-serif text-[#17212B] tracking-tight">
                 Festivals That Define the Year
               </h3>
             </div>

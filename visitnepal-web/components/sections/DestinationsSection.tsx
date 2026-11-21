@@ -159,7 +159,7 @@ export default function DestinationsSection() {
                     {destinations[0].altitude}
                   </span>
                 </div>
-                <h3 className="text-heading-3 text-white">
+                <h3 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-bold font-serif text-white leading-[1.12] tracking-tight">
                   {destinations[0].name}
                 </h3>
                 <p className="text-sm text-white/85 max-w-xl line-clamp-2 leading-relaxed">

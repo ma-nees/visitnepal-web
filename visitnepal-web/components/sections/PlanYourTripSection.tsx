@@ -185,7 +185,7 @@ export default function PlanYourTripSection() {
           {activeStep === 0 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">Where do you want to explore?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">Where do you want to explore?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">Select one or multiple regions to combine in your itinerary.</p>
               </div>
 
@@ -229,7 +229,7 @@ export default function PlanYourTripSection() {
           {activeStep === 1 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">What style of journey calls to you?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">What style of journey calls to you?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">Select the travel theme that best matches your expectations.</p>
               </div>
 
@@ -261,7 +261,7 @@ export default function PlanYourTripSection() {
           {activeStep === 2 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">How much time do you have in Nepal?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">How much time do you have in Nepal?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">Sufficient duration ensures safe altitude acclimatization.</p>
               </div>
 
@@ -293,7 +293,7 @@ export default function PlanYourTripSection() {
           {activeStep === 3 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">When are you planning to travel?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">When are you planning to travel?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">Each season in the Himalayas provides its own weather and cultural charm.</p>
               </div>
 
@@ -327,7 +327,7 @@ export default function PlanYourTripSection() {
           {activeStep === 4 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">What trail difficulty suits your fitness?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">What trail difficulty suits your fitness?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">We calibrate guide coverage and porter support based on trail grade.</p>
               </div>
 
@@ -359,7 +359,7 @@ export default function PlanYourTripSection() {
           {activeStep === 5 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">Preferred mode of travel between regions?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">Preferred mode of travel between regions?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">Combine domestic mountain flights, private vehicles, or helicopter transfers.</p>
               </div>
 
@@ -391,7 +391,7 @@ export default function PlanYourTripSection() {
           {activeStep === 6 && (
             <div className="flex flex-col gap-6">
               <div>
-                <h3 className="text-xl font-bold font-serif text-[#17212B]">Where would you prefer to stay?</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#17212B] tracking-tight">Where would you prefer to stay?</h3>
                 <p className="text-xs text-[#4B5563] mt-1">From mountain teahouses along the trails to luxury heritage resorts.</p>
               </div>
 
