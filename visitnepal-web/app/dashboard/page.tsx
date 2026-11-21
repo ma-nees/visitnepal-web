@@ -1,20 +1,32 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import DiscoverSection from '@/components/features/dashboard/DiscoverSection';
 import DashboardHome from '@/components/features/dashboard/DashboardHome';
-import ActivitiesSection from '@/components/features/dashboard/ActivitiesSection';
 import LeftSidebar from '@/components/features/dashboard/LeftSidebar';
 import RightSidebar from '@/components/features/dashboard/RightSidebar';
-import InfoDetailPanel from '@/components/features/info/InfoDetailPanel';
-import StaysSection from '@/components/features/dashboard/StaysSection';
-import GuidesPermitsSection from '@/components/features/dashboard/GuidesPermitsSection';
-import AccountSection from '@/components/features/dashboard/AccountSection';
-import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
+
+const SectionSkeleton = () => (
+  <div className="max-w-[1440px] w-full mx-auto py-6 animate-pulse flex flex-col gap-5">
+    <div className="h-8 w-64 rounded-xl bg-white/80" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="h-56 rounded-[20px] bg-white/80" />
+      <div className="h-56 rounded-[20px] bg-white/80" />
+    </div>
+  </div>
+);
+
+const DiscoverSection = dynamic(() => import('@/components/features/dashboard/DiscoverSection'), { loading: SectionSkeleton });
+const ActivitiesSection = dynamic(() => import('@/components/features/dashboard/ActivitiesSection'), { loading: SectionSkeleton });
+const InfoDetailPanel = dynamic(() => import('@/components/features/info/InfoDetailPanel'), { loading: SectionSkeleton });
+const StaysSection = dynamic(() => import('@/components/features/dashboard/StaysSection'), { loading: SectionSkeleton });
+const GuidesPermitsSection = dynamic(() => import('@/components/features/dashboard/GuidesPermitsSection'), { loading: SectionSkeleton });
+const AccountSection = dynamic(() => import('@/components/features/dashboard/AccountSection'), { loading: SectionSkeleton });
+const HostSection = dynamic(() => import('@/components/features/dashboard/HostSection'), { loading: SectionSkeleton });
 import {
   Home,
   SlidersHorizontal,
@@ -781,7 +793,9 @@ export default function DashboardPage() {
 
             {/* Main scrollable body */}
             <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 min-h-0 relative z-10 scrollbar-thin">
-              {renderActiveSection()}
+              <div key={active} className="animate-section-enter">
+                {renderActiveSection()}
+              </div>
             </main>
           </div>
         )}
