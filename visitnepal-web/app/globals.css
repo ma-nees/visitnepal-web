@@ -399,3 +399,11 @@ a,
   content-visibility: auto;
   contain-intrinsic-size: 1px 700px;
 }
+
+/* ─── Premium Fluid Sidebar Transition ───────────────────────────────────── */
+.transition-sidebar {
+  transition-property: width, max-width, transform, opacity, padding, margin;
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+

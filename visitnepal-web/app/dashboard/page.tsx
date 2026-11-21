@@ -742,6 +742,8 @@ export default function DashboardPage() {
           onActiveChange={handleActiveChange}
           collapsed={collapsed}
           onCollapsedChange={setCollapsed}
+          mobileOpen={mobileSidebarOpen}
+          onMobileClose={() => setMobileSidebarOpen(false)}
         />
 
         {/* ── MAIN CONTENT CANVAS ───────────────────────────────────────── */}
@@ -753,7 +755,7 @@ export default function DashboardPage() {
             setRightCollapsed={setRightCollapsed}
           />
         ) : (
-          <div className="flex-1 flex flex-col min-w-0 relative bg-[#EDF3F9]">
+          <div className="flex-1 flex flex-col min-w-0 relative bg-[#EDF3F9] transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]">
             {/* Context breadcrumb & Search toolbar */}
             <div className="flex items-center justify-between px-6 py-3 bg-[#F8FAFD] border-b border-slate-200/70 select-none relative z-10">
               <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
