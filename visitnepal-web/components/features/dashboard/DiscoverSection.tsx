@@ -15,7 +15,8 @@ import {
   Activity, 
   UserPlus, 
   UserCheck, 
-  ClipboardList
+  ClipboardList,
+  Mountain
 } from 'lucide-react';
 
 interface DiscoverSectionProps {
@@ -891,12 +892,14 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
         {/* ── EXPLORE VIEW ──────────────────────────────────────────────── */}
         {activeId === 'explore' && (
           <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
-            <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
+            <motion.div variants={itemVariants} className="flex flex-col gap-2">
+              <span className="text-[11px] font-bold tracking-[0.18em] text-[#0552A2] uppercase">
                 Explore Destinations
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Discover Curated Havens</h2>
-              <p className="text-xs text-[#475569]">Select from our handpicked destinations to see local altitude grids and travel stories.</p>
+              <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">
+                Discover Curated Havens
+              </h2>
+              <p className="text-sm text-[#475569]">Select from our handpicked destinations to see local altitude grids and travel stories.</p>
             </motion.div>
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -906,10 +909,20 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
                   className="group bg-[var(--card-bg)] border border-[#92C4EA]/30 rounded-2xl overflow-hidden hover:border-[#0552A2]/50 transition-all duration-305 shadow-[0_4px_12px_rgba(61,45,39,0.015)] cursor-pointer active:scale-[0.99]"
                 >
-                  <div className="relative h-44 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
                     <img src={d.image} alt={d.name} className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" />
-                    <div className="absolute top-3 left-3 bg-white/95 text-[9px] font-mono font-bold text-[#17212B] px-2 py-0.5 rounded border border-[#92C4EA] shadow-sm">
-                      {d.elevation}
+                    <div className="absolute top-3 left-3 bg-white rounded-[12px] px-2.5 py-1.5 border border-[#0552A2]/10 shadow-[0_6px_16px_-4px_rgba(15,42,74,0.18)] flex items-center gap-2">
+                      <div className="h-6 w-6 rounded-[7px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+                        <Mountain className="h-3 w-3" strokeWidth={2.2} />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-xs font-bold tracking-tight text-[#17212B] block leading-none">
+                          {d.elevation}
+                        </span>
+                        <span className="text-[9px] font-medium text-[#64748B] block mt-0.5 leading-none">
+                          Elevation
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <div className="p-5 flex flex-col gap-2">
