@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { destinations, Destination } from '@/lib/destinations';
@@ -30,6 +30,8 @@ const itemVariants = {
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const resetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Rotating pool of non-featured destinations from mockData
   const rotatingPool = useMemo(() => {
@@ -39,30 +41,48 @@ export default function DestinationsSection() {
     return filtered.length > 0 ? filtered : pool;
   }, [activeTab]);
 
+  // Triple cloned items for infinite seamless sliding loop
+  const displayItems = useMemo(() => {
+    if (rotatingPool.length === 0) return [];
+    return [...rotatingPool, ...rotatingPool, ...rotatingPool];
+  }, [rotatingPool]);
+
   // Reset carousel index when category tab changes
   useEffect(() => {
+    setIsTransitioning(false);
     setCarouselIndex(0);
+    const t = setTimeout(() => setIsTransitioning(true), 50);
+    return () => clearTimeout(t);
   }, [activeTab]);
 
-  // Continuous auto-rotation every 3.5 seconds
+  // Silky smooth one-by-one auto-rotation in a continuous loop
   useEffect(() => {
     if (rotatingPool.length <= 1) return;
-    const timer = setInterval(() => {
-      setCarouselIndex((prev) => (prev + 1) % rotatingPool.length);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [rotatingPool.length]);
 
-  // Window of 4 visible destinations that dynamically slide
-  const visibleDestinations = useMemo(() => {
-    if (rotatingPool.length === 0) return [];
-    const count = Math.min(4, rotatingPool.length);
-    const result: Destination[] = [];
-    for (let i = 0; i < count; i++) {
-      result.push(rotatingPool[(carouselIndex + i) % rotatingPool.length]);
-    }
-    return result;
-  }, [rotatingPool, carouselIndex]);
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setCarouselIndex((prev) => {
+        const next = prev + 1;
+        // When we reach rotatingPool.length, schedule invisible reset back to 0
+        if (next === rotatingPool.length) {
+          if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+          resetTimerRef.current = setTimeout(() => {
+            setIsTransitioning(false);
+            setCarouselIndex(0);
+            setTimeout(() => {
+              setIsTransitioning(true);
+            }, 50);
+          }, 850);
+        }
+        return next;
+      });
+    }, 3200);
+
+    return () => {
+      clearInterval(interval);
+      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    };
+  }, [rotatingPool.length]);
 
   return (
     <section
@@ -190,26 +210,29 @@ export default function DestinationsSection() {
             </div>
           </div>
 
-          {/* Continuously Auto-Rotating Quad Editorial Grid */}
-          <div className="pt-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 min-h-[420px]">
-              <AnimatePresence mode="popLayout" initial={false}>
-                {visibleDestinations.map((dest) => (
-                  <motion.div
-                    key={dest.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex flex-col rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40"
-                  >
+          {/* Smooth Continuous One-by-One Infinite Looping Carousel Track */}
+          <div className="pt-2 overflow-hidden">
+            <div
+              className="flex -mx-3 [--cards-per-view:1] sm:[--cards-per-view:2] lg:[--cards-per-view:4] will-change-transform"
+              style={{
+                transform: `translateX(calc(-${carouselIndex} * 100% / var(--cards-per-view)))`,
+                transition: isTransitioning
+                  ? 'transform 850ms cubic-bezier(0.22, 1, 0.36, 1)'
+                  : 'none',
+              }}
+            >
+              {displayItems.map((dest, idx) => (
+                <div
+                  key={`${dest.id}-${idx}`}
+                  className="w-full sm:w-1/2 lg:w-1/4 px-3 shrink-0"
+                >
+                  <div className="group flex flex-col h-full rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
                     <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                       <Image
                         src={dest.imageUrl}
                         alt={dest.name}
                         fill
-                        sizes="(max-width: 768px) 100vw, 25vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2] shadow-sm">
@@ -238,20 +261,23 @@ export default function DestinationsSection() {
                         <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </a>
                     </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Interactive Progress Indicator Dots */}
+            {/* Subtle Progress Indicator Dots */}
             <div className="flex justify-center items-center gap-1.5 mt-8">
               {rotatingPool.map((dest, idx) => (
                 <button
                   key={dest.id}
-                  onClick={() => setCarouselIndex(idx)}
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setCarouselIndex(idx);
+                  }}
                   aria-label={`Jump to ${dest.name}`}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === carouselIndex
+                    idx === carouselIndex % rotatingPool.length
                       ? 'w-7 bg-[#0552A2]'
                       : 'w-2 bg-zinc-300 hover:bg-zinc-400'
                   }`}
