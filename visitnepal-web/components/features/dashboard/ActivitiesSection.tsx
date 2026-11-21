@@ -510,8 +510,8 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`text-xs px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${isActive
-                      ? 'bg-[#0552A2] text-white shadow-sm'
-                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300'
+                    ? 'bg-[#0552A2] text-white shadow-sm'
+                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300'
                     }`}
                 >
                   {cat !== 'All' && getCategoryIcon(cat)}
@@ -650,18 +650,18 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
         {selectedActivity && (
           <div
             onClick={() => setSelectedActivity(null)}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4 py-8 sm:py-12 md:py-16 overflow-y-auto"
           >
             <motion.div
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] shadow-2xl border border-slate-200 flex flex-col text-left overflow-hidden my-auto"
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full max-h-[76vh] sm:max-h-[80vh] shadow-2xl border border-slate-200 flex flex-col text-left overflow-hidden my-auto shrink-0"
             >
               {/* Modal Cover Image */}
-              <div className="relative h-40 sm:h-48 w-full overflow-hidden bg-slate-900 shrink-0">
+              <div className="relative h-32 sm:h-38 w-full overflow-hidden bg-slate-900 shrink-0">
                 <Image
                   src={selectedActivity.image}
                   alt={selectedActivity.title}
@@ -673,24 +673,24 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
 
                 <button
                   onClick={() => setSelectedActivity(null)}
-                  className="absolute top-3.5 right-3.5 h-8 w-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors cursor-pointer shadow-md"
+                  className="absolute top-3 right-3 h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors cursor-pointer shadow-md"
                   aria-label="Close activity details"
                 >
                   <X className="h-4 w-4" />
                 </button>
 
-                <div className="absolute bottom-3.5 left-5 right-5 text-white">
+                <div className="absolute bottom-3 left-4 sm:left-5 right-4 sm:right-5 text-white">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold">
+                    <span className="bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] font-bold">
                       {selectedActivity.category}
                     </span>
-                    <span className="bg-[#EC1F27] px-2.5 py-0.5 rounded-full text-[10px] font-bold">
+                    <span className="bg-[#EC1F27] px-2 py-0.5 rounded-full text-[10px] font-bold">
                       {selectedActivity.difficulty}
                     </span>
                   </div>
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-black leading-tight">{selectedActivity.title}</h2>
-                  <p className="text-xs text-white/90 mt-1 flex items-center gap-2">
-                    <MapPin className="h-3.5 w-3.5 text-rose-400" />
+                  <h2 className="text-base sm:text-lg md:text-xl font-bold leading-tight">{selectedActivity.title}</h2>
+                  <p className="text-[11px] sm:text-xs text-white/90 mt-0.5 flex items-center gap-1.5">
+                    <MapPin className="h-3 w-3 text-rose-400" />
                     <span>{selectedActivity.region}</span>
                     <span>•</span>
                     <span>Max Elevation: {selectedActivity.maxAltitude}</span>
