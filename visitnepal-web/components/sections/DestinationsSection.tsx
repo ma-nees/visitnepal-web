@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { destinations, Destination } from '@/lib/destinations';
-import { ArrowUpRight, MapPin, Compass, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { ArrowUpRight, MapPin, Compass } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,7 +30,6 @@ const itemVariants = {
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   // Rotating pool of non-featured destinations from mockData
   const rotatingPool = useMemo(() => {
@@ -45,22 +44,14 @@ export default function DestinationsSection() {
     setCarouselIndex(0);
   }, [activeTab]);
 
-  // Auto-rotation every 4 seconds when not paused by hover
+  // Continuous auto-rotation every 3.5 seconds
   useEffect(() => {
-    if (isPaused || rotatingPool.length <= 1) return;
+    if (rotatingPool.length <= 1) return;
     const timer = setInterval(() => {
       setCarouselIndex((prev) => (prev + 1) % rotatingPool.length);
-    }, 4000);
+    }, 3500);
     return () => clearInterval(timer);
-  }, [isPaused, rotatingPool.length]);
-
-  const handlePrev = () => {
-    setCarouselIndex((prev) => (prev - 1 + rotatingPool.length) % rotatingPool.length);
-  };
-
-  const handleNext = () => {
-    setCarouselIndex((prev) => (prev + 1) % rotatingPool.length);
-  };
+  }, [rotatingPool.length]);
 
   // Window of 4 visible destinations that dynamically slide
   const visibleDestinations = useMemo(() => {
@@ -199,71 +190,8 @@ export default function DestinationsSection() {
             </div>
           </div>
 
-          {/* Rotating Non-Featured Destinations Carousel */}
-          <div
-            className="pt-4"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {/* Carousel Navigation Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-200/80">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-[#0552A2]/10 text-[#0552A2]">
-                  <span
-                    className={`w-2 h-2 rounded-full ${
-                      isPaused ? 'bg-amber-500' : 'bg-[#0552A2] animate-pulse'
-                    }`}
-                  />
-                  {isPaused ? 'Paused on Hover' : 'Auto-Rotating'}
-                </span>
-                <span className="text-xs text-[#4B5563] hidden sm:inline">
-                  {rotatingPool.length} Destinations Available
-                </span>
-              </div>
-
-              {/* Controls */}
-              <div className="flex items-center gap-2.5 self-end sm:self-auto">
-                <div className="text-xs font-mono text-zinc-600 bg-zinc-100 px-3 py-1.5 rounded-full border border-zinc-200">
-                  <span className="font-bold text-[#0552A2]">{carouselIndex + 1}</span>
-                  <span className="text-zinc-400 mx-1">/</span>
-                  <span>{rotatingPool.length}</span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setIsPaused((p) => !p)}
-                  title={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
-                  aria-label={isPaused ? 'Resume auto-rotation' : 'Pause auto-rotation'}
-                  className="p-2 rounded-full border border-zinc-300 bg-white hover:bg-zinc-50 text-zinc-700 transition-colors shadow-sm cursor-pointer"
-                >
-                  {isPaused ? (
-                    <Play className="h-3.5 w-3.5 fill-current" />
-                  ) : (
-                    <Pause className="h-3.5 w-3.5 fill-current" />
-                  )}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  aria-label="Previous destination"
-                  className="p-2 rounded-full border border-zinc-300 bg-white hover:bg-[#0552A2] hover:text-white hover:border-[#0552A2] transition-colors shadow-sm cursor-pointer"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  aria-label="Next destination"
-                  className="p-2 rounded-full border border-zinc-300 bg-white hover:bg-[#0552A2] hover:text-white hover:border-[#0552A2] transition-colors shadow-sm cursor-pointer"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Rotating 4-Card Quad Grid */}
+          {/* Continuously Auto-Rotating Quad Editorial Grid */}
+          <div className="pt-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 min-h-[420px]">
               <AnimatePresence mode="popLayout" initial={false}>
                 {visibleDestinations.map((dest) => (
