@@ -304,7 +304,7 @@ export default function CultureSection() {
           </div>
 
           {/* Clean Segmented Festival Selector with Full Marigold Toran */}
-          <div className="bg-[#F8FAFD] p-2 rounded-[22px] border border-[#0552A2]/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-8">
+          <div className="bg-white p-2 rounded-[22px] border border-[#0552A2]/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-8">
             {festivals.map((fest) => {
               const isActive = activeFestival.id === fest.id;
               const shortMonth = fest.month.split('(')[0].trim();

@@ -211,10 +211,17 @@ export default function AuthMapDrawing() {
                   x={svgX} 
                   y={svgY + 22} 
                   textAnchor="middle" 
-                  fill={isActive ? '#C29367' : '#EBD6BC'} 
-                  fontSize="10" 
-                  className="font-mono font-bold tracking-wider pointer-events-none select-none opacity-80 group-hover:opacity-100 transition-opacity"
-                  style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
+                  fill={isActive ? '#FDBA74' : '#FFFDF8'} 
+                  fontSize="11" 
+                  fontWeight="800"
+                  className="font-mono tracking-wider pointer-events-none select-none transition-all"
+                  style={{
+                    paintOrder: 'stroke fill',
+                    stroke: '#130E0A',
+                    strokeWidth: '4.5px',
+                    strokeLinejoin: 'round',
+                    textShadow: '0 2px 8px rgba(0,0,0,0.8)',
+                  }}
                 >
                   {node.name.split(' ')[0]}
                 </text>

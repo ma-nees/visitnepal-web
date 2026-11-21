@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  devIndicators: false,
 
   // Image optimization with modern AVIF and WebP formats
   /* config options here */

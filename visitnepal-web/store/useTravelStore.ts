@@ -172,67 +172,197 @@ interface TravelStore {
 const initialStays: Stay[] = [
   {
     id: 's1',
-    name: 'Shangri-La Cyber-Resort',
+    name: "The Dwarika's Heritage Palace",
     type: 'Luxury',
     location: 'Kathmandu Valley',
-    price: 320,
+    price: 340,
     rating: 4.9,
     image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800',
-    features: ['Holographic concierge', 'Oxygen-rich pods', 'Rooftop Helipad', 'Geothermal Spa'],
-    description: 'An ultra-luxury sanctuary situated at the foothills of Kathmandu, combining ancient Newari architecture with advanced architectural design. Features sensory isolation spas and full AI butler integration.',
-    coords: [27.7172, 85.324],
+    features: ['14th-Century Newari Woodcraft', 'Courtyard Lotus Pool', 'Ayurvedic Panchakarma Spa', '6 Dining Pavilions'],
+    description: 'A living museum and sanctuary preserving ancient Newari terracotta architecture. Handcrafted brickwork, courtyards, and organic Nepali royal dining.',
+    coords: [27.7056, 85.3486],
     availableDates: ['2026-06-01', '2026-06-02', '2026-06-03', '2026-06-04'],
     roomPreviews: [
-      { name: 'Nebula Presidential Suite', price: 450, image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=800', info: '360° virtual window displaying active Himalayan skies.' },
-      { name: 'Zen Glass Sanctuary', price: 320, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800', info: 'Indoor thermal pool and biometric health monitors.' }
+      { name: 'Heritage Courtyard Suite', price: 340, image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=800', info: 'Antique carved pillars, king canopy bed & brass soaking tub.' },
+      { name: 'Royal Newari Master Suite', price: 520, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800', info: 'Private courtyard terrace overlooking heritage shrines.' }
     ]
   },
   {
     id: 's2',
-    name: 'Everest Quantum Domes',
+    name: 'Everest View Quantum Lodge & Domes',
     type: 'Eco Resort',
-    location: 'Gorak Shep (5,164m)',
-    price: 680,
+    location: 'Syangboche (3,880m)',
+    price: 460,
     rating: 5.0,
     image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=800',
-    features: ['Pressurized pods', 'Heated floors', 'Himalayan astronomy deck', '3D Printed Meals'],
-    description: 'The highest luxury eco-resort in the world. Positioned right below Everest Base Camp, offering climate-controlled glass dome structures with raw panoramic views of Mt. Everest, Lhotse, and Nuptse.',
-    coords: [27.9878, 86.925],
+    features: ['360° Everest Panorama', 'Pressurized Oxygen Suites', 'Heated Stone Hearth', 'Astronomy Stargazing Deck'],
+    description: 'The highest altitude luxury eco-resort in the Khumbu region. Every heated suite directly faces the summit pyramids of Mt. Everest, Lhotse, and Ama Dablam.',
+    coords: [27.8103, 86.7144],
     availableDates: ['2026-06-10', '2026-06-11', '2026-06-12'],
     roomPreviews: [
-      { name: 'Celestial Glass Dome', price: 680, image: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=800', info: 'Polarized anti-glare dome glass with direct sky-tracking star maps.' }
+      { name: 'Sagarmatha Summit Panorama Suite', price: 460, image: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=800', info: 'Direct floor-to-ceiling Everest view with medical oxygen generator.' },
+      { name: 'Ama Dablam Glacial Glass Dome', price: 620, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800', info: 'Polarized geodesic dome for high-altitude dark-sky milky way viewing.' }
     ]
   },
   {
     id: 's3',
-    name: 'Phewa Mirror Sanctuary',
+    name: 'Pavilions Himalayas The Farm',
     type: 'Boutique Hotel',
-    location: 'Pokhara Lakeside',
-    price: 210,
-    rating: 4.8,
+    location: 'Pokhara Valley',
+    price: 280,
+    rating: 4.9,
     image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=800',
-    features: ['Infinity Lakeside Pool', 'Solar Yacht Access', 'Smart Audio Rooms', 'Meditation Gardens'],
-    description: 'A striking minimalist boutique stay reflecting the pristine waters of Phewa Lake. Fully automated lighting, zero-gravity bedding, and automated eco-climate controls.',
-    coords: [28.2096, 83.9856],
+    features: ['100% Solar Powered', 'Infinity Valley Pool', 'Organic Farm-to-Table', 'Annapurna Range Horizon'],
+    description: 'A secluded eco-luxury haven tucked away in a quiet valley outside Pokhara. Organic gardens, mountain-view infinity pools, and Ayurvedic spa treatments.',
+    coords: [28.1833, 83.95],
     availableDates: ['2026-05-28', '2026-05-29', '2026-05-30'],
     roomPreviews: [
-      { name: 'Lake-mirror Pavilion', price: 210, image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800', info: 'Full retractable glass walls floating right above Lake Phewa.' }
+      { name: 'Valley Chalet Villa', price: 280, image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800', info: 'Open-air rain shower, private terrace over rice paddy terraces.' },
+      { name: 'Grand Himalayan Sanctuary Villa', price: 410, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800', info: 'Plunge pool with unhindered vista of Machhapuchhre fishtail peak.' }
     ]
   },
   {
     id: 's4',
-    name: 'Annapurna Cyber Lodge',
+    name: 'Moksha Mustang Heritage Resort',
     type: 'Mountain Lodge',
-    location: 'Manang Valley (3,519m)',
-    price: 150,
-    rating: 4.7,
+    location: 'Jomsom, Mustang (2,800m)',
+    price: 320,
+    rating: 4.8,
     image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800',
-    features: ['Acclimatization chamber', 'Hot tub over mountains', 'Local microbrewery', 'Smart map planning'],
-    description: 'A cozy sanctuary for Annapurna Circuit adventurers. Equips guests with biometric trekking wearables, geothermal heating, and automated satellite communications.',
-    coords: [28.6667, 84.0333],
+    features: ['Local Riverstone Walls', 'Himalayan Apple Cellar', 'Heated Slate Flooring', 'Tibetan Herbal Spa'],
+    description: 'An architectural marvel carved into the desert canyon of Lower Mustang. Enjoy private woodstoves, local Marpha apple brandies, and Nilgiri mountain panoramas.',
+    coords: [28.7844, 83.7431],
     availableDates: ['2026-05-31', '2026-06-01', '2026-06-02'],
     roomPreviews: [
-      { name: 'Sagarmatha View Room', price: 150, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800', info: 'Fitted with adjustable oxygen flow dial and pine-scented humidifiers.' }
+      { name: 'Nilgiri Mountain View Suite', price: 320, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800', info: 'Floor-to-ceiling glass facing Nilgiri peak with heated fleece bedding.' }
+    ]
+  },
+  {
+    id: 's5',
+    name: 'Tiger Tops Tharu Safari Lodge',
+    type: 'Eco Resort',
+    location: 'Chitwan National Park',
+    price: 240,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1581888227599-779811939961?q=80&w=800',
+    features: ['Ethical Elephant Camp', 'Solar-Powered Bungalows', 'Jungle Jeep Safaris', 'Tharu Cultural Dining'],
+    description: 'Pioneers of conservation tourism in Nepal. Stay in handcrafted mud-and-thatch longhouses surrounded by wild sal forests, rhinos, and Bengal tiger habitats.',
+    coords: [27.5342, 84.4489],
+    availableDates: ['2026-06-05', '2026-06-06', '2026-06-07'],
+    roomPreviews: [
+      { name: 'Tharu Heritage Safari Room', price: 240, image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800', info: 'Solar fan, handwoven local textiles, and veranda overlooking buffer forest.' }
+    ]
+  },
+  {
+    id: 's6',
+    name: 'Yeti Mountain Home Kongde',
+    type: 'Mountain Lodge',
+    location: 'Kongde Ri, Khumbu (4,250m)',
+    price: 490,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
+    features: ['World’s Highest Luxury Lodge', 'Direct Everest Face', 'Sherpa Hospitality', 'Heated Electric Blankets'],
+    description: 'Perched on a cliff edge high above Namche Bazaar, this secluded mountain lodge offers the most spectacular unobstructed panoramic breakfast view of Mt. Everest.',
+    coords: [27.8011, 86.6892],
+    availableDates: ['2026-06-12', '2026-06-13', '2026-06-14'],
+    roomPreviews: [
+      { name: 'Panoramic Summit Room', price: 490, image: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=800', info: 'Timber-lined sanctuary with down duvets, hot water bottles and Everest view.' }
+    ]
+  },
+  {
+    id: 's7',
+    name: 'Barahi Jungle River Lodge',
+    type: 'Luxury',
+    location: 'Meghauli, Chitwan',
+    price: 310,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=800',
+    features: ['Rapti River Waterfront', 'Private Plunge Pools', 'Canoe Birding Safaris', 'Campfire Bush Dinners'],
+    description: 'Overlooking the serene Rapti river where wild one-horned rhinos drink at sunset. Luxury stone-and-wood cottages with private verandas and expert naturalists.',
+    coords: [27.5812, 84.2145],
+    availableDates: ['2026-06-15', '2026-06-16', '2026-06-17'],
+    roomPreviews: [
+      { name: 'Riverfront Deluxe Cottage', price: 310, image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=800', info: 'Handcrafted timber furnishings with glass doors opening directly to the river.' }
+    ]
+  },
+  {
+    id: 's8',
+    name: 'Kyanjin Ri Glacier Eco Lodge',
+    type: 'Eco Resort',
+    location: 'Langtang Valley (3,870m)',
+    price: 95,
+    rating: 4.7,
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800',
+    features: ['Artisan Yak Cheese Farm', 'Glacial Moraine View', 'Wood Stove Hearth', 'Fresh Himalayan Herbs'],
+    description: 'An authentic high-altitude eco lodge situated in the heart of Langtang amphitheater. Warm fire hearths, homemade apple crumble, and direct trail access to Kyanjin Ri.',
+    coords: [28.2125, 85.5681],
+    availableDates: ['2026-06-03', '2026-06-04', '2026-06-05'],
+    roomPreviews: [
+      { name: 'Glacier Panorama Room', price: 95, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800', info: 'Cozy pine room with heavy fleece quilts and view of Langtang Lirung icefalls.' }
+    ]
+  },
+  {
+    id: 's9',
+    name: 'The Fort Resort Heritage Sanctuary',
+    type: 'Boutique Hotel',
+    location: 'Nagarkot Ridge (2,175m)',
+    price: 165,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800',
+    features: ['Sunrise Over 5 Himalayan Ranges', 'Terraced Pine Forest', 'Heritage Terracotta', 'Organic Bakery'],
+    description: 'Built in the fortified palace style with handmade red bricks and carved wood. Renowned for spectacular 180-degree sunrises stretching all the way to Mt. Everest.',
+    coords: [27.7167, 85.5167],
+    availableDates: ['2026-06-08', '2026-06-09', '2026-06-10'],
+    roomPreviews: [
+      { name: 'Sunrise Balcony Suite', price: 165, image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800', info: 'Private balcony facing East for the morning golden sunrise over the peaks.' }
+    ]
+  },
+  {
+    id: 's10',
+    name: 'Shinta Mani Mustang - Bensley Collection',
+    type: 'Luxury',
+    location: 'Jomsom, Mustang (2,800m)',
+    price: 890,
+    rating: 5.0,
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800',
+    features: ['Bill Bensley Design', 'Helicopter Excursions', 'All-Inclusive Expeditions', 'Private Amchi Tibetan Doctor'],
+    description: 'An extraordinary ultra-luxury sanctuary by visionary designer Bill Bensley. Blends traditional Tibetan art with dramatic raw Himalayan stone, floor heating, and fine dining.',
+    coords: [28.7844, 83.7431],
+    availableDates: ['2026-06-20', '2026-06-21', '2026-06-22'],
+    roomPreviews: [
+      { name: 'Mustang Royal Suite', price: 890, image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=800', info: 'Bespoke hand-painted Tibetan motifs, personal sherpa butler, and Nilgiri view.' }
+    ]
+  },
+  {
+    id: 's11',
+    name: 'Old Inn Bandipur Living Heritage',
+    type: 'Homestay',
+    location: 'Bandipur Ridge (1,030m)',
+    price: 110,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=800',
+    features: ['18th-Century Merchant House', 'Traffic-Free Bazaar', 'Mountain View Balcony', 'Traditional Newari Feasts'],
+    description: 'Restored Newari merchant mansion with wooden shutter windows and brass lanterns. Stroll along the cobblestone promenade of ancient Bandipur under mountain silhouettes.',
+    coords: [27.9333, 84.4167],
+    availableDates: ['2026-06-02', '2026-06-03', '2026-06-04'],
+    roomPreviews: [
+      { name: 'Newari Balcony Room', price: 110, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800', info: 'Handmade cotton quilts, terracotta floors, and balcony over the bazaar.' }
+    ]
+  },
+  {
+    id: 's12',
+    name: 'Rara Lake Sapphire Eco Camp',
+    type: 'Homestay',
+    location: 'Rara Lake, Mugu (2,990m)',
+    price: 75,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800',
+    features: ['Lakeside Stargazing', 'Organic Buckwheat Pancakes', 'Wooden Horse Riding', 'Crystal Clear Waters'],
+    description: 'Step out directly onto the tranquil shores of Nepal’s largest sapphire-blue alpine lake. Pine-scented mountain air, traditional wood fires, and unmatched remote silence.',
+    coords: [29.5375, 82.0792],
+    availableDates: ['2026-06-18', '2026-06-19', '2026-06-20'],
+    roomPreviews: [
+      { name: 'Sapphire Shore Timber Lodge', price: 75, image: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=800', info: 'Rustic pine timber room right beside the morning water reflections.' }
     ]
   }
 ];

@@ -49,52 +49,52 @@ function SidebarItem({
   onClick,
 }: SidebarItemProps) {
   return (
-    <div className="relative group px-2">
+    <div className="relative group px-1.5">
       <button
         onClick={onClick}
         aria-label={label}
-        className={`w-full flex items-center h-10 px-2.5 rounded-xl transition-all duration-200 relative text-left cursor-pointer overflow-hidden ${
+        className={`w-full flex items-center h-8.5 px-2 rounded-lg transition-all duration-200 relative text-left cursor-pointer overflow-hidden ${
           isActive
             ? 'bg-[#0552A2]/10 text-[#0552A2] font-semibold shadow-xs'
             : 'text-slate-600 hover:text-[#17212B] hover:bg-slate-200/50 font-medium'
         }`}
-        style={{ fontSize: '13px' }}
+        style={{ fontSize: '12px' }}
       >
         {/* Active Pill Accent Indicator */}
         <span
-          className={`absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#0552A2] transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#0552A2] transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-50'
           }`}
         />
 
         {/* Icon Container: Fixed width & positioning prevents any horizontal jumping */}
         <span
-          className={`h-7 w-7 shrink-0 flex items-center justify-center rounded-lg transition-transform duration-200 group-hover:scale-105 ${
+          className={`h-6 w-6 shrink-0 flex items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-105 ${
             isActive ? 'text-[#0552A2]' : 'text-slate-400 group-hover:text-slate-700'
           }`}
         >
           {typeof icon === 'string' ? (
-            <Icon d={icon} size={18} />
+            <Icon d={icon} size={16} />
           ) : (
-            React.createElement(icon, { size: 18, className: 'shrink-0' })
+            React.createElement(icon, { size: 16, className: 'shrink-0' })
           )}
         </span>
 
         {/* Text Label & Badge: Smooth opacity and transform transition */}
         <div
-          className={`flex-1 min-w-0 flex items-center justify-between ml-3 whitespace-nowrap overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`flex-1 min-w-0 flex items-center justify-between ml-2.5 whitespace-nowrap overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             collapsed
               ? 'opacity-0 -translate-x-2 pointer-events-none max-w-0 ml-0'
-              : 'opacity-100 translate-x-0 max-w-[200px]'
+              : 'opacity-100 translate-x-0 max-w-[170px]'
           }`}
         >
-          <span className="truncate tracking-tight text-xs font-medium">
+          <span className="truncate tracking-tight text-[12px] font-medium">
             {label}
           </span>
 
           {badge && (
             <span
-              className={`rounded-full text-[10px] font-mono font-bold px-2 py-0.5 leading-none shrink-0 ml-2 transition-colors ${
+              className={`rounded-full text-[9px] font-mono font-bold px-1.5 py-0.2 leading-none shrink-0 ml-1.5 transition-colors ${
                 isActive
                   ? 'bg-[#0552A2] text-white'
                   : 'bg-slate-200/80 text-slate-600 group-hover:bg-[#0552A2]/15 group-hover:text-[#0552A2]'
@@ -107,14 +107,14 @@ function SidebarItem({
 
         {/* Collapsed Badge Dot Indicator */}
         {collapsed && badge && (
-          <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-[#EC1F27] ring-2 ring-[#F6FAFD]" />
+          <span className="absolute top-1.5 right-2 h-1.5 w-1.5 rounded-full bg-[#EC1F27] ring-2 ring-white" />
         )}
       </button>
 
       {/* Accessible Floating Tooltip in Collapsed Mode */}
       {collapsed && (
-        <div className="absolute left-[70px] top-1/2 -translate-y-1/2 z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out">
-          <div className="bg-[#17212B] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg shadow-xl flex items-center gap-1.5 whitespace-nowrap border border-white/10">
+        <div className="absolute left-[58px] top-1/2 -translate-y-1/2 z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out">
+          <div className="bg-[#17212B] text-white text-xs font-semibold px-2 py-1 rounded-md shadow-xl flex items-center gap-1.5 whitespace-nowrap border border-white/10">
             <span>{label}</span>
             {badge && (
               <span className="bg-[#0552A2] text-white font-mono text-[9px] font-bold px-1.5 py-0.2 rounded-full">
@@ -145,11 +145,11 @@ function SidebarGroup({
   onItemClick,
 }: SidebarGroupProps) {
   return (
-    <div className="py-2.5">
+    <div className="py-1">
       {/* Group Title: Smoothly fades and collapses without abrupt DOM removal */}
       <div className="overflow-hidden">
         <p
-          className={`text-[10px] font-mono tracking-widest uppercase text-slate-400 px-4 pb-1.5 font-bold select-none whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`text-[9px] font-mono tracking-widest uppercase text-slate-400 px-3 pb-1 font-bold select-none whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             collapsed ? 'opacity-0 -translate-x-2 h-0 pb-0' : 'opacity-100 translate-x-0 h-auto'
           }`}
         >
@@ -189,13 +189,13 @@ export default function LeftSidebar({
     <>
       {/* ── 1. DESKTOP / TABLET IN-FLOW SIDEBAR ───────────────────────────── */}
       <aside
-        className={`hidden md:flex flex-col shrink-0 h-full select-none bg-[#F6FAFD] border-r border-slate-200 z-20 will-change-[width] overflow-hidden transition-[width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          collapsed ? 'w-[68px]' : 'w-[256px]'
+        className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 z-20 will-change-[width] overflow-hidden transition-[width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          collapsed ? 'w-[54px]' : 'w-[204px]'
         }`}
       >
         {/* Sticky Header / Toggle Bar */}
         <div
-          className={`sticky top-0 z-30 bg-[#F6FAFD]/95 backdrop-blur-md border-b border-slate-100 px-3 py-2.5 flex items-center h-12 ${
+          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-2.5 py-1.5 flex items-center h-10 ${
             collapsed ? 'justify-center' : 'justify-between'
           }`}
         >
@@ -205,7 +205,7 @@ export default function LeftSidebar({
               collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100 pl-1'
             }`}
           >
-            <span className="text-[11px] font-mono font-bold tracking-wider text-slate-400 uppercase whitespace-nowrap">
+            <span className="text-[10px] font-mono font-bold tracking-wider text-slate-400 uppercase whitespace-nowrap">
               Navigation
             </span>
           </div>
@@ -213,13 +213,13 @@ export default function LeftSidebar({
           {/* Toggle Button: Smooth rotation & hover transition */}
           <button
             onClick={() => onCollapsedChange(!collapsed)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-[#0552A2] hover:bg-slate-200/50 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
+            className="p-1 rounded-md text-slate-400 hover:text-[#0552A2] hover:bg-slate-200/50 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
             title={collapsed ? 'Expand Sidebar (Ctrl+B)' : 'Collapse Sidebar (Ctrl+B)'}
             aria-label={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             <svg
-              width="16"
-              height="16"
+              width="15"
+              height="15"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -236,7 +236,7 @@ export default function LeftSidebar({
         </div>
 
         {/* Scrollable Navigation Groups List */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-100/80 py-2 scrollbar-none">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden divide-y divide-slate-100/80 py-1 scrollbar-none">
           {navGroups.map((group) => (
             <SidebarGroup
               key={group.title}
@@ -252,15 +252,15 @@ export default function LeftSidebar({
         {/* Footer Support / Portal Tag */}
         <div
           className={`border-t border-slate-100 bg-slate-50/70 text-left overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            collapsed ? 'h-0 opacity-0 p-0 border-transparent pointer-events-none' : 'h-auto opacity-100 p-3.5'
+            collapsed ? 'h-0 opacity-0 p-0 border-transparent pointer-events-none' : 'h-auto opacity-100 p-2.5'
           }`}
         >
-          <div className="flex items-center gap-2 whitespace-nowrap">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className="text-[11px] font-mono text-slate-500 font-medium truncate">NTB System Active</span>
+          <div className="flex items-center gap-1.5 whitespace-nowrap">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span className="text-[10px] font-mono text-slate-500 font-medium truncate">NTB System Active</span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1 leading-snug whitespace-nowrap">
-            Nepal Tourism Board Official Portal
+          <p className="text-[9px] text-slate-400 mt-0.5 leading-snug whitespace-nowrap">
+            Nepal Tourism Board Portal
           </p>
         </div>
       </aside>
@@ -276,9 +276,9 @@ export default function LeftSidebar({
           />
 
           {/* Drawer Container */}
-          <div className="relative w-72 max-w-[85vw] bg-[#F6FAFD] h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+          <div className="relative w-64 max-w-[80vw] bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
             {/* Mobile Drawer Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-[#F6FAFD]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-white">
               <span className="text-xs font-mono font-bold tracking-wider text-[#0552A2] uppercase">
                 Expedition Navigation
               </span>

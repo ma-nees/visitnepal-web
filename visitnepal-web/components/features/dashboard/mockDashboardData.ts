@@ -453,7 +453,7 @@ export interface ActivityLogItem {
 export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   {
     id: 'act-1',
-    icon: '🏨',
+    icon: 'hotel',
     title: 'Lodging Confirmed',
     description: 'Sagarmatha View Lodge room confirmed for 13–16 December in Namche Bazaar.',
     timestamp: '2 hours ago',
@@ -461,7 +461,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-2',
-    icon: '🗺️',
+    icon: 'map',
     title: 'Draft Itinerary Updated',
     description: 'Added Poon Hill sunrise checkpoint to your Annapurna Sanctuary itinerary.',
     timestamp: 'Yesterday',
@@ -469,7 +469,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-3',
-    icon: '📄',
+    icon: 'file-check',
     title: 'Permit Verification Issued',
     description: 'ACAP Conservation Permit (PRM-2026-081) officially endorsed by Nepal Tourism Board.',
     timestamp: '2 days ago',
@@ -477,7 +477,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-4',
-    icon: '❤️',
+    icon: 'heart',
     title: 'Destination Bookmarked',
     description: 'Saved Rara Lake Alpine Sanctuary to your personal Himalayan wishlist.',
     timestamp: '3 days ago',
@@ -485,7 +485,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-5',
-    icon: '✈️',
+    icon: 'plane',
     title: 'Flight Tickets Confirmed',
     description: 'Tara Air KTM ➔ LUA morning flight e-ticket confirmed (Ref: FL-TARA-220).',
     timestamp: '4 days ago',
@@ -493,7 +493,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-6',
-    icon: '🧗',
+    icon: 'user-check',
     title: 'Guide Assignment Approved',
     description: 'Nima Dorjee Sherpa (IFMGA / UIAGM certified) assigned to your Annapurna expedition.',
     timestamp: '5 days ago',
@@ -501,7 +501,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-7',
-    icon: '🪂',
+    icon: 'mountain',
     title: 'Adventure Activity Booked',
     description: 'Sarangkot Sunrise Tandem Paragliding voucher generated for 26 December in Pokhara.',
     timestamp: '1 week ago',
@@ -509,7 +509,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-8',
-    icon: '🎒',
+    icon: 'shield-check',
     title: 'Gear Checklist Validated',
     description: 'Sherpa AI reviewed your high-altitude winter gear list with zero warnings.',
     timestamp: '1 week ago',
@@ -517,7 +517,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-9',
-    icon: '🏨',
+    icon: 'hotel',
     title: 'Luxury Heritage Stay Reserved',
     description: "The Dwarika's Hotel heritage courtyard suite reserved for Kathmandu arrival.",
     timestamp: '2 weeks ago',
@@ -525,7 +525,7 @@ export const RECENT_ACTIVITY_LOG: ActivityLogItem[] = [
   },
   {
     id: 'act-10',
-    icon: '🗺️',
+    icon: 'map',
     title: 'New Journey Draft Initiated',
     description: 'Created Langtang Valley & Sacred Gosainkunda Lakes expedition draft.',
     timestamp: '2 weeks ago',

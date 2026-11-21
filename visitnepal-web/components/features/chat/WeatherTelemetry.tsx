@@ -26,42 +26,30 @@ export default function WeatherTelemetry({ rightCollapsed, weather }: WeatherTel
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-[0.14em]">
-          Himalayan Telemetry
+        <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          Telemetry
         </span>
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-medium text-[#64748B]">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+        <span className="inline-flex items-center gap-1.5 text-[9px] font-medium text-slate-500">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
           Live 10m Sync
         </span>
       </div>
 
-      <h4 className="text-[15px] font-bold text-[#17212B] leading-snug">{weather.region}</h4>
-
-      <div className="grid grid-cols-2 gap-4 pt-1">
-        <div>
-          <span className="text-[10px] uppercase tracking-wider font-medium text-[#64748B] block">
-            Base Temp
-          </span>
-          <span className="text-2xl font-bold tracking-tight text-[#0552A2] mt-0.5 block leading-none">
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <h4 className="text-xs font-bold text-[#17212B] truncate">{weather.region}</h4>
+          <span className="text-[10px] text-slate-500 block truncate mt-0.5">{weather.status}</span>
+        </div>
+        <div className="text-right shrink-0">
+          <span className="text-xl font-bold tracking-tight text-[#0552A2] leading-none block">
             {weather.temp}
           </span>
-        </div>
-        <div>
-          <span className="text-[10px] uppercase tracking-wider font-medium text-[#64748B] block">
-            Conditions
-          </span>
-          <span className="text-sm font-semibold text-[#17212B] mt-1 block leading-snug">
-            {weather.status}
+          <span className="inline-block text-[8px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 mt-1">
+            {weather.alert}
           </span>
         </div>
-      </div>
-
-      <div className="pt-1">
-        <span className="inline-flex items-center text-[10px] font-semibold text-[#0552A2] bg-[#F2F8FD] px-2.5 py-1 rounded-full">
-          {weather.alert}
-        </span>
       </div>
     </div>
   );

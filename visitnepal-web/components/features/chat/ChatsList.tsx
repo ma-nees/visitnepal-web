@@ -7,14 +7,20 @@ export type Channel = ChatChannel;
 
 export interface ChatsListProps {
   channels: ChatChannel[];
-  onActiveChannelIdChange: (id: string) => void;
-  onChatViewStateChange: (state: 'inbox' | 'conversation') => void;
+  activeChannelId?: string;
+  onActiveChannelIdChange?: (id: string) => void;
+  onChatViewStateChange?: (state: 'inbox' | 'conversation') => void;
+  onSelectChannel?: (id: string) => void;
+  onExpandToggle?: (id: string) => void;
 }
 
 export default function ChatsList({
   channels,
+  activeChannelId,
   onActiveChannelIdChange,
   onChatViewStateChange,
+  onSelectChannel,
+  onExpandToggle,
 }: ChatsListProps) {
   return (
     <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-1 min-h-0 my-1 py-1 scrollbar-thin">
@@ -23,15 +29,26 @@ export default function ChatsList({
           const lastMsg = chan.messages[chan.messages.length - 1];
           const isAi = chan.id === 'ch-ai';
           const isMeLast = lastMsg?.sender === 'user';
+          const isSelected = activeChannelId === chan.id;
           
           return (
             <button
               key={chan.id}
               onClick={() => {
-                onActiveChannelIdChange(chan.id);
-                onChatViewStateChange('conversation');
+                if (onSelectChannel) {
+                  onSelectChannel(chan.id);
+                } else if (onActiveChannelIdChange) {
+                  onActiveChannelIdChange(chan.id);
+                }
+                if (onChatViewStateChange) {
+                  onChatViewStateChange('conversation');
+                }
               }}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F2F8FD] active:bg-[#92C4EA]/20 transition-all duration-150 text-left cursor-pointer group border border-transparent hover:border-[#92C4EA]/30"
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 text-left cursor-pointer group border ${
+                isSelected
+                  ? 'bg-[#F2F8FD] border-[#0552A2]/30'
+                  : 'hover:bg-[#F2F8FD] border-transparent hover:border-[#92C4EA]/30'
+              }`}
             >
               {/* Avatar */}
               <div className="relative shrink-0">

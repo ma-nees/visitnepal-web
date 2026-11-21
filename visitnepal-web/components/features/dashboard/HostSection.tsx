@@ -60,12 +60,12 @@ export default function HostSection({ activeId }: HostSectionProps) {
       animate="visible"
       className="w-full text-left"
     >
-      <div className="flex flex-col gap-6 max-w-sm mx-auto py-8">
+      <div className="flex flex-col gap-6 max-w-md w-full mx-auto py-4 px-2 sm:px-0">
         
         {/* ── BECOME A HOST ────────────────────────────────────────────── */}
         {activeId === 'becomehost' && (
-          <motion.div variants={itemVariants} className="bg-[var(--card-bg)] border border-[#92C4EA]/35 p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-[#92C4EA]/20 pb-2">
+          <motion.div variants={itemVariants} className="bg-white border border-slate-200/90 p-6 rounded-2xl flex flex-col gap-4 shadow-xs">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-slate-100 pb-2">
               Become a Host / Guide
             </h3>
             <form onSubmit={e => handleSubmit(e, 'Host profile submitted')} className="flex flex-col gap-3 font-mono text-[10px]">
@@ -76,7 +76,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={hostName}
                   onChange={e => setHostName(e.target.value)}
                   placeholder="Nima Sherpa" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
@@ -85,7 +85,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
                 <select 
                   value={hostType}
                   onChange={e => setHostType(e.target.value)}
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:outline-none"
                 >
                   <option value="Guide">Certified Mountaineer Guide</option>
                   <option value="Stay">Hotel / Tea House Owner</option>
@@ -94,7 +94,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
               </div>
               <button 
                 type="submit"
-                className="bg-[#0552A2] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 hover:bg-[#B08156] transition-colors cursor-pointer"
+                className="bg-[#0552A2] hover:bg-[#044080] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 transition-colors cursor-pointer shadow-2xs"
               >
                 Register Host Credentials
               </button>
@@ -104,8 +104,8 @@ export default function HostSection({ activeId }: HostSectionProps) {
 
         {/* ── LIST YOUR PROPERTY ────────────────────────────────────────── */}
         {activeId === 'listproperty' && (
-          <motion.div variants={itemVariants} className="bg-[var(--card-bg)] border border-[#92C4EA]/35 p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-[#92C4EA]/20 pb-2">
+          <motion.div variants={itemVariants} className="bg-white border border-slate-200/90 p-6 rounded-2xl flex flex-col gap-4 shadow-xs">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-slate-100 pb-2">
               List Your Property
             </h3>
             <form onSubmit={e => handleSubmit(e, 'Property listing requested')} className="flex flex-col gap-3 font-mono text-[10px]">
@@ -116,7 +116,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={propertyName}
                   onChange={e => setPropertyName(e.target.value)}
                   placeholder="Annapurna Cyber Lodge" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
@@ -127,7 +127,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={propertyLocation}
                   onChange={e => setPropertyLocation(e.target.value)}
                   placeholder="Manang Valley (3,519m)" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
@@ -138,13 +138,13 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={propertyPrice}
                   onChange={e => setPropertyPrice(e.target.value)}
                   placeholder="120" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
               <button 
                 type="submit"
-                className="bg-[#0552A2] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 hover:bg-[#B08156] transition-colors cursor-pointer"
+                className="bg-[#0552A2] hover:bg-[#044080] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 transition-colors cursor-pointer shadow-2xs"
               >
                 Submit Property for Audit
               </button>
@@ -154,8 +154,8 @@ export default function HostSection({ activeId }: HostSectionProps) {
 
         {/* ── LIST AN ATTRACTION ────────────────────────────────────────── */}
         {activeId === 'listattraction' && (
-          <motion.div variants={itemVariants} className="bg-[var(--card-bg)] border border-[#92C4EA]/35 p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-[#92C4EA]/20 pb-2">
+          <motion.div variants={itemVariants} className="bg-white border border-slate-200/90 p-6 rounded-2xl flex flex-col gap-4 shadow-xs">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-slate-100 pb-2">
               Register Landmark / Trail
             </h3>
             <form onSubmit={e => handleSubmit(e, 'Landmark registered successfully')} className="flex flex-col gap-3 font-mono text-[10px]">
@@ -166,7 +166,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={attractionName}
                   onChange={e => setAttractionName(e.target.value)}
                   placeholder="Tengboche Monastery" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
@@ -177,13 +177,13 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={attractionRegion}
                   onChange={e => setAttractionRegion(e.target.value)}
                   placeholder="Khumbu Region" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
               <button 
                 type="submit"
-                className="bg-[#0552A2] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 hover:bg-[#B08156] transition-colors cursor-pointer"
+                className="bg-[#0552A2] hover:bg-[#044080] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 transition-colors cursor-pointer shadow-2xs"
               >
                 Request Landmark Registration
               </button>
@@ -193,8 +193,8 @@ export default function HostSection({ activeId }: HostSectionProps) {
 
         {/* ── PERMIT AUTHORITY / REGISTER OFFICER ────────────────────────── */}
         {activeId === 'listpermit' && (
-          <motion.div variants={itemVariants} className="bg-[var(--card-bg)] border border-[#92C4EA]/35 p-6 rounded-2xl flex flex-col gap-4 shadow-sm">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-[#92C4EA]/20 pb-2">
+          <motion.div variants={itemVariants} className="bg-white border border-slate-200/90 p-6 rounded-2xl flex flex-col gap-4 shadow-xs">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] text-center border-b border-slate-100 pb-2">
               Permit Officer Registration
             </h3>
             <form onSubmit={e => handleSubmit(e, 'Immigration authority logged')} className="flex flex-col gap-3 font-mono text-[10px]">
@@ -205,7 +205,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={permitOfficerName}
                   onChange={e => setPermitOfficerName(e.target.value)}
                   placeholder="Officer K. P. Sharma" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
@@ -216,13 +216,13 @@ export default function HostSection({ activeId }: HostSectionProps) {
                   value={permitOfficerCode}
                   onChange={e => setPermitOfficerCode(e.target.value)}
                   placeholder="••••••••" 
-                  className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs text-[#17212B]"
+                  className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs text-[#17212B] focus:border-[#0552A2] focus:outline-none"
                   required
                 />
               </div>
               <button 
                 type="submit"
-                className="bg-[#0552A2] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 hover:bg-[#B08156] transition-colors cursor-pointer"
+                className="bg-[#0552A2] hover:bg-[#044080] text-white font-bold py-2.5 rounded-xl uppercase tracking-widest mt-2 transition-colors cursor-pointer shadow-2xs"
               >
                 Login to Immigration Desk
               </button>
@@ -239,7 +239,7 @@ export default function HostSection({ activeId }: HostSectionProps) {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
             >
-              <div className="bg-[#F8FAFD] border border-[#92C4EA]/40 p-5 rounded-3xl text-center shadow-xl">
+              <div className="bg-white border border-[#92C4EA]/40 p-5 rounded-3xl text-center shadow-xl">
                 <span className="text-2xl mb-1 block">📝</span>
                 <h4 className="text-sm font-bold text-[#17212B]">{successMsg}</h4>
                 <p className="text-[10px] text-[#475569] mt-1">Audit verification queue updated.</p>

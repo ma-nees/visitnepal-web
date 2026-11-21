@@ -33,7 +33,7 @@ export default function AuthLeftPanel({
 
       {/* Centered Nepal Map Vector */}
       <div className="absolute inset-0 z-10 flex items-center justify-center p-8 pointer-events-none scale-105">
-        <NepalBackgroundMap isSidebar={true} />
+        <NepalBackgroundMap isSidebar={true} theme="dark" />
       </div>
 
       {/* Bottom coordinates display */}

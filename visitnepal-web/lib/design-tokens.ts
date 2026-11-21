@@ -4,6 +4,7 @@ export const colors = {
   deepBlue: '#0552A2',
   nepalRed: '#EC1F27',
   goldenYellow: '#FDB716',
+  pureWhite: '#FFFFFF',
   glacierWhite: '#FFFFFF',
 
   // Semantic colors

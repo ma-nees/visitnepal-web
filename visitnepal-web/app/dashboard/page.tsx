@@ -15,6 +15,7 @@ import AccountSection from '@/components/features/dashboard/AccountSection';
 import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Home,
   SlidersHorizontal,
@@ -134,18 +135,22 @@ export default function DashboardPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  // Keyboard shortcut: Ctrl+B or Cmd+B to toggle sidebar smoothly
+  // Keyboard shortcut: Ctrl+B to toggle left sidebar, Ctrl+I to toggle right sidebar
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
         e.preventDefault();
         setCollapsed((c) => !c);
       }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'i') {
+        e.preventDefault();
+        setRightCollapsed((c) => !c);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-  const [rightCollapsed, setRightCollapsed] = useState(false);
+  const [rightCollapsed, setRightCollapsed] = useState(true);
   const [isFullExpanded, setIsFullExpanded] = useState(false);
   const [expandedChannelId, setExpandedChannelId] = useState<string | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -217,7 +222,7 @@ export default function DashboardPage() {
 
   if (!currentUser || !currentUser.loggedIn) {
     return (
-      <div className="h-screen w-screen bg-[#F2F8FD] flex items-center justify-center font-mono text-xs text-[#0552A2] tracking-widest uppercase">
+      <div className="h-screen w-screen bg-white flex items-center justify-center font-mono text-xs text-[#0552A2] tracking-widest uppercase">
         <span className="h-2 w-2 bg-[#0552A2] rounded-full animate-ping mr-2" />
         Connecting to Visit Nepal Travel Portal...
       </div>
@@ -476,7 +481,7 @@ export default function DashboardPage() {
             <button
               key={chip}
               onClick={() => setChatInput(chip)}
-              className="text-[10px] font-mono bg-[#F2F8FD] border border-[#92C4EA]/40 hover:border-[#0552A2] text-[#0552A2] hover:bg-[#0552A2] hover:text-white px-2.5 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap"
+              className="text-[10px] font-mono bg-slate-50 border border-slate-200 hover:border-[#0552A2] text-[#0552A2] hover:bg-[#0552A2] hover:text-white px-2.5 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap"
             >
               {chip}
             </button>
@@ -536,10 +541,10 @@ export default function DashboardPage() {
   const activeChannelObj = channels.find(c => c.id === activeChannelId) || channels[0];
 
   return (
-    <div className="dashboard-theme h-screen flex flex-col overflow-hidden relative bg-[#EDF3F9] text-[#17212B] font-sans">
+    <div className="dashboard-theme h-screen flex flex-col overflow-hidden relative bg-white text-[#17212B] font-sans">
 
       {/* ── TOP EDITORIAL HEADER BAR ─────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-3 bg-[#F8FAFD]/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 flex items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         {/* Brand Logo & Back to Home */}
         <div className="flex items-center gap-3 sm:gap-6 select-none">
           {/* Mobile Navigation Drawer Trigger */}
@@ -556,7 +561,7 @@ export default function DashboardPage() {
             </svg>
           </button>
 
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" prefetch={false} className="flex items-center gap-3 group">
             <div className="relative h-9 w-24">
               <Image
                 src="/logo.png"
@@ -574,6 +579,7 @@ export default function DashboardPage() {
 
           <Link
             href="/"
+            prefetch={false}
             className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-[#0552A2] transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -586,17 +592,32 @@ export default function DashboardPage() {
         {/* Global Controls & Traveler Gateway */}
         <div className="flex items-center gap-3 relative">
           {/* Weather status pill */}
-          <div className="hidden md:flex items-center gap-2 bg-[#F2F8FD] border border-[#92C4EA]/30 px-3 py-1.5 rounded-full">
+          <button
+            onClick={() => {
+              if (!rightCollapsed && rightSidebarTab === 'telemetry') {
+                setRightCollapsed(true);
+              } else {
+                setRightSidebarTab('telemetry');
+                setRightCollapsed(false);
+              }
+            }}
+            className="hidden md:flex items-center gap-2 bg-slate-50 border border-slate-200 hover:border-[#0552A2]/40 hover:bg-[#EAF3FB] px-3 py-1.5 rounded-full cursor-pointer transition-colors"
+            title="Toggle Himalayan Weather & Telemetry"
+          >
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[11px] font-mono text-[#0552A2] font-semibold">{weather.region.split('(')[0].trim()}</span>
             <span className="text-[11px] font-bold text-slate-700">{weather.temp}</span>
-          </div>
+          </button>
 
           {/* Intelligence drawer button */}
           <button
             onClick={() => {
-              setRightCollapsed(false);
-              setRightSidebarTab(rightSidebarTab === 'telemetry' ? 'chat' : 'telemetry');
+              if (!rightCollapsed && rightSidebarTab === 'telemetry') {
+                setRightCollapsed(true);
+              } else {
+                setRightSidebarTab('telemetry');
+                setRightCollapsed(false);
+              }
             }}
             className={`p-2 rounded-xl transition-colors cursor-pointer flex items-center justify-center relative ${rightSidebarTab === 'telemetry' && !rightCollapsed
               ? 'bg-[#0552A2]/10 text-[#0552A2]'
@@ -612,8 +633,8 @@ export default function DashboardPage() {
           {/* Chat / Dispatches button */}
           <button
             onClick={() => {
-              if (rightSidebarTab === 'chat' && !rightCollapsed) {
-                setRightSidebarTab('telemetry');
+              if (!rightCollapsed && rightSidebarTab === 'chat') {
+                setRightCollapsed(true);
               } else {
                 setRightSidebarTab('chat');
                 setRightCollapsed(false);
@@ -671,7 +692,7 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => { setActive('customize'); setProfileDropdownOpen(false); }}
-                className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-slate-50 text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
@@ -681,7 +702,7 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => { setActive('bookings'); setProfileDropdownOpen(false); }}
-                className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center justify-between font-medium cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-slate-50 text-slate-700 hover:text-[#0552A2] transition-colors flex items-center justify-between font-medium cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -699,7 +720,7 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => { setActive('pasttrips'); setProfileDropdownOpen(false); }}
-                className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-slate-50 text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -747,43 +768,92 @@ export default function DashboardPage() {
         />
 
         {/* ── MAIN CONTENT CANVAS ───────────────────────────────────────── */}
-        {['everest', 'pokhara', 'kathmandu', 'chitwan', 'mustang'].includes(active) ? (
-          <InfoDetailPanel
-            slug={active}
-            onBack={() => handleActiveChange(previousActive)}
-            rightCollapsed={rightCollapsed}
-            setRightCollapsed={setRightCollapsed}
-          />
-        ) : (
-          <div className="flex-1 flex flex-col min-w-0 relative bg-[#EDF3F9] transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]">
-            {/* Context breadcrumb & Search toolbar */}
-            <div className="flex items-center justify-between px-6 py-3 bg-[#F8FAFD] border-b border-slate-200/70 select-none relative z-10">
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-                <span className="uppercase tracking-wider font-semibold text-slate-500">{activeDetails.groupTitle}</span>
-                <span className="text-slate-300">/</span>
-                <span className="text-[#0552A2] font-bold">{activeDetails.itemLabel}</span>
+        <AnimatePresence mode="wait" initial={false}>
+          {['everest', 'pokhara', 'kathmandu', 'chitwan', 'mustang'].includes(active) ? (
+            <motion.div
+              key={`detail-${active}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className="flex-1 flex flex-col min-w-0 h-full overflow-hidden"
+            >
+              <InfoDetailPanel
+                slug={active}
+                onBack={() => handleActiveChange(previousActive)}
+                rightCollapsed={rightCollapsed}
+                setRightCollapsed={setRightCollapsed}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="main-canvas"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="flex-1 flex flex-col min-w-0 relative bg-white transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            >
+              {/* Context breadcrumb & Search toolbar */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-white border-b border-slate-200/70 select-none relative z-10 gap-2 sm:gap-4">
+                <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+                  <span className="uppercase tracking-wider font-semibold text-slate-500">{activeDetails.groupTitle}</span>
+                  <span className="text-slate-300">/</span>
+                  <span className="text-[#0552A2] font-bold">{activeDetails.itemLabel}</span>
+                </div>
+
+                <div className="flex items-center w-full sm:max-w-xs relative">
+                  <span className="absolute left-3 text-slate-400 flex items-center justify-center pointer-events-none">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search destinations, guides, stays..."
+                    className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-9 pr-4 py-1.5 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
+                  />
+                </div>
               </div>
 
-              <div className="flex items-center max-w-xs w-full relative">
-                <span className="absolute left-3 text-slate-400 flex items-center justify-center pointer-events-none">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                  </svg>
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search destinations, guides, stays..."
-                  className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-9 pr-4 py-1.5 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
-                />
-              </div>
-            </div>
+              {/* Main scrollable body */}
+              <main className="flex-1 overflow-y-auto p-3 sm:p-5 md:p-6 pb-20 md:pb-6 min-h-0 relative z-10 scrollbar-thin">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={active}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full min-h-full"
+                  >
+                    {renderActiveSection()}
+                  </motion.div>
+                </AnimatePresence>
+              </main>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-            {/* Main scrollable body */}
-            <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 min-h-0 relative z-10 scrollbar-thin">
-              {renderActiveSection()}
-            </main>
-          </div>
+        {/* Edge Toggle Tab to reopen Right Sidebar when collapsed on desktop */}
+        {rightCollapsed && (
+          <button
+            onClick={() => {
+              setRightCollapsed(false);
+              setRightSidebarTab('telemetry');
+            }}
+            className="hidden xl:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-white border border-slate-200 border-r-0 rounded-l-xl px-2 py-3 shadow-md hover:shadow-lg hover:bg-blue-50/50 text-[#0552A2] transition-all cursor-pointer flex-col items-center gap-1.5 group select-none animate-in fade-in slide-in-from-right-2 duration-200"
+            title="Open Himalayan Intel & Weather (Ctrl+I)"
+            aria-label="Open Himalayan Intel & Weather"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-0.5 transition-transform text-[#0552A2]">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#0552A2] [writing-mode:vertical-lr] rotate-180">
+              Intel
+            </span>
+          </button>
         )}
 
         {/* ── RIGHT INTELLIGENCE SIDEBAR ─────────────────────────────────── */}
@@ -818,7 +888,7 @@ export default function DashboardPage() {
       {actionAlert.visible && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200] max-w-sm w-full px-4 animate-in fade-in slide-in-from-top-6 duration-300">
           <div className="p-4 bg-white border-2 border-[#0552A2] rounded-2xl shadow-xl flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-[#F2F8FD] text-[#0552A2] flex items-center justify-center text-lg animate-pulse">
+            <div className="h-9 w-9 rounded-full bg-blue-50 text-[#0552A2] flex items-center justify-center text-lg animate-pulse">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
             </div>
             <div className="flex-1 min-w-0 text-left">

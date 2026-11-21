@@ -103,14 +103,18 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
             <p className="text-xs text-[#475569]">Hire native Himalayan navigators certified for high altitude routes, wildlife tracking, and translation support.</p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div 
+            variants={itemVariants} 
+            className="grid gap-5 auto-card-grid"
+            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))' }}
+          >
             {guides.map(guide => (
               <div 
                 key={guide.id}
-                className="bg-[var(--card-bg)] border border-[#92C4EA]/35 rounded-2xl p-5 flex flex-col justify-between hover:border-[#0552A2]/50 transition-all duration-300 shadow-[0_4px_12px_rgba(61,45,39,0.01)]"
+                className="bg-white border border-slate-200/90 rounded-2xl p-5 flex flex-col justify-between hover:border-[#0552A2]/50 transition-all duration-300 shadow-xs"
               >
                 <div className="flex gap-4">
-                  <img src={guide.avatar} alt={guide.name} className="w-16 h-16 object-cover rounded-xl border border-[#92C4EA]/30 shrink-0" />
+                  <img src={guide.avatar} alt={guide.name} className="w-16 h-16 object-cover rounded-xl border border-slate-200 shrink-0" />
                   <div className="flex-1 flex flex-col gap-1">
                     <div className="flex justify-between items-start">
                       <h3 className="text-sm font-bold text-[#17212B]">{guide.name}</h3>
@@ -123,14 +127,14 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center mt-5 border-t border-[#92C4EA]/15 pt-3">
+                <div className="flex justify-between items-center mt-5 border-t border-slate-100 pt-3">
                   <div className="text-xs font-mono">
                     <span className="text-[#64748B] block text-[9px] uppercase">Service Rate</span>
                     <span className="font-bold text-[#17212B]">${guide.pricePerDay}/day</span>
                   </div>
                   <button 
                     onClick={() => handleHireGuide(guide)}
-                    className="bg-[#0552A2] text-white text-[10px] font-mono font-bold px-3.5 py-2 rounded-lg hover:bg-[#B08156] transition-colors cursor-pointer"
+                    className="bg-[#0552A2] hover:bg-[#044080] text-white text-[10px] font-mono font-bold px-3.5 py-2 rounded-lg transition-colors cursor-pointer shadow-2xs"
                   >
                     Hire Guide
                   </button>
@@ -141,7 +145,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
 
           {hiredGuide && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-              <div className="bg-[#F8FAFD] border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center">
+              <div className="bg-white border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center">
                 <span className="text-2xl mb-1 block">🧗</span>
                 <h4 className="text-sm font-bold text-[#17212B]">Guide Application Recieved</h4>
                 <p className="text-xs text-[#475569] mt-1.5 leading-relaxed">
@@ -168,9 +172,9 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
             {/* Form */}
             <motion.div 
               variants={itemVariants}
-              className="bg-[var(--card-bg)] border border-[#92C4EA]/35 p-5 rounded-2xl flex flex-col gap-4 shadow-sm"
+              className="bg-white border border-slate-200/90 p-5 rounded-2xl flex flex-col gap-4 shadow-xs"
             >
-              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-[#92C4EA]/20 pb-2">
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-slate-100 pb-2">
                 New Permit Request
               </h3>
 
@@ -181,7 +185,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                     type="text" 
                     value={applicantName} 
                     onChange={e => setApplicantName(e.target.value)}
-                    className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs focus:outline-none focus:border-[#0552A2] text-[#17212B]"
+                    className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs focus:outline-none focus:border-[#0552A2] text-[#17212B]"
                     required
                   />
                 </div>
@@ -191,17 +195,17 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                     type="text" 
                     value={passportNumber} 
                     onChange={e => setPassportNumber(e.target.value)}
-                    className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs focus:outline-none focus:border-[#0552A2] text-[#17212B]"
+                    className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs focus:outline-none focus:border-[#0552A2] text-[#17212B]"
                     required
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex flex-col gap-1.5">
                     <label className="uppercase text-[#64748B]">Permit Class</label>
                     <select 
                       value={permitType} 
                       onChange={e => setPermitType(e.target.value as any)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs focus:outline-none text-[#17212B]"
+                      className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs focus:outline-none text-[#17212B]"
                     >
                       <option value="Trekking">Trekking Loop</option>
                       <option value="Mountaineering">Mountaineering Peak</option>
@@ -214,19 +218,19 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                       type="text" 
                       value={zone} 
                       onChange={e => setZone(e.target.value)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs focus:outline-none focus:border-[#0552A2] text-[#17212B]"
+                      className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs focus:outline-none focus:border-[#0552A2] text-[#17212B]"
                       required
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex flex-col gap-1.5">
                     <label className="uppercase text-[#64748B]">Start Date</label>
                     <input 
                       type="date" 
                       value={startDate} 
                       onChange={e => setStartDate(e.target.value)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs focus:outline-none text-[#17212B] font-mono"
+                      className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs focus:outline-none text-[#17212B] font-mono"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -235,7 +239,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                       type="date" 
                       value={endDate} 
                       onChange={e => setEndDate(e.target.value)}
-                      className="bg-[#F2F8FD] border border-[#92C4EA]/40 p-2.5 rounded-lg text-xs focus:outline-none text-[#17212B] font-mono"
+                      className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs focus:outline-none text-[#17212B] font-mono"
                     />
                   </div>
                 </div>
@@ -243,7 +247,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="bg-[#0552A2] hover:bg-[#B08156] text-white py-2.5 rounded-xl font-bold uppercase tracking-widest mt-2 cursor-pointer transition-colors text-[10px]"
+                  className="bg-[#0552A2] hover:bg-[#044080] text-white py-2.5 rounded-xl font-bold uppercase tracking-widest mt-2 cursor-pointer transition-colors text-[10px] shadow-2xs"
                 >
                   {isSubmitting ? 'Requesting...' : 'Request Permit Clearances'}
                 </button>
@@ -252,13 +256,13 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
 
             {/* List */}
             <motion.div variants={itemVariants} className="flex flex-col gap-4">
-              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-[#92C4EA]/20 pb-2">
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-slate-100 pb-2">
                 Active Permits Ledger
               </h3>
 
               <div className="flex flex-col gap-3">
                 {permits.map(permit => (
-                  <div key={permit.id} className="bg-[#F2F8FD]/40 border border-[#92C4EA]/35 p-4 rounded-xl flex justify-between items-center">
+                  <div key={permit.id} className="bg-white border border-slate-200/90 p-4 rounded-xl flex justify-between items-center shadow-xs">
                     <div>
                       <span className="text-[8px] font-mono font-bold text-white bg-[#0552A2] px-1.5 py-0.5 rounded uppercase">
                         {permit.type}
@@ -286,7 +290,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-[#F8FAFD] border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center w-full"
+                  className="bg-white border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center w-full"
                 >
                   <div className="flex flex-col items-center gap-3">
                     <span className="h-6 w-6 rounded-full border-2 border-t-transparent border-[#0552A2] animate-spin" />

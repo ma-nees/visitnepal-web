@@ -83,7 +83,7 @@ export default function AdminSection({ activeId }: AdminSectionProps) {
                     <span className="text-[#475569]">{spot.name}</span>
                     <div className="flex items-center gap-2">
                       {/* Density meter */}
-                      <div className="w-16 h-1.5 rounded-full bg-[#F2F8FD] overflow-hidden border border-[#92C4EA]/30">
+                      <div className="w-16 h-1.5 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
                         <div 
                           style={{ width: `${spot.intensity * 100}%` }}
                           className="h-full bg-[#0552A2]"
@@ -100,7 +100,7 @@ export default function AdminSection({ activeId }: AdminSectionProps) {
           {/* AI insights list */}
           <motion.div 
             variants={itemVariants}
-            className="bg-[#F2F8FD]/50 border border-[#92C4EA]/35 p-5 rounded-2xl flex flex-col gap-3"
+            className="bg-white border border-slate-200/90 p-5 rounded-2xl flex flex-col gap-3 shadow-xs"
           >
             <span className="text-[9px] font-mono font-bold text-[#0552A2] uppercase">Cognitive AI Highlights</span>
             <ul className="flex flex-col gap-2 list-disc list-inside text-xs text-[#475569] leading-relaxed">

@@ -22,7 +22,7 @@ export default function AuthRightLayout({ children }: AuthRightLayoutProps) {
         />
         <div className="absolute inset-0 bg-[#FAF9F5]/90 pointer-events-none" />
         <div className="absolute inset-0 flex items-center justify-center p-4 pointer-events-none scale-105">
-          <NepalBackgroundMap isSidebar={false} />
+          <NepalBackgroundMap isSidebar={false} theme="light" />
         </div>
       </div>
 

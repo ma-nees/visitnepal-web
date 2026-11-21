@@ -6,6 +6,7 @@ import { useTravelStore } from '@/store/useTravelStore';
 import LeftSidebar from '@/components/features/dashboard/LeftSidebar';
 import RightSidebar from '@/components/features/dashboard/RightSidebar';
 import InfoDetailPanel from '@/components/features/info/InfoDetailPanel';
+import { Mountain, ArrowLeft } from 'lucide-react';
 
 import {
   NAV_GROUPS,
@@ -342,15 +343,18 @@ export default function InfoDetailPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-[#3D2D27]"
         style={{ background: 'linear-gradient(135deg, #FFFEFA 0%, #FAF3E3 100%)' }}>
-        <span className="text-5xl animate-bounce">🏔️</span>
+        <div className="h-16 w-16 rounded-full bg-[#F2F8FD] border-2 border-[#0552A2] flex items-center justify-center text-[#0552A2] shadow-sm">
+          <Mountain className="h-8 w-8 text-[#0552A2]" strokeWidth={2.2} />
+        </div>
         <h1 className="text-xl font-black">Information Hub</h1>
         <p className="text-xs font-mono text-[#A89286]">Data route for "{rawSlug}" not found in current local mock registry.</p>
         <button
           onClick={() => router.push('/dashboard')}
-          className="mt-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white cursor-pointer hover:opacity-90 transition-opacity"
+          className="mt-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white cursor-pointer hover:opacity-90 transition-opacity flex items-center gap-1.5"
           style={{ background: 'linear-gradient(135deg, #C29367, #A67848)' }}
         >
-          ← Back to Main Dashboard
+          <ArrowLeft className="h-3.5 w-3.5" />
+          <span>Back to Main Dashboard</span>
         </button>
       </div>
     );
@@ -378,8 +382,8 @@ export default function InfoDetailPage() {
           onClick={() => router.push('/dashboard')}
           className="flex items-center gap-2.5 cursor-pointer active:scale-98 transition-transform group"
         >
-          <div className="h-8 w-8 rounded-xl bg-[var(--vanilla)] border border-[var(--caramel)]/30 flex items-center justify-center shadow-inner relative overflow-hidden">
-            <span className="text-base font-black text-[var(--caramel)] transform group-hover:rotate-12 transition-transform duration-300">🏔️</span>
+          <div className="h-8 w-8 rounded-xl bg-[#F2F8FD] border border-[#0552A2]/30 flex items-center justify-center shadow-inner relative overflow-hidden text-[#0552A2]">
+            <Mountain className="h-4 w-4 text-[#0552A2] transform group-hover:scale-110 transition-transform duration-300" />
           </div>
           <span className="text-xs font-black tracking-widest uppercase font-mono text-[var(--foreground)]">
             Visit Nepal

@@ -230,9 +230,16 @@ export default function NepalMap() {
                     x={svgX} 
                     y={svgY + 20} 
                     textAnchor="middle" 
-                    fill={isSelected ? '#06b6d4' : '#a1a1aa'} 
-                    fontSize="9" 
-                    className="font-mono font-bold tracking-wider pointer-events-none"
+                    fill={isSelected ? '#06b6d4' : '#f8fafc'} 
+                    fontSize="11" 
+                    fontWeight="800"
+                    className="font-mono tracking-wider pointer-events-none select-none"
+                    style={{
+                      paintOrder: 'stroke fill',
+                      stroke: '#09090b',
+                      strokeWidth: '4px',
+                      strokeLinejoin: 'round',
+                    }}
                   >
                     {hub.name.split(' ')[0]}
                   </text>

@@ -6,6 +6,7 @@
   --color-deep-blue-hover: #043e7b;
   --color-nepal-red: #EC1F27;
   --color-golden-yellow: #FDB716;
+  --color-pure-white: #FFFFFF;
   --color-glacier-white: #FFFFFF;
   --color-foreground: #17212B;
   --color-muted: #4B5563;
@@ -27,6 +28,7 @@
   --color-deep-blue-hover: #043e7b;
   --color-nepal-red: #EC1F27;
   --color-golden-yellow: #FDB716;
+  --color-pure-white: #FFFFFF;
   --color-glacier-white: #FFFFFF;
   --color-foreground: #17212B;
   --color-muted: #4B5563;
@@ -51,7 +53,7 @@ html,
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-glacier-white);
+  background-color: var(--color-pure-white, #FFFFFF);
   color: var(--color-foreground);
   font-family: var(--font-sans);
   overflow-x: clip;
@@ -66,6 +68,12 @@ button,
 a,
 [role="button"] {
   touch-action: manipulation;
+}
+
+/* ─── Broken Image Placeholder Suppression ────────────────────────────────── */
+img:not([src]),
+img[src=""] {
+  visibility: hidden;
 }
 
 /* ─── Global Scrollbar Removal (Entire Website) ───────────────────────────── */
@@ -109,35 +117,36 @@ a,
   height: 0 !important;
 }
 
-/* ─── Dashboard Non-Glacier-White Theme Overrides ─────────────────────────── */
+/* ─── Dashboard Pure White Theme ─────────────────────────────────────────── */
 .dashboard-theme {
-  --color-glacier-white: #F4F8FC;
-  --color-surface: #F8FAFD;
-  --color-surface-muted: #EDF3F9;
-  background-color: #EDF3F9 !important;
+  --color-glacier-white: #FFFFFF;
+  --color-pure-white: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #FFFFFF;
+  background-color: #FFFFFF !important;
 }
 
-/* Eliminate stark glacier white from all dashboard surfaces, sidebars & cards */
+/* Ensure clean pure white on all dashboard surfaces, sidebars & cards */
 .dashboard-theme .bg-white,
 .dashboard-theme .bg-\[\#FFFFFF\],
 .dashboard-theme .bg-\[\#ffffff\] {
-  background-color: #F8FAFD !important;
+  background-color: #FFFFFF !important;
 }
 
 .dashboard-theme .bg-white\/95 {
-  background-color: rgba(248, 250, 253, 0.95) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .dashboard-theme .bg-white\/90 {
-  background-color: rgba(248, 250, 253, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .dashboard-theme .bg-white\/80 {
-  background-color: rgba(248, 250, 253, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .dashboard-theme .bg-white\/60 {
-  background-color: rgba(248, 250, 253, 0.6) !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Typography Scale */
@@ -405,5 +414,76 @@ a,
   transition-property: width, max-width, transform, opacity, padding, margin;
   transition-duration: 350ms;
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── Auto-Responsive Card Grid (Fluid Container-Aware Columns) ───────────── */
+.auto-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  contain: layout inline-size;
+}
+
+.auto-card-grid > * {
+  contain: content;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 320px;
+}
+
+/* ─── Responsive Journey Card (Container-Aware Sidebar Adaptation) ───────── */
+.journey-card-wrapper {
+  container-type: inline-size;
+}
+
+.journey-responsive-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.journey-responsive-visual {
+  width: 100%;
+  height: 210px;
+  min-height: 190px;
+}
+
+@container (min-width: 660px) {
+  .journey-responsive-card {
+    flex-direction: row !important;
+  }
+  .journey-responsive-visual {
+    width: 42% !important;
+    height: auto !important;
+    min-height: 220px !important;
+  }
+}
+
+/* ─── Responsive Multi-Column Grids (Adapts to Left Sidebar Collapse/Open) ── */
+.responsive-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@container (min-width: 440px) {
+  .responsive-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 740px) {
+  .responsive-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@container (min-width: 480px) {
+  .responsive-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 

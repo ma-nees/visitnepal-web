@@ -8,6 +8,7 @@ import DashboardHome from './DashboardHome';
 import { 
   MapPin, 
   ArrowLeft, 
+  ArrowRight,
   Share2, 
   Check, 
   Camera, 
@@ -15,7 +16,8 @@ import {
   Activity, 
   UserPlus, 
   UserCheck, 
-  ClipboardList
+  ClipboardList,
+  User
 } from 'lucide-react';
 
 interface DiscoverSectionProps {
@@ -158,13 +160,15 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
   return (
     <>
-      <motion.div
-        key={activeId}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="w-full text-left"
-      >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={activeId}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full text-left"
+        >
         {/* ── HOME VIEW ────────────────────────────────────────────────── */}
         {activeId === 'home' && (
           selectedProfileUser ? (
@@ -323,7 +327,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                     className="flex flex-col gap-6"
                   >
                     {feedPosts.filter(p => p.userName === selectedProfileUser.name).length === 0 ? (
-                      <div className="text-center py-12 bg-[#F2F8FD]/20 border border-[#92C4EA]/35 rounded-2xl">
+                      <div className="text-center py-12 bg-white border border-slate-200/90 rounded-2xl shadow-xs">
                         <p className="text-xs font-mono text-[#64748B]">No chronicles published yet by this traveler.</p>
                       </div>
                     ) : (
@@ -332,17 +336,12 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                         .map((post) => (
                           <div 
                             key={post.id}
-                            style={{
-                              background: 'rgba(255, 254, 250, 0.75)',
-                              border: '1px solid rgba(194,147,103,0.14)',
-                              boxShadow: '0 4px 16px rgba(61,45,39,0.015)',
-                            }}
-                            className="rounded-2xl overflow-hidden hover:border-[#0552A2]/25 transition-all duration-300 flex flex-col text-left"
+                            className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden hover:border-[#0552A2]/30 transition-all duration-300 flex flex-col text-left"
                           >
                             {/* Post Header */}
                             <div className="flex items-center justify-between p-4.5 pb-2">
                               <div className="flex items-center gap-3">
-                                <div className="h-9 w-9 rounded-full overflow-hidden border border-[#92C4EA]/40 bg-[#F2F8FD]">
+                                <div className="h-9 w-9 rounded-full overflow-hidden border border-slate-200 bg-slate-100">
                                   <img src={post.userAvatar} alt={post.userName} className="h-full w-full object-cover" />
                                 </div>
                                 <div>
@@ -371,13 +370,13 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
                             {/* Post Image */}
                             {post.image && (
-                              <div className="w-full overflow-hidden border-y border-[#92C4EA]/15 max-h-72">
+                              <div className="w-full overflow-hidden border-y border-slate-100 max-h-72">
                                 <img src={post.image} alt="Chronicle scene" className="w-full object-cover max-h-72" />
                               </div>
                             )}
 
                             {/* Post Interactive Actions */}
-                            <div className="flex items-center gap-4 px-4.5 py-3 border-t border-[#92C4EA]/10 mt-1">
+                            <div className="flex items-center gap-4 px-4.5 py-3 border-t border-slate-100 mt-1">
                               <button
                                 onClick={() => likeFeedPost(post.id)}
                                 className={`flex items-center gap-1.5 text-[10px] font-medium transition-colors cursor-pointer ${post.likedByUser ? 'text-pink-500' : 'text-[#475569] hover:text-pink-500'}`}
@@ -397,16 +396,16 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
                             {/* Comment Stream */}
                             {post.comments.length > 0 && (
-                              <div className="px-4.5 pb-3 pt-1 border-t border-[#92C4EA]/5 flex flex-col gap-2">
+                              <div className="px-4.5 pb-3 pt-1 border-t border-slate-100 flex flex-col gap-2">
                                 {post.comments.map((comment) => (
                                   <div key={comment.id} className="flex items-start gap-2 text-left">
                                     <div 
                                       onClick={() => handleCommenterClick(comment.userName)}
-                                      className="h-5 w-5 rounded-full overflow-hidden border border-[#92C4EA]/30 bg-[#F2F8FD]/50 shrink-0 flex items-center justify-center text-[7px] text-[#0552A2] font-bold cursor-pointer hover:scale-95 transition-transform"
+                                      className="h-5 w-5 rounded-full overflow-hidden border border-slate-200 bg-slate-100 shrink-0 flex items-center justify-center text-[#0552A2] cursor-pointer hover:scale-95 transition-transform"
                                     >
-                                      👤
+                                      <User className="h-2.5 w-2.5 text-[#0552A2]" />
                                     </div>
-                                    <div className="flex-1 bg-[#F2F8FD]/35 rounded-xl px-3 py-1.5 border border-[#92C4EA]/15">
+                                    <div className="flex-1 bg-slate-50 rounded-xl px-3 py-1.5 border border-slate-200">
                                       <span 
                                         onClick={() => handleCommenterClick(comment.userName)}
                                         className="text-[10px] font-bold text-[#17212B] cursor-pointer hover:text-[#0552A2] hover:underline transition-colors block"
@@ -530,7 +529,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                       <h3 className="text-xs font-mono font-bold uppercase text-[#0552A2] tracking-wider mb-1">Calibrated Gear Pack</h3>
                       {getDiscoverProfileDetails(selectedProfileUser.name, selectedProfileUser.role).gear.map((g: any, idx: number) => (
                         <div key={idx} className="flex gap-3 items-start border-b border-[#F8FAFC] pb-2.5 last:border-0 last:pb-0">
-                          <div className="h-6 w-6 rounded-lg bg-[#F2F8FD] border border-[#0552A2]/20 flex items-center justify-center text-[11px] font-bold text-[#0552A2] mt-0.5 font-mono shrink-0">
+                          <div className="h-6 w-6 rounded-lg bg-blue-50 border border-[#0552A2]/20 flex items-center justify-center text-[11px] font-bold text-[#0552A2] mt-0.5 font-mono shrink-0">
                             0{idx + 1}
                           </div>
                           <div>
@@ -562,7 +561,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               {/* Featured Hero Card / Selected Profile Display */}
               <motion.div
                 variants={itemVariants}
-                className="relative rounded-2xl overflow-hidden border border-[#92C4EA]/40 aspect-video md:aspect-[21/9] shadow-sm bg-[#F2F8FD]"
+                className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-900 aspect-video md:aspect-[21/9]"
               >
                 <img
                   src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200&auto=format&fit=crop"
@@ -579,27 +578,27 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               </motion.div>
 
               {/* Quick Info Grid */}
-              <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-[#F2F8FD]/35 p-5 rounded-2xl border border-[#92C4EA]/30 flex flex-col gap-2 text-left">
+              <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col gap-2 text-left">
                   <span className="text-[10px] font-mono font-bold text-[#0552A2] uppercase">01 / Altitudes</span>
-                  <h3 className="text-sm font-bold">8,848m Peak</h3>
+                  <h3 className="text-sm font-bold text-[#17212B]">8,848m Peak</h3>
                   <p className="text-xs text-[#475569] leading-relaxed">Mount Everest rules the skyline along with seven other 8,000m+ giants.</p>
                 </div>
-                <div className="bg-[#F2F8FD]/35 p-5 rounded-2xl border border-[#92C4EA]/30 flex flex-col gap-2 text-left">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col gap-2 text-left">
                   <span className="text-[10px] font-mono font-bold text-[#0552A2] uppercase">02 / Biodiversity</span>
-                  <h3 className="text-sm font-bold">Subtropical to Arctic</h3>
+                  <h3 className="text-sm font-bold text-[#17212B]">Subtropical to Arctic</h3>
                   <p className="text-xs text-[#475569] leading-relaxed">Explore habitats ranging from wild tiger sanctuaries to thin, freezing glaciers.</p>
                 </div>
-                <div className="bg-[#F2F8FD]/35 p-5 rounded-2xl border border-[#92C4EA]/30 flex flex-col gap-2 text-left">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col gap-2 text-left">
                   <span className="text-[10px] font-mono font-bold text-[#0552A2] uppercase">03 / Sanctuary</span>
-                  <h3 className="text-sm font-bold">Zen & Hospitality</h3>
+                  <h3 className="text-sm font-bold text-[#17212B]">Zen & Hospitality</h3>
                   <p className="text-xs text-[#475569] leading-relaxed">Rest in premium eco-resorts and authentic homestays rooted in ancient warmth.</p>
                 </div>
               </motion.div>
 
               {/* ── COMMUNITY TRAVEL DIARIES ── */}
               <motion.div variants={itemVariants} className="flex flex-col gap-6 mt-4">
-                <div className="flex flex-col gap-1 border-b border-[#92C4EA]/20 pb-3 text-left">
+                <div className="flex flex-col gap-1 border-b border-slate-200/80 pb-3 text-left">
                   <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                     Traveler Diaries
                   </span>
@@ -609,20 +608,15 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
                 {/* Premium Post Composer */}
                 <div
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,254,250,0.8) 0%, rgba(250,243,227,0.5) 100%)',
-                    border: '1px solid rgba(194,147,103,0.18)',
-                    boxShadow: '0 4px 20px rgba(61,45,39,0.02)',
-                  }}
-                  className="rounded-2xl p-5 flex flex-col gap-4.5"
+                  className="rounded-2xl p-4 sm:p-5 flex flex-col gap-4 bg-white border border-slate-200/90 shadow-xs"
                 >
                   {/* Text Input Area */}
                   <div className="flex gap-3">
-                    <div className="h-9 w-9 rounded-full overflow-hidden border-2 border-[#0552A2]/20 flex-shrink-0 bg-[#F2F8FD] flex items-center justify-center">
+                    <div className="h-9 w-9 rounded-full overflow-hidden border-2 border-[#0552A2]/20 flex-shrink-0 bg-slate-100 flex items-center justify-center">
                       {currentUser?.avatar ? (
                         <img src={currentUser.avatar} alt={currentUser.name} className="h-full w-full object-cover" />
                       ) : (
-                        <span className="text-xs font-bold text-[#0552A2]">👤</span>
+                        <User className="h-4 w-4 text-[#0552A2]" />
                       )}
                     </div>
                     <textarea
@@ -630,14 +624,14 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                       onChange={(e) => setPostContent(e.target.value)}
                       placeholder="Share your Nepal chronicle... what mountains did you gaze at today?"
                       rows={3}
-                      className="flex-1 bg-white/70 border border-[#92C4EA]/35 focus:border-[#0552A2]/45 focus:bg-white rounded-xl px-4 py-3 text-[11px] text-[#17212B] placeholder-[#64748B]/60 focus:outline-none resize-none font-sans leading-relaxed transition-all shadow-2xs"
+                      className="flex-1 bg-slate-50/70 border border-slate-200 focus:border-[#0552A2]/50 focus:bg-white rounded-xl px-4 py-3 text-[11px] text-[#17212B] placeholder-slate-400 focus:outline-none resize-none font-sans leading-relaxed transition-all shadow-2xs"
                     />
                   </div>
 
                   {/* Photo selector section */}
                   <div className="flex flex-col gap-2.5">
                     {imageSelectorOpen && (
-                      <div className="grid grid-cols-4 gap-2.5 p-3.5 bg-[#F2F8FD]/40 rounded-xl border border-[#92C4EA]/25 animate-in fade-in duration-200">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 bg-slate-50 rounded-xl border border-slate-200 animate-in fade-in duration-200">
                         {MOCK_PHOTOS.map((photo) => (
                           <div
                             key={photo.name}
@@ -703,7 +697,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                           value={postLocation}
                           onChange={(e) => setPostLocation(e.target.value)}
                           placeholder="Add location..."
-                          className="bg-[#F2F8FD] border border-[#92C4EA]/25 rounded-lg pl-6 pr-2.5 py-1.5 text-[9px] text-[#17212B] placeholder-[#64748B]/55 focus:outline-none focus:border-[#0552A2]/40 transition-all font-sans"
+                          className="bg-slate-50 border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-[9px] text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2]/50 focus:bg-white transition-all font-sans"
                         />
                       </div>
                     </div>
@@ -733,12 +727,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                     .map((post) => (
                       <div 
                         key={post.id}
-                        style={{
-                          background: 'rgba(255, 254, 250, 0.75)',
-                          border: '1px solid rgba(194,147,103,0.14)',
-                          boxShadow: '0 4px 16px rgba(61,45,39,0.015)',
-                        }}
-                        className="rounded-2xl overflow-hidden hover:border-[#0552A2]/25 transition-all duration-300 flex flex-col"
+                        className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden hover:border-[#0552A2]/30 transition-all duration-300 flex flex-col"
                       >
                         {/* Post User Header */}
                         <div className="flex items-center justify-between p-4.5 pb-2 text-left">
@@ -754,7 +743,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                                 });
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                               }}
-                              className="h-9 w-9 rounded-full overflow-hidden border border-[#92C4EA]/40 bg-[#F2F8FD] cursor-pointer hover:scale-95 transition-transform"
+                              className="h-9 w-9 rounded-full overflow-hidden border border-slate-200 bg-slate-100 cursor-pointer hover:scale-95 transition-transform"
                             >
                               <img src={post.userAvatar} alt={post.userName} className="h-full w-full object-cover" />
                             </div>
@@ -798,13 +787,13 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
                         {/* Post Image Showcase */}
                         {post.image && (
-                          <div className="w-full overflow-hidden border-y border-[#92C4EA]/15 max-h-72">
+                          <div className="w-full overflow-hidden border-y border-slate-100 max-h-72">
                             <img src={post.image} alt="Chronicle scene" className="w-full object-cover max-h-72" />
                           </div>
                         )}
 
                         {/* Post Interactive Actions */}
-                        <div className="flex items-center gap-4 px-4.5 py-3 border-t border-[#92C4EA]/10 mt-1">
+                        <div className="flex items-center gap-4 px-4.5 py-3 border-t border-slate-100 mt-1">
                           {/* Like Action */}
                           <button
                             onClick={() => likeFeedPost(post.id)}
@@ -826,16 +815,16 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
                         {/* Comment Stream */}
                         {post.comments.length > 0 && (
-                          <div className="px-4.5 pb-3 pt-1 border-t border-[#92C4EA]/5 flex flex-col gap-2">
+                          <div className="px-4.5 pb-3 pt-1 border-t border-slate-100 flex flex-col gap-2">
                             {post.comments.map((comment) => (
                               <div key={comment.id} className="flex items-start gap-2 text-left">
                                 <div 
                                   onClick={() => handleCommenterClick(comment.userName)}
-                                  className="h-5 w-5 rounded-full overflow-hidden border border-[#92C4EA]/30 bg-[#F2F8FD]/50 shrink-0 flex items-center justify-center text-[7px] text-[#0552A2] font-bold cursor-pointer hover:scale-95 transition-transform"
+                                  className="h-5 w-5 rounded-full overflow-hidden border border-slate-200 bg-slate-100 shrink-0 flex items-center justify-center text-[#0552A2] cursor-pointer hover:scale-95 transition-transform"
                                 >
-                                  👤
+                                  <User className="h-2.5 w-2.5 text-[#0552A2]" />
                                 </div>
-                                <div className="flex-1 bg-[#F2F8FD]/35 rounded-xl px-3 py-1.5 border border-[#92C4EA]/15">
+                                <div className="flex-1 bg-slate-50 rounded-xl px-3 py-1.5 border border-slate-200">
                                   <span 
                                     onClick={() => handleCommenterClick(comment.userName)}
                                     className="text-[10px] font-bold text-[#17212B] cursor-pointer hover:text-[#0552A2] hover:underline transition-colors block"
@@ -899,25 +888,63 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               <p className="text-xs text-[#475569]">Select from our handpicked destinations to see local altitude grids and travel stories.</p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {DESTINATIONS.map(d => (
-                <div
+            <motion.div
+              layout="position"
+              className="grid gap-5 auto-card-grid"
+              style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))' }}
+            >
+              {DESTINATIONS.map((d, index) => (
+                <motion.div
                   key={d.id}
+                  layout="position"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    layout: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                    opacity: { duration: 0.28, delay: index * 0.04 },
+                    y: { duration: 0.28, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }
+                  }}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="group bg-[var(--card-bg)] border border-[#92C4EA]/30 rounded-2xl overflow-hidden hover:border-[#0552A2]/50 transition-all duration-305 shadow-[0_4px_12px_rgba(61,45,39,0.015)] cursor-pointer active:scale-[0.99]"
+                  className="group bg-white border border-slate-200/90 rounded-2xl overflow-hidden hover:border-[#0552A2]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-xs cursor-pointer active:scale-[0.985] flex flex-col justify-between transform-gpu will-change-transform"
                 >
-                  <div className="relative h-44 overflow-hidden">
-                    <img src={d.image} alt={d.name} className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" />
-                    <div className="absolute top-3 left-3 bg-white/95 text-[9px] font-mono font-bold text-[#17212B] px-2 py-0.5 rounded border border-[#92C4EA] shadow-sm">
-                      {d.elevation}
+                  <div>
+                    <div className="relative h-36 sm:h-40 overflow-hidden bg-slate-900">
+                      <img
+                        src={d.image}
+                        alt={d.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[10px] font-mono font-bold text-[#0552A2] px-2.5 py-0.5 rounded-full border border-slate-200 shadow-xs">
+                        {d.elevation}
+                      </div>
+                      <div className="absolute bottom-2.5 left-3 text-[10px] font-mono text-white/90 font-medium">
+                        {d.region} Region
+                      </div>
+                    </div>
+
+                    <div className="p-4 flex flex-col gap-1.5">
+                      <h3 className="text-sm sm:text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors leading-snug line-clamp-1">
+                        {d.name}
+                      </h3>
+                      <p className="text-xs text-[#475569] leading-relaxed line-clamp-2">
+                        {d.description}
+                      </p>
                     </div>
                   </div>
-                  <div className="p-5 flex flex-col gap-2">
-                    <span className="text-[9px] font-mono font-bold uppercase text-[#0552A2]">{d.region} Region</span>
-                    <h3 className="text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors">{d.name}</h3>
-                    <p className="text-xs text-[#475569] leading-relaxed">{d.description}</p>
+
+                  <div className="px-4 pb-3.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span className="text-[10px] font-mono text-slate-400">View Details</span>
+                    <button
+                      className="font-bold text-[#0552A2] group-hover:underline flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Explore</span>
+                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-200 ease-out" />
+                    </button>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -925,34 +952,52 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
         {/* ── POPULAR VIEW ──────────────────────────────────────────────── */}
         {activeId === 'popular' && (
-          <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
-            <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-5 max-w-5xl w-full mx-auto py-2">
+            <motion.div variants={itemVariants} className="flex flex-col gap-1">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Trending Travels
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Popular Journeys</h2>
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-[#17212B]">Popular Journeys</h2>
               <p className="text-xs text-[#475569]">Most loved paths by worldwide travelers seeking adventure, peace, and culture.</p>
             </motion.div>
 
-            {/* Simple list cards */}
-            <div className="flex flex-col gap-4">
-              {DESTINATIONS.slice(0, 3).map((d, index) => (
+            {/* Destination Cards matching design - Compact Size */}
+            <div className="flex flex-col gap-3 sm:gap-3.5 mt-1">
+              {DESTINATIONS.map((d, index) => (
                 <motion.div
                   variants={itemVariants}
                   key={d.id}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="bg-[#F2F8FD]/20 border border-[#92C4EA]/30 rounded-2xl p-4.5 flex flex-col md:flex-row gap-5 items-center hover:bg-[#F2F8FD]/50 hover:border-[#0552A2]/40 transition-all duration-200 cursor-pointer active:scale-[0.995] group"
+                  className="group rounded-xl sm:rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.05)] hover:shadow-md hover:border-[#0552A2]/30 transition-all duration-300 overflow-hidden flex flex-col sm:flex-row cursor-pointer"
                 >
-                  <img src={d.image} alt={d.name} className="w-full md:w-36 h-24 object-cover rounded-xl border border-[#92C4EA]/40 shrink-0" />
-                  <div className="flex-1 flex flex-col gap-1 text-left w-full">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono font-bold text-white bg-[#0552A2] px-2 py-0.5 rounded">
+                  {/* Left Flush Image */}
+                  <div className="relative w-full sm:w-48 md:w-56 h-36 sm:h-auto min-h-[120px] sm:min-h-[130px] shrink-0 bg-slate-100 overflow-hidden">
+                    <img
+                      src={d.image}
+                      alt={d.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Right Details */}
+                  <div className="py-3 sm:py-4 px-4 sm:px-5 md:px-6 flex-1 flex flex-col justify-center text-left">
+                    <div className="flex items-center gap-2.5">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#0552A2] text-white text-[10px] sm:text-[11px] font-bold font-mono tracking-tight shadow-2xs select-none">
                         #{index + 1} Trending
                       </span>
-                      <span className="text-[9px] font-mono text-[#64748B]">{d.elevation}</span>
+                      <span className="text-[11px] font-mono font-semibold text-[#0552A2]">
+                        {d.elevation}
+                      </span>
                     </div>
-                    <h3 className="text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors mt-1">{d.name}</h3>
-                    <p className="text-xs text-[#475569] leading-relaxed">{d.description}</p>
+
+                    <h3 className="text-base sm:text-lg font-bold tracking-tight text-[#17212B] mt-1.5 group-hover:text-[#0552A2] transition-colors leading-snug">
+                      {d.name}
+                    </h3>
+
+                    <p className="text-xs text-[#64748B] mt-1 leading-normal line-clamp-2 max-w-2xl">
+                      {d.description}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -971,20 +1016,63 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               <p className="text-xs text-[#475569]">The spiritual monuments, ancient valleys, and high glaciers defining our geography.</p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {DESTINATIONS.map(d => (
-                <div
+            <motion.div
+              layout="position"
+              className="grid gap-5 auto-card-grid"
+              style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))' }}
+            >
+              {DESTINATIONS.map((d, index) => (
+                <motion.div
                   key={d.id}
+                  layout="position"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    layout: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                    opacity: { duration: 0.28, delay: index * 0.04 },
+                    y: { duration: 0.28, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }
+                  }}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="bg-[var(--card-bg)] border border-[#92C4EA]/30 rounded-2xl p-4 flex flex-col gap-3.5 hover:border-[#0552A2]/40 transition-all duration-200 cursor-pointer active:scale-[0.99] group"
+                  className="group bg-white border border-slate-200/90 rounded-2xl overflow-hidden hover:border-[#0552A2]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-xs cursor-pointer active:scale-[0.985] flex flex-col justify-between transform-gpu will-change-transform"
                 >
-                  <img src={d.image} alt={d.name} className="w-full h-32 object-cover rounded-xl border border-[#92C4EA]/20" />
-                  <div className="flex flex-col gap-1 text-xs text-left">
-                    <h3 className="font-bold text-sm text-[#17212B] group-hover:text-[#0552A2] transition-colors">{d.name}</h3>
-                    <p className="text-[#64748B] font-mono text-[9px]">{d.region} • {d.elevation}</p>
-                    <p className="text-[#475569] leading-relaxed mt-1 text-[11px]">{d.description}</p>
+                  <div>
+                    <div className="relative h-36 sm:h-40 overflow-hidden bg-slate-900">
+                      <img
+                        src={d.image}
+                        alt={d.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[10px] font-mono font-bold text-[#0552A2] px-2.5 py-0.5 rounded-full border border-slate-200 shadow-xs">
+                        {d.elevation}
+                      </div>
+                      <div className="absolute bottom-2.5 left-3 text-[10px] font-mono text-white/90 font-medium">
+                        {d.region} Region
+                      </div>
+                    </div>
+
+                    <div className="p-4 flex flex-col gap-1.5">
+                      <h3 className="text-sm sm:text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors leading-snug line-clamp-1">
+                        {d.name}
+                      </h3>
+                      <p className="text-xs text-[#475569] leading-relaxed line-clamp-2">
+                        {d.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="px-4 pb-3.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span className="text-[10px] font-mono text-slate-400">View Details</span>
+                    <button
+                      className="font-bold text-[#0552A2] group-hover:underline flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Explore</span>
+                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-200 ease-out" />
+                    </button>
+                  </div>
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -992,33 +1080,52 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
 
         {/* ── TOP 5 DESTINATIONS VIEW ─────────────────────────────────────── */}
         {activeId === 'top5' && (
-          <div className="flex flex-col gap-6 max-w-[1440px] w-full mx-auto py-4">
-            <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-5 max-w-5xl w-full mx-auto py-2">
+            <motion.div variants={itemVariants} className="flex flex-col gap-1">
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Curated Gold Tier
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Top 5 Destinations</h2>
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-[#17212B]">Top 5 Destinations</h2>
               <p className="text-xs text-[#475569]">The supreme selection representing Trekking, Spiritual peace, Wildlife, Heritage, and desert camps.</p>
             </motion.div>
 
-            <div className="flex flex-col gap-6">
+            {/* Destination Cards matching design - Compact Size */}
+            <div className="flex flex-col gap-3 sm:gap-3.5 mt-1">
               {DESTINATIONS.map((d, idx) => (
                 <motion.div
                   variants={itemVariants}
                   key={d.id}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="bg-[#F2F8FD]/20 border border-[#92C4EA]/30 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:border-[#0552A2]/30 transition-all duration-200 cursor-pointer active:scale-[0.995] group"
+                  className="group rounded-xl sm:rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.05)] hover:shadow-md hover:border-[#0552A2]/30 transition-all duration-300 overflow-hidden flex flex-col sm:flex-row cursor-pointer"
                 >
-                  <div className="w-full md:w-56 h-36 relative shrink-0">
-                    <img src={d.image} alt={d.name} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 left-3 h-7 w-7 rounded-full bg-[#0552A2] text-white flex items-center justify-center font-black text-xs font-mono shadow-sm">
-                      0{idx + 1}
-                    </div>
+                  {/* Left Flush Image */}
+                  <div className="relative w-full sm:w-48 md:w-56 h-36 sm:h-auto min-h-[120px] sm:min-h-[130px] shrink-0 bg-slate-100 overflow-hidden">
+                    <img
+                      src={d.image}
+                      alt={d.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
                   </div>
-                  <div className="p-5 flex flex-col justify-center gap-2 text-left">
-                    <h3 className="text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors">{d.name}</h3>
-                    <p className="text-xs text-[#475569] leading-relaxed">{d.details}</p>
-                    <p className="text-[9px] font-mono text-[#0552A2] uppercase font-bold">{d.region} Region • {d.elevation}</p>
+
+                  {/* Right Details */}
+                  <div className="py-3 sm:py-4 px-4 sm:px-5 md:px-6 flex-1 flex flex-col justify-center text-left">
+                    <div className="flex items-center gap-2.5">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#0552A2] text-white text-[10px] sm:text-[11px] font-bold font-mono tracking-tight shadow-2xs select-none">
+                        #{idx + 1} Top Pick
+                      </span>
+                      <span className="text-[11px] font-mono font-semibold text-[#0552A2]">
+                        {d.elevation}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base sm:text-lg font-bold tracking-tight text-[#17212B] mt-1.5 group-hover:text-[#0552A2] transition-colors leading-snug">
+                      {d.name}
+                    </h3>
+
+                    <p className="text-xs text-[#64748B] mt-1 leading-normal line-clamp-2 max-w-2xl">
+                      {d.description}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -1026,7 +1133,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
           </div>
         )}
       </motion.div>
-
+    </AnimatePresence>
 
     </>
   );

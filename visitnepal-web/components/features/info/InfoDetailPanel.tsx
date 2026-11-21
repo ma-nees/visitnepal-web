@@ -28,7 +28,10 @@ import {
   Minus,
   PlusCircle,
   Trash2,
-  Mountain
+  Mountain,
+  Hotel,
+  Lock,
+  X
 } from 'lucide-react';
 
 import OpenStreetMap from './OpenStreetMap';
@@ -295,8 +298,8 @@ export default function InfoDetailPanel({
       </div>
 
       {/* Main Scroll Content Area */}
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-10 min-h-0 relative z-10 text-left">
-        <div className="max-w-[1440px] w-full mx-auto flex flex-col gap-8 pb-16">
+      <main className="flex-1 overflow-y-auto p-3 sm:p-6 md:p-10 pb-24 md:pb-16 min-h-0 relative z-10 text-left">
+        <div className="max-w-[1440px] w-full mx-auto flex flex-col gap-8 pb-8">
           
           {/* Cover Image Spotlight Frame */}
           <motion.div
@@ -430,7 +433,8 @@ export default function InfoDetailPanel({
               </p>
               {isLuxury && (
                 <div className="text-[10px] text-[#475569] font-medium bg-[#F8FAFC] px-3 py-2 rounded-lg border border-[#92C4EA]/20 mt-1 inline-flex items-center gap-1.5">
-                  <span>🔒 Inclusive perks: Private heli airport shuttling, customized bio-oxygen flow, and exclusive access to remote ancient archives.</span>
+                  <Lock className="h-3 w-3 text-[#0552A2] shrink-0" />
+                  <span>Inclusive perks: Private heli airport shuttling, customized bio-oxygen flow, and exclusive access to remote ancient archives.</span>
                 </div>
               )}
             </div>
@@ -620,7 +624,7 @@ export default function InfoDetailPanel({
                     {/* Accommodation Selector indicator */}
                     <div className="flex items-center gap-2.5 border-t border-b border-[#92C4EA]/10 py-2">
                       <div className="h-7 w-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shrink-0">
-                        🏨
+                        <Hotel className="h-4 w-4" />
                       </div>
                       <div className="text-left">
                         <span className="text-[7.5px] font-mono text-[#64748B] uppercase tracking-wider block leading-none">Accommodation Tier</span>
@@ -823,10 +827,10 @@ export default function InfoDetailPanel({
 
       {/* Booking Success Modal */}
       {bookingSuccess && (
-        <div className="fixed inset-0 z-[300] bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#FFFEFA] border border-[#0552A2] rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl flex flex-col items-center gap-4 animate-in zoom-in-95 duration-200">
-            <div className="h-14 w-14 rounded-full bg-[#F2F8FD] border border-[#0552A2] flex items-center justify-center text-3xl animate-bounce">
-              🏔️
+        <div className="fixed inset-0 z-[300] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-[#0552A2]/20 rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl flex flex-col items-center gap-4 animate-in zoom-in-95 duration-200">
+            <div className="h-14 w-14 rounded-full bg-[#F2F8FD] border-2 border-[#0552A2] flex items-center justify-center text-[#0552A2] shadow-sm">
+              <Mountain className="h-7 w-7 text-[#0552A2]" strokeWidth={2.2} />
             </div>
             <div>
               <h4 className="text-sm font-black text-[#17212B]">Expedition Synced!</h4>
@@ -905,7 +909,7 @@ export default function InfoDetailPanel({
                         onClick={() => setFloatingChatOpen(false)}
                         className="h-6.5 w-6.5 rounded-full bg-white/70 hover:bg-white border border-[#92C4EA]/20 text-[#475569] hover:text-rose-500 flex items-center justify-center cursor-pointer transition-colors"
                       >
-                        ✕
+                        <X className="h-3.5 w-3.5" />
                       </button>
                     </div>
                   </div>
@@ -1023,7 +1027,7 @@ export default function InfoDetailPanel({
           }}
           className="flex h-12 w-12 items-center justify-center rounded-full text-white transition-all active:scale-90 cursor-pointer relative hover:scale-105 duration-200 border border-white/20 animate-bounce"
         >
-          {floatingChatOpen ? '✕' : '💬'}
+          {floatingChatOpen ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
         </button>
       </div>
 
