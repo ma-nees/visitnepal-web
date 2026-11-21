@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useTravelStore } from '@/store/useTravelStore';
 import { Sparkles, User, LogOut, MessageSquare, Calendar, Database, ShieldAlert, Clock, Cloud } from 'lucide-react';
 
