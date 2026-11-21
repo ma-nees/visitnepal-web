@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -58,31 +56,25 @@ export default function Footer() {
 
           {/* Travel Resources & Contact */}
           <div className="lg:col-span-3 flex flex-col gap-3">
-            <span className="text-[11px] uppercase tracking-wider text-[#0552A2] font-black">Traveler Resources</span>
-            <ul className="flex flex-col gap-2.5 text-sm text-[#5A6578] mb-2">
-              <li><Link href="/login" className="hover:text-[#0552A2] transition-colors">TIMS & Park Permits</Link></li>
-              <li><Link href="/login" className="hover:text-[#0552A2] transition-colors">Registered Mountain Guides</Link></li>
-              <li><a href="#plan-your-trip" className="hover:text-[#0552A2] transition-colors">High Altitude Protocols</a></li>
+            <span className="text-[11px] uppercase tracking-wider text-[#0552A2] font-black">Traveler Assistance</span>
+            <ul className="flex flex-col gap-2.5 text-sm text-[#5A6578]">
+              <li><span className="font-semibold text-[#17212B]">Tourism Hotline:</span> +977-1-4256909</li>
+              <li><span className="font-semibold text-[#17212B]">Tourist Police:</span> 1144 (Toll-Free)</li>
+              <li><span className="font-semibold text-[#17212B]">Email:</span> info@visitnepal.gov.np</li>
+              <li><span className="font-semibold text-[#17212B]">Headquarters:</span> Bhrikutimandap, Kathmandu</li>
             </ul>
-            <div className="pt-3 border-t border-zinc-100 text-xs text-[#7A8699] flex flex-col gap-1">
-              <span>Helpdesk: +977-1-4256909</span>
-              <span>Email: info@ntb.gov.np</span>
-              <span>Pradarshani Marg, Kathmandu</span>
-            </div>
           </div>
         </div>
 
-        {/* Sub-Footer: Copyright & Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7A8699]">
-          <div>
-            © {new Date().getFullYear()} Nepal Tourism Board. All rights reserved.
-          </div>
+        {/* Bottom Sub-Footer Bar */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#5A6578] gap-4">
+          <p>© {new Date().getFullYear()} Nepal Tourism Board. Government of Nepal. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="hover:text-[#0552A2] transition-colors cursor-pointer">Privacy Policy</span>
-            <span>•</span>
-            <span className="hover:text-[#0552A2] transition-colors cursor-pointer">Terms of Service</span>
-            <span>•</span>
-            <span className="hover:text-[#0552A2] transition-colors cursor-pointer">Permit Guidelines</span>
+            <a href="#privacy" className="hover:text-[#0552A2] transition-colors">Privacy Policy</a>
+            <span className="text-zinc-300">•</span>
+            <a href="#terms" className="hover:text-[#0552A2] transition-colors">Terms of Service</a>
+            <span className="text-zinc-300">•</span>
+            <a href="#permits" className="hover:text-[#0552A2] transition-colors">Permit Guidelines</a>
           </div>
         </div>
       </div>

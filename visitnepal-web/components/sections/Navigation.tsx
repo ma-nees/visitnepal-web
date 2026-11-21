@@ -10,14 +10,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navigation() {
   const router = useRouter();
-  const { currentUser } = useTravelStore();
+  const currentUser = useTravelStore((state) => state.currentUser);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+    let isScrolled = window.scrollY > 40;
+    setScrolled(isScrolled);
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const nextScrolled = window.scrollY > 40;
+          if (nextScrolled !== isScrolled) {
+            isScrolled = nextScrolled;
+            setScrolled(nextScrolled);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

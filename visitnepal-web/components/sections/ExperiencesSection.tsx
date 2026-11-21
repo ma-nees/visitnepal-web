@@ -182,8 +182,7 @@ export default function ExperiencesSection() {
                     src={selectedExperience.imageUrl}
                     alt={selectedExperience.name}
                     fill
-                    priority
-                    quality={90}
+                    loading="lazy"
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
                   />

@@ -1,14 +1,18 @@
-'use client';
-
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Navigation from '@/components/sections/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
 import StorytellingSection from '@/components/sections/StorytellingSection';
 import DestinationsSection from '@/components/sections/DestinationsSection';
 import ExperiencesSection from '@/components/sections/ExperiencesSection';
 import CultureSection from '@/components/sections/CultureSection';
-import PlanYourTripSection from '@/components/sections/PlanYourTripSection';
 import Footer from '@/components/sections/Footer';
+
+// Code-split below-the-fold interactive console so it does not block initial hydration
+const PlanYourTripSection = dynamic(
+  () => import('@/components/sections/PlanYourTripSection'),
+  { ssr: true }
+);
 
 export default function LandingPage() {
   return (
@@ -31,7 +35,7 @@ export default function LandingPage() {
       {/* Culture & Living Heritage */}
       <CultureSection />
 
-      {/* Interactive Plan Your Trip Console */}
+      {/* Interactive Plan Your Trip Console (Code-split) */}
       <PlanYourTripSection />
 
       {/* Official Tourism Board Footer */}

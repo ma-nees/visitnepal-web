@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,12 +30,14 @@ const itemVariants = {
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
 
-  const filteredDestinations = destinations.filter(d => {
-    if (activeTab === 'mountains') return ['everest', 'annapurna', 'mustang'].includes(d.id);
-    if (activeTab === 'culture') return ['kathmandu', 'lumbini', 'mustang'].includes(d.id);
-    if (activeTab === 'wildlife') return ['chitwan', 'pokhara'].includes(d.id);
-    return true;
-  });
+  const filteredDestinations = useMemo(() => {
+    return destinations.filter(d => {
+      if (activeTab === 'mountains') return ['everest', 'annapurna', 'mustang'].includes(d.id);
+      if (activeTab === 'culture') return ['kathmandu', 'lumbini', 'mustang'].includes(d.id);
+      if (activeTab === 'wildlife') return ['chitwan', 'pokhara'].includes(d.id);
+      return true;
+    });
+  }, [activeTab]);
 
   return (
     <section
@@ -97,7 +99,7 @@ export default function DestinationsSection() {
                 src={destinations[0].imageUrl}
                 alt={destinations[0].name}
                 fill
-                priority
+                loading="lazy"
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-85"
               />

@@ -203,7 +203,7 @@ export default function CultureSection() {
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-103"
-                  priority
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
@@ -423,7 +423,7 @@ export default function CultureSection() {
                     fill
                     sizes="(max-width: 1024px) 100vw, 42vw"
                     className="object-cover"
-                    priority
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
 

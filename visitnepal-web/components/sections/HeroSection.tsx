@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Compass } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,7 +26,8 @@ const itemVariants = {
   },
 };
 
-const heroImage = 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=2400&auto=format&fit=crop';
+// Clean URL allowing Next.js Image component to generate optimal device sizes (AVIF/WebP)
+const heroImage = 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop';
 
 export default function HeroSection() {
   return (
@@ -35,20 +36,20 @@ export default function HeroSection() {
       className="relative min-h-[95vh] lg:min-h-screen flex items-center overflow-hidden bg-[#17212B]"
       aria-labelledby="hero-heading"
     >
-      {/* Background Cinematic Himalaya Photography */}
+      {/* Background Cinematic Himalaya Photography — LCP Prioritized */}
       <motion.div
         className="absolute inset-0 z-0"
-        initial={{ scale: 1.08 }}
+        initial={{ scale: 1.06 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
-        style={{ willChange: 'transform' }}
+        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <Image
           src={heroImage}
           alt="Breathtaking Himalayan mountain peaks bathed in golden alpine dawn"
           fill
           priority
-          quality={90}
+          fetchPriority="high"
+          quality={85}
           sizes="100vw"
           className="object-cover brightness-[0.78]"
         />
@@ -57,9 +58,6 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#17212B]/85 via-transparent to-black/30" />
       </motion.div>
 
-      {/* Vertical editorial coordinate tag on desktop */}
-
-
       <div className="relative z-10 container py-28 md:py-36 lg:py-44">
         <motion.div
           variants={containerVariants}
@@ -67,7 +65,6 @@ export default function HeroSection() {
           animate="visible"
           className="max-w-3xl text-left"
         >
-
           <motion.h1
             id="hero-heading"
             variants={itemVariants}
@@ -114,15 +111,6 @@ export default function HeroSection() {
               <span>Plan Your Journey</span>
             </Link>
           </motion.div>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          variants={itemVariants}
-          className="absolute bottom-8 left-6 sm:left-12 flex items-center gap-3 text-xs uppercase tracking-widest text-white/60 pointer-events-none"
-        >
-
-
         </motion.div>
       </div>
     </section>

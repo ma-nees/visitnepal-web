@@ -1,10 +1,7 @@
-'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Mountain, Heart, Sun, Compass } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const storyMoments = [
   {
@@ -77,6 +74,7 @@ export default function StorytellingSection() {
                       src={moment.imageUrl}
                       alt={moment.title}
                       fill
+                      loading="lazy"
                       sizes="(max-width: 1024px) 100vw, 58vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-104"
                     />
@@ -120,9 +118,6 @@ export default function StorytellingSection() {
             );
           })}
         </div>
-
-        {/* Brand Quote Box */}
-
       </div>
     </section>
   );

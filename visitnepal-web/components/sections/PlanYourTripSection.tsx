@@ -63,7 +63,8 @@ const travelTips = [
 
 export default function PlanYourTripSection() {
   const router = useRouter();
-  const { currentUser, setCustomPreference } = useTravelStore();
+  const currentUser = useTravelStore((state) => state.currentUser);
+  const setCustomPreference = useTravelStore((state) => state.setCustomPreference);
   const [activeStep, setActiveStep] = useState(0);
   const [selections, setSelections] = useState({
     destinations: ['everest'] as string[],
