@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import DiscoverSection from '@/components/features/dashboard/DiscoverSection';
 import ActivitiesSection from '@/components/features/dashboard/ActivitiesSection';
 import LeftSidebar from '@/components/features/dashboard/LeftSidebar';
@@ -13,7 +15,7 @@ import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
 
-// ─── Icon primitives (inline SVG to avoid import issues) ──────────────────────
+// ─── Icon primitives (inline SVG) ─────────────────────────────────────────────
 const Icon = ({ d, size = 16 }: { d: string; size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d={d} />
@@ -104,6 +106,7 @@ export default function DashboardPage() {
     }
     setActive(newActiveId);
   };
+
   const [collapsed, setCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
   const [isFullExpanded, setIsFullExpanded] = useState(false);
@@ -114,7 +117,7 @@ export default function DashboardPage() {
   const [chatViewState, setChatViewState] = useState<'inbox' | 'conversation'>('inbox');
   const [chatInput, setChatInput] = useState('');
   
-  // Messenger premium extra states
+  // Messenger states
   const [floatingChatOpen, setFloatingChatOpen] = useState(false);
   const [calendarMarks, setCalendarMarks] = useState<Record<string, boolean>>({});
   const [userNote, setUserNote] = useState('');
@@ -168,18 +171,18 @@ export default function DashboardPage() {
     }
   }, [channels, floatingChatOpen, activeChannelId]);
 
-  // Auth Portal verification check
+  // Auth verification check
   useEffect(() => {
-    if (!currentUser || !currentUser.loggedIn || !currentUser.otpVerified) {
+    if (!currentUser || !currentUser.loggedIn) {
       router.push('/login');
     }
   }, [currentUser, router]);
 
-  if (!currentUser || !currentUser.loggedIn || !currentUser.otpVerified) {
+  if (!currentUser || !currentUser.loggedIn) {
     return (
-      <div className="h-screen w-screen bg-[#FDFBF7] flex items-center justify-center font-mono text-xs text-[#7A6258] tracking-widest uppercase">
-        <span className="h-2 w-2 bg-[#C29367] rounded-full animate-ping mr-2" />
-        Redirecting to travel portal...
+      <div className="h-screen w-screen bg-[#F2F8FD] flex items-center justify-center font-mono text-xs text-[#0552A2] tracking-widest uppercase">
+        <span className="h-2 w-2 bg-[#0552A2] rounded-full animate-ping mr-2" />
+        Connecting to Visit Nepal Travel Portal...
       </div>
     );
   }
@@ -199,15 +202,15 @@ export default function DashboardPage() {
   // Dynamic weather mappings based on active section
   const getWeatherInfo = () => {
     if (['trekking', 'mountaineering', 'top5'].includes(active)) {
-      return { region: 'Khumbu Peak Station', temp: '-6°C', status: 'Windy, Clear', alert: 'Altitude Warning: 5k m+' };
+      return { region: 'Khumbu Peak Station (5,364m)', temp: '-6°C', status: 'Clear Sky, High UV', alert: 'Altitude Warning: 5,000m+' };
     }
     if (['adventure', 'explore'].includes(active)) {
-      return { region: 'Pokhara Valley', temp: '24°C', status: 'Light Rain', alert: 'Paragliding Active' };
+      return { region: 'Pokhara Lakeside (822m)', temp: '24°C', status: 'Pleasant Breeze', alert: 'Paragliding Clear Window' };
     }
     if (['wildlife'].includes(active)) {
-      return { region: 'Chitwan Jungles', temp: '31°C', status: 'Humid, Sunny', alert: 'Tiger Spotting Active' };
+      return { region: 'Chitwan Jungles (150m)', temp: '31°C', status: 'Subtropical Sunshine', alert: 'Safari Active Today' };
     }
-    return { region: 'Kathmandu Gateway', temp: '22°C', status: 'Sunny', alert: 'Safe Altitude (1,400m)' };
+    return { region: 'Kathmandu Gateway (1,400m)', temp: '22°C', status: 'Sunny & Clear', alert: 'Safe Altitude Window' };
   };
 
   const weather = getWeatherInfo();
@@ -218,23 +221,23 @@ export default function DashboardPage() {
     sendMessage(activeChannelId, userMsg, 'user');
     setChatInput('');
     
-    // Trigger mock responses
+    // Responses from providers
     setTimeout(() => {
       setTyping(activeChannelId, true);
       setTimeout(() => {
         setTyping(activeChannelId, false);
         
-        let replyText = "Namaste! Connecting to the central server in Kathmandu. Let me assist you shortly.";
+        let replyText = "Namaste! Connecting to the central station in Kathmandu. We will assist your journey shortly.";
         if (activeChannelId === 'ch-ai') {
-          replyText = `AURA AI Assistant: I've processed your query about "${userMsg}". Telemetry updates show clear coordinates over the Khumbu flight paths. Syncing your itinerary details.`;
+          replyText = `Sherpa AI Assistant: I've verified coordinates for "${userMsg}". The trail conditions are favorable with stable atmospheric readings across the central ranges.`;
         } else if (activeChannelId === 'ch-g1') {
-          replyText = `Nima Sherpa (Guide): Noted, Alex! I've packed the altitude safety kit. We are scheduled to start our ascent early Friday morning.`;
+          replyText = `Nima Sherpa (Lead Guide): Tashi Delek, ${currentUser.name}! High-altitude gear is checked and our climbing permits are confirmed. Ready when you are!`;
         } else if (activeChannelId === 'ch-s1') {
-          replyText = `Shangri-La Desk: Welcome! We've updated your room oxygen levels. The robotic dinner delivery has been pre-scheduled for 7 PM.`;
+          replyText = `Shangri-La Concierge: Welcome! Your mountain view suite is prepared with panoramic valley vistas. Private tea service is ready at 4 PM.`;
         }
         sendMessage(activeChannelId, replyText, activeChannelId === 'ch-ai' ? 'ai' : 'provider');
-      }, 1500);
-    }, 800);
+      }, 1400);
+    }, 700);
   };
 
   // Group resolver helper to know which Section view component to render
@@ -263,59 +266,59 @@ export default function DashboardPage() {
   const renderSingleChatView = (activeChan: typeof channels[0], showBackButton: boolean) => {
     return (
       <div className="flex flex-col flex-1 min-h-0 px-1 py-1">
-        <div className="flex items-center justify-between border-b border-[var(--waffle)]/15 pb-2.5 mb-2.5 shrink-0">
-          <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2.5 shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0">
             {showBackButton && (
               <button 
                 onClick={() => setChatViewState('inbox')}
-                className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer shrink-0"
+                className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0"
                 title="Back to Inbox"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
                 </svg>
               </button>
             )}
 
-            <div className="relative h-8 w-8 rounded-full overflow-hidden border border-[var(--caramel)]/30 shrink-0">
+            <div className="relative h-9 w-9 rounded-full overflow-hidden border border-slate-200 shrink-0">
               <img src={activeChan.avatar} alt={activeChan.name} className="h-full w-full object-cover" />
               <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-[11px] font-bold text-[var(--foreground)] truncate leading-tight">{activeChan.name}</h4>
-              <span className="text-[7.5px] font-mono text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
+              <h4 className="text-xs font-bold text-[#17212B] truncate leading-tight">{activeChan.name}</h4>
+              <span className="text-[9px] font-mono text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
                 <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-ping" />
-                Active Now
+                Active Link
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-1 shrink-0">
             <button
-              onClick={() => handleActionAlert("Starting secure holographic voice call link...", activeChan.name)}
-              className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer"
+              onClick={() => handleActionAlert("Connecting satellite voice dispatch...", activeChan.name)}
+              className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
               title="Voice Call"
             >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
             </button>
             <button
-              onClick={() => handleActionAlert("Opening secure satellite video stream...", activeChan.name)}
-              className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer"
-              title="Video Stream"
+              onClick={() => handleActionAlert("Starting video link...", activeChan.name)}
+              className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+              title="Video Link"
             >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M23 7l-7 5 7 5V7z" />
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
               </svg>
             </button>
             <button
               onClick={() => setRightSidebarTab('telemetry')}
-              className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer"
-              title="Details"
+              className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+              title="Telemetry Details"
             >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="16" x2="12" y2="12" />
                 <line x1="12" y1="8" x2="12.01" y2="8" />
@@ -324,51 +327,46 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-1.5 min-h-0 my-1 py-1 scrollbar-none">
+        <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-2 min-h-0 my-1 py-1 scrollbar-thin">
           {activeChan.messages.map((msg) => {
             const isMe = msg.sender === 'user';
             return (
-              <div key={msg.id} className={`flex items-start gap-2 max-w-[85%] ${isMe ? 'self-end flex-row-reverse' : 'self-start flex-row'}`}>
+              <div key={msg.id} className={`flex items-start gap-2.5 max-w-[85%] ${isMe ? 'self-end flex-row-reverse' : 'self-start flex-row'}`}>
                 {!isMe && (
-                  <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 rounded-full object-cover border border-[var(--waffle)]/25 mt-0.5 shrink-0" />
+                  <img src={activeChan.avatar} alt={activeChan.name} className="h-7 w-7 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
                 )}
                 <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                   <div className="relative group">
                     <div 
-                      style={{
-                        background: isMe 
-                          ? 'linear-gradient(135deg, #C29367 0%, #A67848 100%)' 
-                          : 'rgba(255, 255, 255, 0.95)',
-                        color: isMe ? 'white' : '#5C463C',
-                        border: isMe ? 'none' : '1px solid rgba(194,147,103,0.15)'
-                      }}
-                      className={`rounded-2xl px-3 py-2 text-[10px] leading-relaxed shadow-sm relative flex flex-col ${
-                        isMe ? 'rounded-tr-xs' : 'rounded-tl-xs'
+                      className={`rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-xs relative flex flex-col ${
+                        isMe 
+                          ? 'bg-[#0552A2] text-white rounded-tr-xs' 
+                          : 'bg-white text-[#17212B] border border-slate-200/90 rounded-tl-xs'
                       }`}
                     >
                       {msg.isVoice ? (
                         <div className="flex items-center gap-2 py-0.5 select-none">
-                          <button className="h-5 w-5 rounded-full bg-[var(--caramel)] text-white flex items-center justify-center cursor-pointer shrink-0 shadow-sm active:scale-95 transition-all">
-                            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                          <button className={`h-6 w-6 rounded-full flex items-center justify-center cursor-pointer shrink-0 shadow-xs ${isMe ? 'bg-white text-[#0552A2]' : 'bg-[#0552A2] text-white'}`}>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
                           </button>
                           <div className="flex items-center gap-0.5 h-4">
-                            <span className="h-2 w-[1.5px] bg-[var(--caramel)]/40 rounded animate-pulse" />
-                            <span className="h-3.5 w-[1.5px] bg-[var(--caramel)]/70 rounded animate-pulse" style={{ animationDelay: '100ms' }} />
-                            <span className="h-2.5 w-[1.5px] bg-[var(--caramel)] rounded animate-pulse" style={{ animationDelay: '200ms' }} />
-                            <span className="h-4.5 w-[1.5px] bg-[var(--caramel)] rounded animate-pulse" style={{ animationDelay: '300ms' }} />
-                            <span className="h-2.5 w-[1.5px] bg-[var(--caramel)]/80 rounded animate-pulse" style={{ animationDelay: '400ms' }} />
-                            <span className="h-1.5 w-[1.5px] bg-[var(--caramel)]/30 rounded animate-pulse" />
+                            <span className={`h-2 w-[2px] rounded animate-pulse ${isMe ? 'bg-white/50' : 'bg-[#0552A2]/40'}`} />
+                            <span className={`h-3.5 w-[2px] rounded animate-pulse ${isMe ? 'bg-white/80' : 'bg-[#0552A2]/70'}`} style={{ animationDelay: '100ms' }} />
+                            <span className={`h-2.5 w-[2px] rounded animate-pulse ${isMe ? 'bg-white' : 'bg-[#0552A2]'}`} style={{ animationDelay: '200ms' }} />
+                            <span className={`h-4.5 w-[2px] rounded animate-pulse ${isMe ? 'bg-white' : 'bg-[#0552A2]'}`} style={{ animationDelay: '300ms' }} />
+                            <span className={`h-2.5 w-[2px] rounded animate-pulse ${isMe ? 'bg-white/80' : 'bg-[#0552A2]/80'}`} style={{ animationDelay: '400ms' }} />
+                            <span className={`h-1.5 w-[2px] rounded animate-pulse ${isMe ? 'bg-white/40' : 'bg-[#0552A2]/30'}`} />
                           </div>
-                          <span className={`text-[7px] font-mono font-bold shrink-0 ${isMe ? 'text-white/80' : 'text-[#A89286]'}`}>{msg.duration || '0:06'}</span>
+                          <span className={`text-[8px] font-mono font-bold shrink-0 ${isMe ? 'text-white/80' : 'text-slate-400'}`}>{msg.duration || '0:06'}</span>
                         </div>
                       ) : msg.text === '👍' ? (
-                        <span className="text-2xl filter drop-shadow-[0_1.5px_4px_rgba(0,0,0,0.15)] animate-bounce inline-block select-none cursor-pointer">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+                        <span className="text-xl filter drop-shadow-sm animate-bounce inline-block select-none cursor-pointer">
+                          👍
                         </span>
                       ) : msg.translatedText ? (
                         <div className="flex flex-col gap-1">
-                          <span className="italic text-[8.5px] opacity-80 leading-normal font-medium">"{msg.text}"</span>
-                          <span className="font-bold border-t border-[var(--waffle)]/15 pt-1 mt-0.5">{msg.translatedText}</span>
+                          <span className="italic text-[11px] opacity-80 leading-normal">"{msg.text}"</span>
+                          <span className="font-semibold border-t border-slate-200/40 pt-1 mt-0.5 text-xs">{msg.translatedText}</span>
                         </div>
                       ) : (
                         <span>{msg.text}</span>
@@ -378,31 +376,32 @@ export default function DashboardPage() {
                         {!isMe && !msg.translatedText && !msg.isVoice && (
                           <button 
                             onClick={() => toggleTranslation(activeChan.id, msg.id)}
-                            className="text-[7.5px] font-mono font-bold text-[var(--caramel)] hover:underline uppercase cursor-pointer leading-none"
+                            className="text-[9px] font-mono font-bold text-[#0552A2] hover:underline uppercase cursor-pointer leading-none"
                           >
                             Translate
                           </button>
                         )}
-                        <span className={`text-[6.5px] font-mono ml-auto leading-none ${isMe ? 'text-white/70' : 'text-[#A89286]'}`}>
+                        <span className={`text-[8px] font-mono ml-auto leading-none ${isMe ? 'text-white/70' : 'text-slate-400'}`}>
                           {msg.timestamp}
                         </span>
                       </div>
 
                       {reactions[msg.id] && (
-                        <span className="absolute -bottom-2 -right-1 bg-white border border-[var(--waffle)]/25 rounded-full px-1.5 py-0.2 text-[8px] shadow-sm select-none">
+                        <span className="absolute -bottom-2 -right-1 bg-white border border-slate-200 rounded-full px-1.5 py-0.2 text-[9px] shadow-xs select-none">
                           {reactions[msg.id]}
                         </span>
                       )}
                     </div>
 
-                    <div className="absolute top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 flex items-center gap-1 bg-white/95 backdrop-blur shadow-[0_2px_12px_rgba(61,45,39,0.08)] border border-[var(--waffle)]/25 rounded-full px-1.5 py-0.5 scale-90"
+                    <div 
+                      className="absolute top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-md border border-slate-200 rounded-full px-2 py-0.5 scale-90"
                       style={isMe ? { right: 'calc(100% + 6px)' } : { left: 'calc(100% + 6px)' }}
                     >
-                      {['❤️', '👍', '😂', '😮', '😢', '🙏'].map(emoji => (
+                      {['❤️', '👍', '😂', '😮', '🏔️', '🙏'].map(emoji => (
                         <button
                           key={emoji}
                           onClick={() => toggleReaction(msg.id, emoji)}
-                          className="hover:scale-125 transition-transform duration-100 cursor-pointer text-[9.5px] p-0.5"
+                          className="hover:scale-125 transition-transform duration-100 cursor-pointer text-xs p-0.5"
                         >
                           {emoji}
                         </button>
@@ -416,62 +415,51 @@ export default function DashboardPage() {
           
           {activeChan.typing && (
             <div className="flex items-end gap-2 max-w-[85%] self-start flex-row animate-pulse">
-              <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 rounded-full object-cover border border-[var(--waffle)]/25 mt-0.5 shrink-0" />
-              <div className="bg-white/90 border border-[var(--waffle)]/15 rounded-2xl rounded-tl-xs px-2.5 py-1.5 flex items-center gap-1 shadow-sm">
-                <span className="h-1.5 w-1.5 bg-[var(--caramel)] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="h-1.5 w-1.5 bg-[var(--caramel)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="h-1.5 w-1.5 bg-[var(--caramel)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
+              <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-xs px-3 py-2 flex items-center gap-1 shadow-xs">
+                <span className="h-1.5 w-1.5 bg-[#0552A2] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="h-1.5 w-1.5 bg-[#0552A2] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="h-1.5 w-1.5 bg-[#0552A2] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           )}
           <div ref={chatEndRef} />
         </div>
 
-        <div className="flex gap-1 overflow-x-auto pb-1.5 pt-1.5 select-none scrollbar-none border-t border-[var(--waffle)]/10 shrink-0">
+        {/* Quick Suggestion Chips */}
+        <div className="flex gap-1.5 overflow-x-auto pb-2 pt-2 select-none scrollbar-none border-t border-slate-100 shrink-0">
           {(activeChan.id === 'ch-ai'
-            ? [
-                { label: 'Everest Weather', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg> },
-                { label: 'Permit Status', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg> },
-                { label: 'Buddhist Monasteries', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> }
-              ]
+            ? ['Everest Weather', 'Permit Status', 'Buddhist Monasteries', 'Altitude Plan']
             : activeChan.id === 'ch-g1'
-            ? [
-                { label: 'Oxygen Calibrate', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg> },
-                { label: 'Meet at Pokhara', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="3 20 12 4 21 20 3 20"/></svg> },
-                { label: 'Gear Checklist', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> }
-              ]
-            : [
-                { label: 'Drone Dinner', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><line x1="12" y1="5" x2="12" y2="10"/><circle cx="12" cy="12" r="2"/><path d="M12 14v5M9 19h6"/></svg> },
-                { label: 'Room Temp 20°C', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg> },
-                { label: 'Airport Transport', icon: <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> }
-              ]
+            ? ['Oxygen Status', 'Meet at Pokhara', 'Gear Checklist', 'Safety Beacon']
+            : ['Lodge Tea Service', 'Heater Parameters', 'Helicopter Transfer', 'Room Amenities']
           ).map((chip) => (
             <button
-              key={chip.label}
-              onClick={() => setChatInput(chip.label)}
-              className="text-[8.5px] font-mono bg-[var(--vanilla)] border border-[var(--waffle)]/25 hover:border-[var(--caramel)]/40 text-[#7A6258] hover:text-[var(--foreground)] px-2.5 py-1 rounded-full transition-all cursor-pointer whitespace-nowrap flex items-center gap-1"
+              key={chip}
+              onClick={() => setChatInput(chip)}
+              className="text-[10px] font-mono bg-[#F2F8FD] border border-[#92C4EA]/40 hover:border-[#0552A2] text-[#0552A2] hover:bg-[#0552A2] hover:text-white px-2.5 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap"
             >
-              {chip.icon}
-              {chip.label}
+              {chip}
             </button>
           ))}
         </div>
 
-        <div className="shrink-0 flex items-center gap-2 pt-2 border-t border-[var(--waffle)]/15 mt-1">
+        {/* Input Bar */}
+        <div className="shrink-0 flex items-center gap-2 pt-2 border-t border-slate-100">
           <button
-            onClick={() => handleActionAlert("Accessing media gallery to attach trip documents...", activeChan.name)}
-            className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer shrink-0 border border-[var(--waffle)]/20"
-            title="Attach Photo or Document"
+            onClick={() => handleActionAlert("Opening documents attachment...", activeChan.name)}
+            className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0 border border-slate-200"
+            title="Attach Document"
           >
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           </button>
 
           <button
             onClick={() => sendVoiceMessage(activeChan.id, '0:06')}
-            className="h-7 w-7 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer shrink-0 border border-[var(--waffle)]/20"
-            title="Send simulated audio note"
+            className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0 border border-slate-200"
+            title="Send audio note"
           >
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </button>
 
           <input
@@ -480,26 +468,25 @@ export default function DashboardPage() {
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleSendMessage();
             }}
-            placeholder="Write message..."
-            className="flex-1 bg-white border border-[var(--waffle)]/35 rounded-full px-3.5 py-2 text-[10px] text-[var(--foreground)] placeholder-[#A89286]/60 focus:outline-none focus:border-[var(--caramel)]/50 transition-all shadow-inner"
+            placeholder="Type message..."
+            className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-3.5 py-2 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
           />
 
           {chatInput.trim() === '' ? (
             <button
               onClick={() => sendMessage(activeChan.id, '👍', 'user')}
-              className="h-7 w-7 rounded-full flex items-center justify-center bg-[var(--vanilla)] hover:bg-[var(--waffle)]/40 text-[#7A6258] hover:text-[var(--caramel)] transition-all cursor-pointer shrink-0 border border-[var(--waffle)]/25 active:scale-90"
-              title="Send Thumbs Up"
+              className="h-8 w-8 rounded-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer shrink-0"
+              title="Thumbs Up"
             >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              👍
             </button>
           ) : (
             <button
               onClick={handleSendMessage}
-              style={{ background: 'linear-gradient(135deg, #C29367 0%, #A67848 100%)' }}
-              className="h-7 w-7 rounded-full flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shrink-0 shadow-sm"
+              className="h-8 w-8 rounded-full flex items-center justify-center bg-[#0552A2] text-white hover:bg-[#044080] cursor-pointer transition-colors shrink-0 shadow-xs"
               title="Send Message"
             >
-              <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
           )}
         </div>
@@ -510,161 +497,169 @@ export default function DashboardPage() {
   const activeChannelObj = channels.find(c => c.id === activeChannelId) || channels[0];
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden relative" style={{ background: 'var(--background)', color: 'var(--foreground)', fontFamily: 'var(--font-sans)' }}>
+    <div className="h-screen flex flex-col overflow-hidden relative bg-[#FFFFFF] text-[#17212B] font-sans">
 
-      {/* ── TOP BAR ─────────────────────────────────────────────────────── */}
-      <header
-        style={{
-          background: 'rgba(252, 249, 242, 0.75)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '1px solid rgba(194,147,103,0.12)',
-          boxShadow: '0 2px 20px rgba(61,45,39,0.06)',
-        }}
-        className="sticky top-0 z-50 flex items-center justify-between px-5 py-3.5"
-      >
-        <div className="flex items-center gap-2.5 select-none">
-          <div
-            style={{ background: 'linear-gradient(135deg, #C29367 0%, #A67848 100%)', boxShadow: '0 2px 8px rgba(194,147,103,0.35)' }}
-            className="h-7 w-7 rounded-lg flex items-center justify-center font-black text-sm text-white"
+      {/* ── TOP EDITORIAL HEADER BAR ─────────────────────────────────────── */}
+      <header className="sticky top-0 z-40 flex items-center justify-between px-6 py-3 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+        {/* Brand Logo & Back to Home */}
+        <div className="flex items-center gap-6 select-none">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative h-9 w-24">
+              <Image 
+                src="/logo.png" 
+                alt="Visit Nepal Official Logo" 
+                fill 
+                className="object-contain" 
+                unoptimized 
+                priority
+              />
+            </div>
+            <span className="hidden lg:inline text-xs font-mono font-bold tracking-wider text-[#0552A2] uppercase border-l border-slate-200 pl-3">
+              Expedition Portal
+            </span>
+          </Link>
+
+          <Link 
+            href="/" 
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-[#0552A2] transition-colors"
           >
-            N
-          </div>
-          <span className="text-xs font-black tracking-widest uppercase" style={{ fontFamily: 'var(--font-mono)', color: 'var(--foreground)' }}>
-            Visit Nepal
-          </span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+            </svg>
+            <span>Return to Site</span>
+          </Link>
         </div>
 
-        {/* Global Profile Gateway */}
+        {/* Global Controls & Traveler Gateway */}
         <div className="flex items-center gap-3 relative">
-          <div className="relative">
-            <button
-              onClick={() => {
-                setRightCollapsed(false);
-                setRightSidebarTab(rightSidebarTab === 'telemetry' ? 'chat' : 'telemetry');
-              }}
-              style={{
-                background: rightSidebarTab === 'telemetry' ? 'rgba(14,165,233,0.12)' : 'transparent',
-                border: rightSidebarTab === 'telemetry' ? '1px solid rgba(14,165,233,0.3)' : '1px solid transparent'
-              }}
-              className="p-1.5 rounded-lg text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-all cursor-pointer flex items-center justify-center relative"
-              title="Himalayan Weather"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={rightSidebarTab === 'telemetry' ? '#0ea5e9' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
-              </svg>
-              <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-sky-400 animate-ping" />
-            </button>
+          {/* Weather status pill */}
+          <div className="hidden md:flex items-center gap-2 bg-[#F2F8FD] border border-[#92C4EA]/30 px-3 py-1.5 rounded-full">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[11px] font-mono text-[#0552A2] font-semibold">{weather.region.split('(')[0].trim()}</span>
+            <span className="text-[11px] font-bold text-slate-700">{weather.temp}</span>
           </div>
 
+          {/* Intelligence drawer button */}
           <button
             onClick={() => {
-              if (rightSidebarTab === 'chat') {
+              setRightCollapsed(false);
+              setRightSidebarTab(rightSidebarTab === 'telemetry' ? 'chat' : 'telemetry');
+            }}
+            className={`p-2 rounded-xl transition-colors cursor-pointer flex items-center justify-center relative ${
+              rightSidebarTab === 'telemetry' && !rightCollapsed
+                ? 'bg-[#0552A2]/10 text-[#0552A2]'
+                : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
+            }`}
+            title="Himalayan Weather & Telemetry"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+            </svg>
+          </button>
+
+          {/* Chat / Dispatches button */}
+          <button
+            onClick={() => {
+              if (rightSidebarTab === 'chat' && !rightCollapsed) {
                 setRightSidebarTab('telemetry');
               } else {
                 setRightSidebarTab('chat');
                 setRightCollapsed(false);
               }
             }}
-            style={{
-              background: rightSidebarTab === 'chat' ? 'rgba(194,147,103,0.15)' : 'transparent',
-              border: rightSidebarTab === 'chat' ? '1px solid rgba(194,147,103,0.3)' : '1px solid transparent'
-            }}
-            className="p-1.5 rounded-lg text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-all cursor-pointer relative mr-1 flex items-center justify-center"
-            title="Chat"
+            className={`p-2 rounded-xl transition-colors cursor-pointer relative flex items-center justify-center ${
+              rightSidebarTab === 'chat' && !rightCollapsed
+                ? 'bg-[#0552A2]/10 text-[#0552A2]'
+                : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
+            }`}
+            title="Expedition Dispatches"
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            <span className="absolute -top-1 -right-1.5 h-3.5 w-3.5 bg-red-500 rounded-full text-[7px] font-mono font-bold text-white flex items-center justify-center shadow-sm">
+            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-[#EC1F27] rounded-full text-[9px] font-mono font-bold text-white flex items-center justify-center shadow-xs">
               3
             </span>
           </button>
 
-          <div className="text-right hidden sm:block">
-            <span className="block text-[10px] font-bold font-sans text-[var(--foreground)] leading-none">
-              {currentUser ? currentUser.name : 'Guest Traveler'}
-            </span>
-            <span className="block text-[8px] font-mono uppercase tracking-widest text-[#A89286] mt-0.5">
-              {currentUser ? currentUser.role : 'Offline Access'}
-            </span>
-          </div>
-          <button
-            onClick={() => setProfileDropdownOpen(open => !open)}
-            className="h-8 w-8 rounded-full overflow-hidden border-2 border-[var(--caramel)]/40 hover:border-[var(--caramel)] transition-colors cursor-pointer bg-[var(--vanilla)] shadow-sm flex items-center justify-center relative"
-            title="Account Gateway"
-          >
-            {currentUser ? (
-              <img src={currentUser.avatar} alt={currentUser.name} className="h-full w-full object-cover" />
-            ) : (
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--caramel)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            )}
-          </button>
+          {/* Profile Gateway Button */}
+          <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+            <div className="text-right hidden sm:block">
+              <span className="block text-xs font-bold text-[#17212B] leading-none">
+                {currentUser ? currentUser.name : 'Alex Mercer'}
+              </span>
+              <span className="block text-[10px] font-mono uppercase tracking-wider text-[#0552A2] mt-0.5">
+                {currentUser ? currentUser.role : 'Traveler'}
+              </span>
+            </div>
 
-          {profileDropdownOpen && (
-            <div 
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,254,250,0.98) 0%, rgba(250,243,227,0.98) 100%)',
-                border: '1px solid rgba(194,147,103,0.18)',
-                boxShadow: '0 10px 30px rgba(61,45,39,0.08)',
-                borderRadius: '16px',
-              }}
-              className="absolute top-11 right-0 w-56 py-2.5 z-[100] flex flex-col gap-0.5"
+            <button
+              onClick={() => setProfileDropdownOpen(open => !open)}
+              className="h-9 w-9 rounded-full overflow-hidden border-2 border-[#0552A2]/40 hover:border-[#0552A2] transition-colors cursor-pointer shadow-xs flex items-center justify-center relative"
+              title="Account Menu"
             >
-              <div className="px-4 py-2 flex flex-col gap-0.5 border-b border-[var(--waffle)]/20 mb-1 text-left">
-                <span className="text-[11px] font-bold text-[var(--foreground)]">
-                  {currentUser ? currentUser.name : 'Guest Traveler'}
+              <img 
+                src={currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400'} 
+                alt={currentUser?.name || 'Traveler'} 
+                className="h-full w-full object-cover" 
+              />
+            </button>
+          </div>
+
+          {/* Profile Dropdown Menu */}
+          {profileDropdownOpen && (
+            <div className="absolute top-12 right-0 w-60 py-2 z-50 bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col animate-in fade-in zoom-in-95 duration-150">
+              <div className="px-4 py-2.5 border-b border-slate-100 mb-1 text-left">
+                <span className="text-xs font-bold text-[#17212B] block">
+                  {currentUser ? currentUser.name : 'Alex Mercer'}
                 </span>
-                <span className="text-[9px] font-mono text-[#A89286]">
-                  {currentUser ? currentUser.email : 'No verified credential'}
+                <span className="text-[10px] font-mono text-slate-400 block mt-0.5">
+                  {currentUser ? currentUser.email : 'alex.mercer@visitnepal.com'}
                 </span>
               </div>
 
               <button 
                 onClick={() => { setActive('customize'); setProfileDropdownOpen(false); }}
-                className="px-4 py-2 text-left text-[11px] hover:bg-[var(--vanilla)] text-[#7A6258] hover:text-[var(--foreground)] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80">
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03348 19.175 5.09913 19.4326 5.02325 19.673L4.62936 20.9196C4.46979 21.4239 4.90804 21.9056 5.42278 21.7777L6.81226 21.4325C7.03923 21.3761 7.28096 21.4332 7.45857 21.5858C8.79624 21.8558 10.3204 22 12 22Z" />
-                  <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor" />
-                  <circle cx="11.5" cy="7.5" r="1.5" fill="currentColor" />
-                  <circle cx="16.5" cy="9.5" r="1.5" fill="currentColor" />
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                 </svg>
                 <span>Customize Trip</span>
               </button>
+
               <button 
                 onClick={() => { setActive('bookings'); setProfileDropdownOpen(false); }}
-                className="px-4 py-2 text-left text-[11px] hover:bg-[var(--vanilla)] text-[#7A6258] hover:text-[var(--foreground)] transition-colors flex items-center justify-between font-medium cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center justify-between font-medium cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80">
-                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-                    <path d="M9 5v14" />
-                    <path d="M15 5v14" />
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
                   </svg>
-                  <span>Bookings</span>
+                  <span>My Bookings</span>
                 </div>
-                <span className="bg-[var(--caramel)]/15 text-[var(--caramel)] font-mono text-[9px] font-bold px-1.5 py-0.2 rounded-full">
+                <span className="bg-[#0552A2] text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded-full">
                   2
                 </span>
               </button>
+
               <button 
                 onClick={() => { setActive('pasttrips'); setProfileDropdownOpen(false); }}
-                className="px-4 py-2 text-left text-[11px] hover:bg-[var(--vanilla)] text-[#7A6258] hover:text-[var(--foreground)] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-[#F2F8FD] text-slate-700 hover:text-[#0552A2] transition-colors flex items-center gap-2.5 font-medium cursor-pointer"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                   <polyline points="14 2 14 8 20 8" />
                   <line x1="16" y1="13" x2="8" y2="13" />
                   <line x1="16" y1="17" x2="8" y2="17" />
-                  <polyline points="10 9 9 9 8 9" />
                 </svg>
-                <span>Past Trips</span>
+                <span>Past Expeditions</span>
               </button>
-              <div className="border-t border-[var(--waffle)]/20 my-1" />
+
+              <div className="border-t border-slate-100 my-1" />
 
               <button 
                 onClick={() => {
@@ -672,11 +667,12 @@ export default function DashboardPage() {
                   router.push('/login');
                   setProfileDropdownOpen(false);
                 }}
-                className="px-4 py-2 text-left text-[11px] hover:bg-[var(--vanilla)] text-[var(--caramel)] font-bold transition-colors flex items-center gap-2.5 cursor-pointer"
+                className="px-4 py-2 text-left text-xs hover:bg-red-50 text-[#EC1F27] font-semibold transition-colors flex items-center gap-2.5 cursor-pointer"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-80">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
                 <span>Sign Out</span>
               </button>
@@ -685,10 +681,10 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* ── BODY (Sidebar + Content) ─────────────────────────────────────── */}
+      {/* ── BODY (Sidebar + Canvas + Intelligence) ───────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* ── SIDEBAR ───────────────────────────────────────────────────── */}
+        {/* ── LEFT EDITORIAL SIDEBAR ────────────────────────────────────── */}
         <LeftSidebar
           navGroups={NAV_GROUPS}
           activeId={['everest', 'pokhara', 'kathmandu', 'chitwan', 'mustang'].includes(active) ? previousActive : active}
@@ -706,43 +702,38 @@ export default function DashboardPage() {
             setRightCollapsed={setRightCollapsed} 
           />
         ) : (
-          <div className="flex-1 flex flex-col min-w-0 relative">
-            <div 
-              style={{
-                background: 'rgba(255,252,246,0.0)',
-                borderBottom: 'none',
-                boxShadow: '0 4px 24px rgba(61,45,39,0.05)',
-              }}
-              className="flex items-center justify-between px-6 py-3.5 select-none relative z-10"
-            >
-              <div className="flex items-center gap-2 text-[10px] font-mono text-[#A89286]">
-                <span className="uppercase tracking-wider font-bold">{activeDetails.groupTitle}</span>
-                <span className="text-[#C29367] opacity-60">/</span>
-                <span className="text-[var(--caramel)] font-bold">{activeDetails.itemLabel}</span>
+          <div className="flex-1 flex flex-col min-w-0 relative bg-slate-50/50">
+            {/* Context breadcrumb & Search toolbar */}
+            <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-slate-200/70 select-none relative z-10">
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+                <span className="uppercase tracking-wider font-semibold text-slate-500">{activeDetails.groupTitle}</span>
+                <span className="text-slate-300">/</span>
+                <span className="text-[#0552A2] font-bold">{activeDetails.itemLabel}</span>
               </div>
 
               <div className="flex items-center max-w-xs w-full relative">
-                <span className="absolute left-3.5 text-[#A89286] flex items-center justify-center pointer-events-none">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+                <span className="absolute left-3 text-slate-400 flex items-center justify-center pointer-events-none">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
                 </span>
                 <input 
                   type="text" 
-                  placeholder="Search landmarks, guides, stays..."
-                  className="w-full bg-[var(--background)]/85 border border-[var(--waffle)]/35 text-[11px] rounded-full pl-9 pr-4 py-2 text-[var(--foreground)] focus:outline-none focus:border-[var(--caramel)]/50 font-sans tracking-wide transition-all shadow-inner placeholder-[#A89286]/70"
+                  placeholder="Search destinations, guides, stays..."
+                  className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-9 pr-4 py-1.5 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
                 />
               </div>
             </div>
 
-            <main className="flex-1 overflow-y-auto p-6 pb-24 md:pb-10 md:p-10 min-h-0 relative z-10">
+            {/* Main scrollable body */}
+            <main className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0 relative z-10 scrollbar-thin">
               {renderActiveSection()}
             </main>
           </div>
         )}
 
-        {/* ── RIGHT SIDEBAR ─────────────────────────────────────────────── */}
+        {/* ── RIGHT INTELLIGENCE SIDEBAR ─────────────────────────────────── */}
         <RightSidebar
           rightCollapsed={rightCollapsed}
           onRightCollapsedChange={setRightCollapsed}
@@ -770,248 +761,98 @@ export default function DashboardPage() {
 
       </div>
 
-      {/* ── ACTION CALL / VIDEO STREAM OVERLAY NOTIFICATION ───────────────── */}
+      {/* ── ACTION NOTIFICATION TOAST ───────────────────────────────────── */}
       {actionAlert.visible && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200] max-w-sm w-full px-4 animate-in fade-in slide-in-from-top-6 duration-300">
-          <div 
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,254,250,0.98) 0%, rgba(250,243,227,0.95) 100%)',
-              border: '1.5px solid var(--caramel)',
-              boxShadow: '0 10px 30px rgba(194,147,103,0.25)',
-              borderRadius: '16px',
-            }}
-            className="p-4 flex items-center gap-3"
-          >
-            <div className="h-9 w-9 rounded-full bg-[var(--vanilla)] border border-[var(--caramel)]/40 flex items-center justify-center text-lg animate-pulse">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div className="p-4 bg-white border-2 border-[#0552A2] rounded-2xl shadow-xl flex items-center gap-3">
+            <div className="h-9 w-9 rounded-full bg-[#F2F8FD] text-[#0552A2] flex items-center justify-center text-lg animate-pulse">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <h5 className="text-[10px] font-mono font-bold text-[var(--caramel)] uppercase tracking-wider">Holographic Secure Link</h5>
-              <p className="text-[11px] font-bold text-[var(--foreground)] mt-0.5 leading-tight">{actionAlert.contactName}</p>
-              <p className="text-[9.5px] text-[#7A6258] mt-1 font-medium">{actionAlert.message}</p>
+              <h5 className="text-[10px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">Expedition Dispatch</h5>
+              <p className="text-xs font-bold text-[#17212B] mt-0.5 leading-tight">{actionAlert.contactName}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">{actionAlert.message}</p>
             </div>
-            <div className="flex flex-col gap-0.5 items-end justify-center shrink-0">
-              <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-ping" />
-              <span className="text-[8px] font-mono text-[#A89286] mt-1">SECURE</span>
-            </div>
+            <span className="h-2 w-2 bg-emerald-500 rounded-full animate-ping" />
           </div>
         </div>
       )}
 
-      {/* ── GLOBAL FLOATING MESSENGER CHAT BOX ──────────────────────────── */}
-      <div className={`fixed inset-x-0 bottom-0 sm:bottom-6 sm:right-6 sm:left-auto z-[100] font-sans flex flex-col items-end ${!rightCollapsed ? 'xl:hidden' : ''}`}>
+      {/* ── FLOATING EXPEDITION MESSENGER ───────────────────────────────── */}
+      <div className={`fixed inset-x-0 bottom-0 sm:bottom-6 sm:right-6 sm:left-auto z-[100] flex flex-col items-end ${!rightCollapsed ? 'xl:hidden' : ''}`}>
         {floatingChatOpen ? (
-          <div 
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,254,250,0.98) 0%, rgba(250,243,227,0.98) 100%)',
-              border: '1px solid rgba(194,147,103,0.22)',
-              boxShadow: '0 12px 40px rgba(61,45,39,0.12)',
-            }}
-            className="w-full sm:w-[350px] h-[85vh] sm:h-[480px] rounded-t-[28px] sm:rounded-[24px] flex flex-col overflow-hidden sm:mb-3 animate-in slide-in-from-bottom duration-300 select-none text-left"
-          >
+          <div className="w-full sm:w-[360px] h-[85vh] sm:h-[500px] rounded-t-3xl sm:rounded-2xl bg-white border border-slate-200 shadow-2xl flex flex-col overflow-hidden sm:mb-3 animate-in slide-in-from-bottom duration-300 text-left">
             {(() => {
               const activeChan = channels.find(c => c.id === activeChannelId) || channels[0];
               return (
                 <>
-                  <div className="bg-gradient-to-r from-[var(--vanilla)] to-[#FAF3E3] p-3.5 border-b border-[var(--waffle)]/20 flex items-center justify-between">
+                  <div className="p-3.5 bg-white border-b border-slate-200 flex items-center justify-between">
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="relative h-8.5 w-8.5 rounded-full overflow-hidden border border-[var(--caramel)]/30 shrink-0">
+                      <div className="relative h-9 w-9 rounded-full overflow-hidden border border-slate-200 shrink-0">
                         <img src={activeChan.avatar} alt={activeChan.name} className="h-full w-full object-cover" />
                         <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-white" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-bold text-[var(--foreground)] truncate leading-none">{activeChan.name}</h4>
-                        <span className="text-[7.5px] font-mono text-[#A89286] uppercase tracking-wider block mt-0.5">{activeChan.role}</span>
+                        <h4 className="text-xs font-bold text-[#17212B] truncate leading-none">{activeChan.name}</h4>
+                        <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block mt-1">{activeChan.role}</span>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => handleActionAlert("Starting holographic voice call link...", activeChan.name)}
-                        className="h-6.5 w-6.5 rounded-full bg-white/70 hover:bg-white border border-[var(--waffle)]/20 text-[#7A6258] hover:text-[var(--caramel)] flex items-center justify-center cursor-pointer transition-colors"
-                        title="Voice Call"
-                      >
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                        </svg>
-                      </button>
-
-                      <button
-                        onClick={() => handleActionAlert("Opening secure satellite video stream...", activeChan.name)}
-                        className="h-6.5 w-6.5 rounded-full bg-white/70 hover:bg-white border border-[var(--waffle)]/20 text-[#7A6258] hover:text-[var(--caramel)] flex items-center justify-center cursor-pointer transition-colors"
-                        title="Video Stream"
-                      >
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M23 7l-7 5 7 5V7z" />
-                          <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-                        </svg>
-                      </button>
-
-                      <button
-                        onClick={() => setFloatingChatOpen(false)}
-                        className="h-6.5 w-6.5 rounded-full bg-white/70 hover:bg-white border border-[var(--waffle)]/20 text-[#7A6258] hover:text-rose-500 flex items-center justify-center cursor-pointer transition-colors"
-                        title="Minimize"
-                      >
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                        </svg>
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => setFloatingChatOpen(false)}
+                      className="h-7 w-7 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-50 flex items-center justify-center cursor-pointer transition-colors"
+                      title="Close"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                      </svg>
+                    </button>
                   </div>
 
-                  <div className="px-3 py-1.5 border-b border-[var(--waffle)]/15 flex gap-2 overflow-x-auto select-none bg-[var(--background)]/30 scrollbar-none shrink-0">
+                  <div className="px-3 py-1.5 border-b border-slate-100 flex gap-2 overflow-x-auto select-none bg-slate-50 scrollbar-none shrink-0">
                     {channels.map((ch) => {
                       const isActive = activeChannelId === ch.id;
                       return (
                         <button
                           key={ch.id}
                           onClick={() => setActiveChannelId(ch.id)}
-                          style={{
-                            background: isActive ? 'var(--caramel)' : 'var(--vanilla)',
-                            color: isActive ? 'white' : '#7A6258',
-                            border: isActive ? '1px solid var(--caramel)' : '1px solid rgba(194,147,103,0.15)'
-                          }}
-                          className="px-2.5 py-0.5 rounded-full text-[8.5px] font-bold transition-all shrink-0 cursor-pointer hover:opacity-95"
+                          className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all shrink-0 cursor-pointer ${
+                            isActive
+                              ? 'bg-[#0552A2] text-white shadow-xs'
+                              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                          }`}
                         >
-                          {ch.id === 'ch-ai' ? 'AURA' : ch.id === 'ch-g1' ? 'Nima' : 'Host'}
+                          {ch.id === 'ch-ai' ? 'Sherpa AI' : ch.id === 'ch-g1' ? 'Nima Sherpa' : 'Shangri-La'}
                         </button>
                       );
                     })}
                   </div>
 
-                  <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-1.5 bg-white/40 scrollbar-none">
+                  <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2 bg-slate-50/50 scrollbar-thin">
                     {activeChan.messages.map((msg) => {
                       const isMe = msg.sender === 'user';
                       return (
-                        <div key={msg.id} className={`flex items-start gap-1.5 max-w-[85%] ${isMe ? 'self-end flex-row-reverse' : 'self-start flex-row'}`}>
+                        <div key={msg.id} className={`flex items-start gap-2 max-w-[85%] ${isMe ? 'self-end flex-row-reverse' : 'self-start flex-row'}`}>
                           {!isMe && (
-                            <img src={activeChan.avatar} alt={activeChan.name} className="h-5 w-5 rounded-full object-cover border border-[var(--waffle)]/25 mt-0.5 shrink-0" />
+                            <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
                           )}
-                          <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                            <div className="relative group">
-                              <div 
-                                style={{
-                                  background: isMe 
-                                    ? 'linear-gradient(135deg, #C29367 0%, #A67848 100%)' 
-                                    : 'rgba(255, 255, 255, 0.95)',
-                                  color: isMe ? 'white' : '#5C463C',
-                                  border: isMe ? 'none' : '1px solid rgba(194,147,103,0.15)'
-                                }}
-                                className={`rounded-2xl px-2.5 py-1.5 text-[9.5px] leading-relaxed shadow-sm relative flex flex-col ${
-                                  isMe ? 'rounded-tr-xs' : 'rounded-tl-xs'
-                                }`}
-                              >
-                                {msg.isVoice ? (
-                                  <div className="flex items-center gap-1.5 py-0.5 px-0.5 select-none">
-                                    <button className="h-4.5 w-4.5 rounded-full bg-[var(--caramel)] text-white flex items-center justify-center cursor-pointer shrink-0">
-                                      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
-                                    </button>
-                                    <div className="flex items-center gap-0.5 h-3.5">
-                                      <span className="h-1.5 w-[1.2px] bg-[var(--caramel)]/40 rounded animate-pulse" />
-                                      <span className="h-3 w-[1.2px] bg-[var(--caramel)]/70 rounded animate-pulse" style={{ animationDelay: '100ms' }} />
-                                      <span className="h-2 w-[1.2px] bg-[var(--caramel)] rounded animate-pulse" style={{ animationDelay: '200ms' }} />
-                                      <span className="h-3.5 w-[1.2px] bg-[var(--caramel)] rounded animate-pulse" style={{ animationDelay: '300ms' }} />
-                                      <span className="h-1.5 w-[1.2px] bg-[var(--caramel)]/30 rounded animate-pulse" />
-                                    </div>
-                                    <span className={`text-[6.5px] font-mono font-bold shrink-0 ${isMe ? 'text-white/80' : 'text-[#A89286]'}`}>{msg.duration || '0:06'}</span>
-                                  </div>
-                                ) : msg.text === '👍' ? (
-                                  <span className="text-xl filter drop-shadow-[0_1.5px_4px_rgba(0,0,0,0.15)] animate-bounce inline-block select-none cursor-pointer">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-                                  </span>
-                                ) : msg.translatedText ? (
-                                  <div className="flex flex-col gap-0.5">
-                                    <span className="italic text-[8px] opacity-80 leading-normal">"{msg.text}"</span>
-                                    <span className="font-semibold border-t border-[var(--waffle)]/15 pt-0.5 mt-0.5">{msg.translatedText}</span>
-                                  </div>
-                                ) : (
-                                  <span>{msg.text}</span>
-                                )}
-                                
-                                <div className="flex items-center justify-between gap-2.5 mt-1 shrink-0 select-none">
-                                  {!isMe && !msg.translatedText && !msg.isVoice && (
-                                    <button 
-                                      onClick={() => toggleTranslation(activeChan.id, msg.id)}
-                                      className="text-[6.5px] font-mono font-bold text-[var(--caramel)] hover:underline uppercase cursor-pointer leading-none"
-                                    >
-                                      Translate
-                                    </button>
-                                  )}
-                                  <span className={`text-[6px] font-mono ml-auto leading-none ${isMe ? 'text-white/70' : 'text-[#A89286]'}`}>
-                                    {msg.timestamp}
-                                  </span>
-                                </div>
-
-                                {reactions[msg.id] && (
-                                  <span className="absolute -bottom-1.5 -right-1 bg-white border border-[var(--waffle)]/25 rounded-full px-1.5 py-0.2 text-[7.5px] shadow-sm select-none">
-                                    {reactions[msg.id]}
-                                  </span>
-                                )}
-                              </div>
-
-                              <div className="absolute top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-[0_2px_10px_rgba(61,45,39,0.08)] border border-[var(--waffle)]/20 rounded-full px-1.5 py-0.5 scale-90"
-                                style={isMe ? { right: 'calc(100% + 5px)' } : { left: 'calc(100% + 5px)' }}
-                              >
-                                {['❤️', '👍', '😂', '😮', '😢', '🙏'].map(emoji => (
-                                  <button
-                                    key={emoji}
-                                    onClick={() => toggleReaction(msg.id, emoji)}
-                                    className="hover:scale-125 transition-transform duration-100 cursor-pointer text-[9px] p-0.5"
-                                  >
-                                    {emoji}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
+                          <div className={`rounded-2xl px-3 py-2 text-xs leading-relaxed shadow-xs ${
+                            isMe 
+                              ? 'bg-[#0552A2] text-white rounded-tr-xs' 
+                              : 'bg-white text-[#17212B] border border-slate-200 rounded-tl-xs'
+                          }`}>
+                            <p>{msg.text}</p>
+                            <span className={`text-[8px] font-mono mt-1 block text-right ${isMe ? 'text-white/70' : 'text-slate-400'}`}>
+                              {msg.timestamp}
+                            </span>
                           </div>
                         </div>
                       );
                     })}
-
-                    {activeChan.typing && (
-                      <div className="flex items-end gap-1.5 max-w-[85%] self-start flex-row">
-                        <img src={activeChan.avatar} alt={activeChan.name} className="h-5 w-5 rounded-full object-cover border border-[var(--waffle)]/25 mt-0.5 shrink-0" />
-                        <div className="bg-white/90 border border-[var(--waffle)]/15 rounded-2xl rounded-tl-xs px-2 py-1 flex items-center gap-1 shadow-sm">
-                          <span className="h-1 w-1 bg-[var(--caramel)] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="h-1 w-1 bg-[var(--caramel)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                          <span className="h-1 w-1 bg-[var(--caramel)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                        </div>
-                      </div>
-                    )}
                     <div ref={floatingChatEndRef} />
                   </div>
 
-                  <div className="px-3.5 py-1.5 flex gap-1 overflow-x-auto select-none bg-[var(--background)]/10 scrollbar-none border-t border-[var(--waffle)]/10 shrink-0">
-                    {(activeChan.id === 'ch-ai' 
-                      ? ['Everest Weather', 'Permit Status', 'Buddhist Monasteries'] 
-                      : activeChan.id === 'ch-g1'
-                      ? ['Oxygen Calibrate', 'Meet at Pokhara', 'Gear Checklist']
-                      : ['Drone Dinner', 'Room Temp 20°C', 'Airport Transport']
-                    ).map((phrase) => (
-                      <button
-                        key={phrase}
-                        onClick={() => setChatInput(phrase)}
-                        className="text-[8px] font-mono bg-[var(--vanilla)] border border-[var(--waffle)]/25 hover:border-[var(--caramel)]/40 text-[#7A6258] hover:text-[var(--foreground)] px-2 py-0.5 rounded-full transition-all cursor-pointer whitespace-nowrap"
-                      >
-                        {phrase}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="p-3 border-t border-[var(--waffle)]/15 bg-[var(--background)]/90 flex items-center gap-1.5 shrink-0">
-                    <button
-                      onClick={() => handleActionAlert("Accessing media gallery to attach trip documents...", activeChan.name)}
-                      className="h-6.5 w-6.5 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer shrink-0 border border-[var(--waffle)]/20"
-                    >
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                    </button>
-                    <button
-                      onClick={() => sendVoiceMessage(activeChan.id, '0:06')}
-                      className="h-6.5 w-6.5 rounded-full flex items-center justify-center text-[#7A6258] hover:text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-colors cursor-pointer shrink-0 border border-[var(--waffle)]/20"
-                    >
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                    </button>
-
+                  <div className="p-3 border-t border-slate-200 bg-white flex items-center gap-2 shrink-0">
                     <input
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
@@ -1019,25 +860,14 @@ export default function DashboardPage() {
                         if (e.key === 'Enter') handleSendMessage();
                       }}
                       placeholder="Write message..."
-                      className="flex-1 bg-white border border-[var(--waffle)]/35 rounded-full px-2.5 py-1 text-[9.5px] text-[var(--foreground)] placeholder-[#A89286]/60 focus:outline-none focus:border-[var(--caramel)]/50 transition-all shadow-inner"
+                      className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2]"
                     />
-
-                    {chatInput.trim() === '' ? (
-                      <button
-                        onClick={() => sendMessage(activeChannelId, '👍', 'user')}
-                        className="h-6.5 w-6.5 rounded-full flex items-center justify-center bg-[var(--vanilla)] hover:bg-[var(--waffle)]/40 text-[#7A6258] hover:text-[var(--caramel)] transition-all cursor-pointer shrink-0 border border-[var(--waffle)]/25 active:scale-90"
-                      >
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-                      </button>
-                    ) : (
-                      <button
-                        onClick={handleSendMessage}
-                        style={{ background: 'linear-gradient(135deg, #C29367 0%, #A67848 100%)' }}
-                        className="h-6.5 w-6.5 rounded-full flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shrink-0 shadow-sm"
-                      >
-                        <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                      </button>
-                    )}
+                    <button
+                      onClick={handleSendMessage}
+                      className="h-8 w-8 rounded-full flex items-center justify-center bg-[#0552A2] text-white cursor-pointer active:scale-95 transition-all shrink-0 shadow-xs"
+                    >
+                      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
                   </div>
                 </>
               );
@@ -1050,23 +880,19 @@ export default function DashboardPage() {
             setFloatingChatOpen(!floatingChatOpen);
             setRightCollapsed(false);
           }}
-          style={{
-            background: 'linear-gradient(135deg, #C29367 0%, #A67848 100%)',
-            boxShadow: '0 4px 18px rgba(194,147,103,0.4)',
-          }}
-          className="hidden sm:flex h-12 w-12 items-center justify-center rounded-full text-white transition-all active:scale-90 cursor-pointer relative hover:scale-105 duration-200 border border-white/20 animate-bounce"
-          title="Messenger"
+          className="hidden sm:flex h-12 w-12 items-center justify-center rounded-full bg-[#0552A2] text-white shadow-xl hover:bg-[#044080] transition-all cursor-pointer relative"
+          title="Expedition Messenger"
         >
           {floatingChatOpen ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
           ) : (
             <div className="relative flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              <span className="absolute -top-2.5 -right-2.5 h-4.5 w-4.5 bg-red-500 rounded-full text-[8px] font-bold text-white flex items-center justify-center border-2 border-white shadow-sm font-mono">
+              <span className="absolute -top-2.5 -right-2.5 h-4.5 w-4.5 bg-[#EC1F27] rounded-full text-[9px] font-bold text-white flex items-center justify-center border-2 border-white shadow-xs font-mono">
                 3
               </span>
             </div>
@@ -1074,56 +900,56 @@ export default function DashboardPage() {
         </button>
       </div>
 
-      {/* ── MOBILE STICKY BOTTOM NAVIGATION ─────────────────────────────────── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FCF9F2]/90 backdrop-blur-lg border-t border-[#3D2D27]/8 px-4 py-2 flex items-center justify-around shadow-[0_-4px_20px_rgba(61,45,39,0.08)]">
+      {/* ── MOBILE BOTTOM NAVIGATION ───────────────────────────────────────── */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex items-center justify-around shadow-lg">
         <button 
           onClick={() => handleActiveChange('home')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-xl transition-all ${
-            active === 'home' ? 'text-[var(--caramel)] bg-[var(--vanilla)]/50' : 'text-[#7A6258]'
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
+            active === 'home' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={18} />
-          <span className="text-[9px] font-mono font-bold tracking-wide">Home</span>
+          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={19} />
+          <span className="text-[10px] font-mono">Home</span>
         </button>
         <button 
           onClick={() => handleActiveChange('explore')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-xl transition-all ${
-            active === 'explore' ? 'text-[var(--caramel)] bg-[var(--vanilla)]/50' : 'text-[#7A6258]'
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
+            active === 'explore' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" size={18} />
-          <span className="text-[9px] font-mono font-bold tracking-wide">Explore</span>
+          <Icon d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" size={19} />
+          <span className="text-[10px] font-mono">Explore</span>
         </button>
         <button 
           onClick={() => {
             setActiveChannelId('ch-ai');
             setFloatingChatOpen(o => !o);
           }}
-          className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-xl transition-all relative ${
-            floatingChatOpen ? 'text-[var(--caramel)] bg-[var(--vanilla)]/50' : 'text-[#7A6258]'
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors relative ${
+            floatingChatOpen ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" size={18} />
-          <span className="absolute top-1.5 right-4 h-1.5 w-1.5 rounded-full bg-red-500" />
-          <span className="text-[9px] font-mono font-bold tracking-wide">Aura AI</span>
+          <Icon d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" size={19} />
+          <span className="absolute top-1 right-3 h-2 w-2 rounded-full bg-[#EC1F27]" />
+          <span className="text-[10px] font-mono">Dispatch</span>
         </button>
         <button 
           onClick={() => handleActiveChange('hotels')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-xl transition-all ${
-            active === 'hotels' ? 'text-[var(--caramel)] bg-[var(--vanilla)]/50' : 'text-[#7A6258]'
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
+            active === 'hotels' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={18} />
-          <span className="text-[9px] font-mono font-bold tracking-wide">Stays</span>
+          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={19} />
+          <span className="text-[10px] font-mono">Stays</span>
         </button>
         <button 
           onClick={() => handleActiveChange('customize')}
-          className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-xl transition-all ${
-            active === 'customize' ? 'text-[var(--caramel)] bg-[var(--vanilla)]/50' : 'text-[#7A6258]'
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
+            active === 'customize' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" size={18} />
-          <span className="text-[9px] font-mono font-bold tracking-wide">Planner</span>
+          <Icon d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" size={19} />
+          <span className="text-[10px] font-mono">Customizer</span>
         </button>
       </div>
 

@@ -96,11 +96,11 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
       {activeId === 'activities' && (
         <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[var(--caramel)] uppercase">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Expedition Catalog
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[var(--foreground)]">Active Modalities</h2>
-            <p className="text-xs text-[#7A6258]">From technical mountain ascents to meditative jungle loops, choose your style of travel.</p>
+            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Active Modalities</h2>
+            <p className="text-xs text-[#475569]">From technical mountain ascents to meditative jungle loops, choose your style of travel.</p>
           </motion.div>
 
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -108,16 +108,16 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
               <div 
                 key={act.id}
                 onClick={() => onNavigate ? onNavigate(act.id) : router.push('/info/' + act.id)}
-                className="bg-[var(--card-bg)] border border-[var(--waffle)]/35 rounded-2xl overflow-hidden hover:border-[var(--caramel)]/50 transition-all duration-200 shadow-[0_4px_12px_rgba(61,45,39,0.01)] cursor-pointer active:scale-[0.99] group"
+                className="bg-[var(--card-bg)] border border-[#92C4EA]/35 rounded-2xl overflow-hidden hover:border-[#0552A2]/50 transition-all duration-200 shadow-[0_4px_12px_rgba(61,45,39,0.01)] cursor-pointer active:scale-[0.99] group"
               >
-                <img src={act.image} alt={act.title} className="w-full h-36 object-cover border-b border-[var(--waffle)]/20" />
+                <img src={act.image} alt={act.title} className="w-full h-36 object-cover border-b border-[#92C4EA]/20" />
                 <div className="p-5 flex flex-col gap-2">
-                  <div className="flex justify-between items-center text-[9px] font-mono font-bold text-[var(--caramel)]">
+                  <div className="flex justify-between items-center text-[9px] font-mono font-bold text-[#0552A2]">
                     <span>{act.difficulty}</span>
                     <span>{act.duration}</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[var(--foreground)] group-hover:text-[var(--caramel)] transition-colors mt-0.5">{act.title}</h3>
-                  <p className="text-[11px] text-[#7A6258] leading-relaxed">{act.description}</p>
+                  <h3 className="text-sm font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors mt-0.5">{act.title}</h3>
+                  <p className="text-[11px] text-[#475569] leading-relaxed">{act.description}</p>
                 </div>
               </div>
             ))}
@@ -129,13 +129,13 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
       {activeId !== 'activities' && (
         <div className="flex flex-col gap-8 max-w-4xl mx-auto py-4">
           <motion.div variants={itemVariants} className="flex flex-col gap-3">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-[var(--caramel)] uppercase">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               {activeActivity.difficulty} • {activeActivity.duration}
             </span>
-            <h2 className="text-2xl md:text-3xl font-black text-[var(--foreground)] tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-black text-[#17212B] tracking-tight">
               {activeActivity.title}
             </h2>
-            <p className="text-sm text-[#7A6258] leading-relaxed max-w-xl">
+            <p className="text-sm text-[#475569] leading-relaxed max-w-xl">
               {activeActivity.description}
             </p>
           </motion.div>
@@ -146,36 +146,36 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
               variants={itemVariants} 
               src={activeActivity.image} 
               alt={activeActivity.title} 
-              className="w-full h-64 object-cover rounded-2xl border border-[var(--waffle)]/40 shadow-sm"
+              className="w-full h-64 object-cover rounded-2xl border border-[#92C4EA]/40 shadow-sm"
             />
             
             <motion.div variants={itemVariants} className="flex flex-col gap-5">
-              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#A89286] border-b border-[var(--waffle)]/30 pb-2">
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] border-b border-[#92C4EA]/30 pb-2">
                 Logistics & Core Calibration
               </h3>
 
-              <div className="flex flex-col gap-3 font-mono text-[11px] text-[#7A6258]">
-                <div className="flex justify-between py-1 border-b border-[var(--waffle)]/15">
-                  <span className="font-bold text-[var(--foreground)]">Optimal Season:</span>
+              <div className="flex flex-col gap-3 font-mono text-[11px] text-[#475569]">
+                <div className="flex justify-between py-1 border-b border-[#92C4EA]/15">
+                  <span className="font-bold text-[#17212B]">Optimal Season:</span>
                   <span>{activeActivity.season}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[var(--waffle)]/15">
-                  <span className="font-bold text-[var(--foreground)]">Guide Requirement:</span>
+                <div className="flex justify-between py-1 border-b border-[#92C4EA]/15">
+                  <span className="font-bold text-[#17212B]">Guide Requirement:</span>
                   <span>Highly Recommended (Cert. Sherpa)</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[var(--waffle)]/15">
-                  <span className="font-bold text-[var(--foreground)]">Permits Needed:</span>
+                <div className="flex justify-between py-1 border-b border-[#92C4EA]/15">
+                  <span className="font-bold text-[#17212B]">Permits Needed:</span>
                   <span>Gov Registry Clearances</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="font-bold text-[var(--foreground)]">Gear Level:</span>
+                  <span className="font-bold text-[#17212B]">Gear Level:</span>
                   <span>Tailored Equipment Set</span>
                 </div>
               </div>
 
-              <div className="bg-[var(--vanilla)] p-4 rounded-xl border border-[var(--waffle)]/35 flex flex-col gap-2">
-                <span className="text-[9px] font-mono font-bold text-[var(--caramel)] uppercase">Traveler safety reminder</span>
-                <p className="text-[11px] text-[#7A6258] leading-relaxed font-sans">
+              <div className="bg-[#F2F8FD] p-4 rounded-xl border border-[#92C4EA]/35 flex flex-col gap-2">
+                <span className="text-[9px] font-mono font-bold text-[#0552A2] uppercase">Traveler safety reminder</span>
+                <p className="text-[11px] text-[#475569] leading-relaxed font-sans">
                   High-altitude circuits require careful acclimatization. Ensure you hydrate well, rest in our classic tea houses, and follow instructions from your local guide.
                 </p>
               </div>
@@ -186,3 +186,4 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
     </motion.div>
   );
 }
+

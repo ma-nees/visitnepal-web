@@ -321,7 +321,15 @@ export const useTravelStore = create<TravelStore>((set) => ({
   setActiveTab: (tab) => set({ activeTab: tab }),
 
   // Auth
-  currentUser: null,
+  currentUser: {
+    name: 'Alex Mercer',
+    role: 'Traveler' as UserRole,
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400',
+    loggedIn: true,
+    email: 'alex.mercer@visitnepal.com',
+    otpVerified: true,
+    location: 'Khumbu Alpine Gateway'
+  },
   loginUser: (name, role, email) => set({
     currentUser: {
       name,

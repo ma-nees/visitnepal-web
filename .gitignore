@@ -26,5 +26,8 @@ build/
 # Logs & OS
 *.log
 .DS_Store
+__MACOSX/
+**/__MACOSX/
 .vscode/
 .idea/
+.kilo/

@@ -30,7 +30,7 @@ const Icon = ({ d, size = 16 }: { d: string; size?: number }) => (
   </svg>
 );
 
-// ─── SidebarItem Component (Internal Helper) ─────────────────────────────────
+// ─── SidebarItem Component ───────────────────────────────────────────────────
 interface SidebarItemProps extends NavItem {
   isActive: boolean;
   collapsed: boolean;
@@ -49,65 +49,35 @@ function SidebarItem({
     <button
       onClick={onClick}
       title={collapsed ? label : undefined}
-      style={{
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '10px',
-        padding: collapsed ? '8px 0' : '8px 16px',
-        justifyContent: collapsed ? 'center' : 'flex-start',
-        cursor: 'pointer',
-        border: 'none',
-        borderRadius: 0,
-        background: isActive ? 'rgba(194,147,103,0.12)' : 'transparent',
-        borderLeft: isActive ? '3px solid var(--caramel)' : '3px solid transparent',
-        color: isActive ? 'var(--caramel)' : '#7A6258',
-        fontFamily: 'var(--font-mono)',
-        fontSize: '11px',
-        fontWeight: isActive ? 700 : 500,
-        letterSpacing: '0.02em',
-        transition: 'all 0.15s ease',
-        position: 'relative',
-      }}
-      onMouseEnter={e => {
-        if (!isActive) {
-          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(194,147,103,0.06)';
-          (e.currentTarget as HTMLButtonElement).style.color = 'var(--foreground)';
-        }
-      }}
-      onMouseLeave={e => {
-        if (!isActive) {
-          (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-          (e.currentTarget as HTMLButtonElement).style.color = '#7A6258';
-        }
-      }}
-      className="group"
+      className={`w-full flex items-center transition-all duration-150 relative text-left cursor-pointer group ${
+        collapsed ? 'justify-center py-2.5 px-0' : 'justify-start py-2.5 px-4 gap-3'
+      } ${
+        isActive
+          ? 'bg-[#0552A2]/10 text-[#0552A2] font-semibold border-l-3 border-[#0552A2]'
+          : 'text-slate-600 hover:text-[#17212B] hover:bg-slate-50 border-l-3 border-transparent font-medium'
+      }`}
+      style={{ fontSize: '13px' }}
     >
-      <span 
-        style={{ flexShrink: 0, opacity: isActive ? 1 : 0.7 }}
-        className="transition-transform group-hover:scale-105 duration-200"
+      <span
+        className={`shrink-0 transition-transform duration-200 group-hover:scale-105 ${
+          isActive ? 'text-[#0552A2] opacity-100' : 'text-slate-400 group-hover:text-slate-600'
+        }`}
       >
-        <Icon d={icon} size={15} />
+        <Icon d={icon} size={17} />
       </span>
 
       {!collapsed && (
         <>
-          <span style={{ flex: 1, textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <span className="flex-1 truncate tracking-tight">
             {label}
           </span>
           {badge && (
             <span
-              style={{
-                background: 'var(--caramel)',
-                color: 'white',
-                borderRadius: '999px',
-                fontSize: '9px',
-                fontWeight: 800,
-                padding: '1px 6px',
-                lineHeight: '16px',
-                minWidth: '18px',
-                textAlign: 'center',
-              }}
+              className={`rounded-full text-[10px] font-mono font-bold px-2 py-0.5 leading-none shrink-0 ${
+                isActive
+                  ? 'bg-[#0552A2] text-white'
+                  : 'bg-slate-100 text-slate-600 group-hover:bg-[#0552A2]/10 group-hover:text-[#0552A2]'
+              }`}
             >
               {badge}
             </span>
@@ -115,25 +85,15 @@ function SidebarItem({
         </>
       )}
 
-      {/* Collapsed badge dot */}
+      {/* Collapsed notification indicator */}
       {collapsed && badge && (
-        <span
-          style={{
-            position: 'absolute',
-            top: '6px',
-            right: '8px',
-            background: 'var(--caramel)',
-            borderRadius: '999px',
-            width: '7px',
-            height: '7px',
-          }}
-        />
+        <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-[#EC1F27]" />
       )}
     </button>
   );
 }
 
-// ─── SidebarGroup Component (Internal Helper) ────────────────────────────────
+// ─── SidebarGroup Component ──────────────────────────────────────────────────
 interface SidebarGroupProps {
   title: string;
   items: NavItem[];
@@ -150,26 +110,14 @@ function SidebarGroup({
   onItemClick,
 }: SidebarGroupProps) {
   return (
-    <div>
-      {/* Group title */}
+    <div className="py-2">
       {!collapsed && (
-        <p
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '9px',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: '#A89286',
-            padding: '14px 16px 4px',
-            fontWeight: 700,
-          }}
-        >
+        <p className="text-[10px] font-mono tracking-widest uppercase text-slate-400 px-4 pb-2 font-bold select-none">
           {title}
         </p>
       )}
-      {collapsed && <div style={{ height: 8 }} />}
+      {collapsed && <div className="h-2" />}
 
-      {/* Items */}
       <div className="flex flex-col gap-0.5">
         {items.map((item) => (
           <SidebarItem
@@ -184,14 +132,11 @@ function SidebarGroup({
           />
         ))}
       </div>
-
-      {/* Group separator */}
-      <div style={{ height: '1px', background: 'transparent', margin: '4px 0' }} />
     </div>
   );
 }
 
-// ─── Main LeftSidebar Component (Exported) ───────────────────────────────────
+// ─── Main LeftSidebar Component ──────────────────────────────────────────────
 export default function LeftSidebar({
   navGroups,
   activeId,
@@ -201,61 +146,42 @@ export default function LeftSidebar({
 }: LeftSidebarProps) {
   return (
     <aside
-      style={{
-        background: 'rgba(252, 249, 242, 0.7)',
-        backdropFilter: 'blur(18px)',
-        WebkitBackdropFilter: 'blur(18px)',
-        borderRight: '1px solid rgba(194,147,103,0.1)',
-        borderBottomRightRadius: '24px',
-        boxShadow: '4px 0 24px rgba(61,45,39,0.05)',
-        width: collapsed ? '56px' : '232px',
-        transition: 'width 0.28s cubic-bezier(.4,0,.2,1)',
-        overflowY: 'auto',
-        overflowX: 'hidden',
-      }}
-      className="hidden md:flex flex-col flex-shrink-0 h-full select-none"
+      className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 transition-all duration-300 z-20 ${
+        collapsed ? 'w-16' : 'w-60'
+      }`}
     >
-      {/* Sticky Header wrapper for Collapse toggle */}
+      {/* Collapse / Expand Toggle Button */}
       <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 40,
-          background: 'rgba(252, 249, 242, 0.92)',
-          backdropFilter: 'blur(18px)',
-          WebkitBackdropFilter: 'blur(18px)',
-          borderBottom: '1px solid rgba(194,147,103,0.06)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'flex-end',
-          width: '100%',
-        }}
+        className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-3 py-2.5 flex items-center ${
+          collapsed ? 'justify-center' : 'justify-between'
+        }`}
       >
+        {!collapsed && (
+          <span className="text-[11px] font-mono font-bold tracking-wider text-slate-400 uppercase">
+            Navigation
+          </span>
+        )}
         <button
           onClick={() => onCollapsedChange(!collapsed)}
-          style={{
-            background: 'transparent',
-            border: 'none',
-            color: 'var(--caramel)',
-            cursor: 'pointer',
-            padding: '12px 16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: collapsed ? '100%' : 'auto',
-          }}
+          className="p-1.5 rounded-lg text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+          title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            {collapsed
-              ? <><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></>
-              : <><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></>
-            }
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            {collapsed ? (
+              <>
+                <polyline points="9 18 15 12 9 6" />
+              </>
+            ) : (
+              <>
+                <polyline points="15 18 9 12 15 6" />
+              </>
+            )}
           </svg>
         </button>
       </div>
 
-      {/* Navigation groups */}
-      <nav className="flex flex-col gap-0 pb-6">
+      {/* Navigation Groups List */}
+      <nav className="flex-1 overflow-y-auto divide-y divide-slate-100/80 py-2 scrollbar-thin">
         {navGroups.map((group) => (
           <SidebarGroup
             key={group.title}
@@ -267,6 +193,19 @@ export default function LeftSidebar({
           />
         ))}
       </nav>
+
+      {/* Footer Support / Portal Tag */}
+      {!collapsed && (
+        <div className="p-3.5 border-t border-slate-100 bg-slate-50/70 text-left">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[11px] font-mono text-slate-500 font-medium">NTB System Active</span>
+          </div>
+          <p className="text-[10px] text-slate-400 mt-1 leading-snug">
+            Nepal Tourism Board Official Portal
+          </p>
+        </div>
+      )}
     </aside>
   );
 }

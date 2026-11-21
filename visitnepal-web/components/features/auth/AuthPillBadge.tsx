@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles } from '@/components/ui/Icons';
 
 interface AuthPillBadgeProps {
   label: string;

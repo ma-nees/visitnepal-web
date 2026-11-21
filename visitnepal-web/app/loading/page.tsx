@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTravelStore } from '@/store/useTravelStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Compass, Sparkles } from 'lucide-react';
+import { Compass, Sparkles } from '@/components/ui/Icons';
 
 const ATTRACTIONS = [
   {

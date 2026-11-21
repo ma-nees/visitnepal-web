@@ -42,10 +42,10 @@ export default function LoginPage() {
     setTimeout(() => {
       const mockName = email.split('@')[0];
       const capitalizedName = mockName.charAt(0).toUpperCase() + mockName.slice(1);
-      
+
       loginUser(`${capitalizedName} Explorer`, 'Traveler', email);
-      verifyOtp(); 
-      
+      verifyOtp();
+
       setIsSubmitting(false);
       router.push('/dashboard');
     }, 1200);
@@ -74,7 +74,7 @@ export default function LoginPage() {
 
   return (
     <main className="h-screen w-screen relative overflow-hidden flex flex-col lg:flex-row bg-[#FAF9F5] font-sans">
-      
+
       {/* 1. Shared Back Button */}
       <AuthBackButton label="Back to Home" onClick={() => router.push('/')} />
 
@@ -83,7 +83,7 @@ export default function LoginPage() {
 
       {/* 3. Shared Right Panel Layout */}
       <AuthRightLayout>
-        
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -91,9 +91,7 @@ export default function LoginPage() {
           className="w-full flex flex-col gap-6 relative z-10"
         >
           {/* Shared Pill Tag */}
-          <motion.div variants={itemVariants}>
-            <AuthPillBadge label="Expedition Registry" />
-          </motion.div>
+
 
           <motion.div variants={itemVariants} className="flex flex-col gap-2">
             <h1 className="text-4xl sm:text-5xl font-black text-[#1A1208] tracking-tight leading-tight">
@@ -111,7 +109,7 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleLoginSubmit} className="space-y-4 text-xs font-sans text-left">
-            
+
             {/* Email Input */}
             <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
               <label className="text-[9.5px] uppercase font-mono text-[#7A6258] tracking-wider font-black">
@@ -121,8 +119,8 @@ export default function LoginPage() {
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C29367] pointer-events-none">
                   <Mail className="h-4 w-4" />
                 </div>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="Enter your email address"
@@ -138,8 +136,8 @@ export default function LoginPage() {
                 <label className="text-[9.5px] uppercase font-mono text-[#7A6258] tracking-wider font-black">
                   Password
                 </label>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => router.push('/signup')}
                   className="text-[10px] text-[#C29367] hover:text-[#3D2D27] font-bold hover:underline"
                 >
@@ -150,7 +148,7 @@ export default function LoginPage() {
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C29367] pointer-events-none">
                   <Lock className="h-4 w-4" />
                 </div>
-                <input 
+                <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
@@ -169,7 +167,7 @@ export default function LoginPage() {
             </motion.div>
 
             {/* Submit Button */}
-            <motion.button 
+            <motion.button
               variants={itemVariants}
               type="submit"
               disabled={isSubmitting}
@@ -195,25 +193,25 @@ export default function LoginPage() {
 
             {/* Google & Apple Buttons */}
             <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="flex items-center justify-center gap-2 rounded-xl border border-[#3D2D27]/12 bg-white py-2.5 text-xs font-semibold text-[#3D2D27] hover:bg-[#FAF9F5] transition-all cursor-pointer hover:scale-[1.01] active:scale-98"
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24">
-                  <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.53 14.99 1 12 1 7.35 1 3.39 3.67 1.39 7.56l3.85 2.99c.96-2.88 3.66-4.51 6.76-4.51z"/>
-                  <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.34H12v4.44h6.44c-.28 1.48-1.12 2.73-2.38 3.58l3.7 2.87c2.16-2 3.73-4.94 3.73-8.55z"/>
-                  <path fill="#FBBC05" d="M5.24 14.79a7.12 7.12 0 0 1 0-4.32L1.39 7.56C.5 9.35 0 11.45 0 13.5c0 2.05.5 4.15 1.39 5.94l3.85-2.99c-.45-.69-.73-1.48-.73-2.15z"/>
-                  <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.7-2.87c-1.12.75-2.55 1.2-4.26 1.2-3.1 0-5.8-1.63-6.76-4.51L1.39 16.9C3.39 20.79 7.35 23 12 23z"/>
+                  <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.53 14.99 1 12 1 7.35 1 3.39 3.67 1.39 7.56l3.85 2.99c.96-2.88 3.66-4.51 6.76-4.51z" />
+                  <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.34H12v4.44h6.44c-.28 1.48-1.12 2.73-2.38 3.58l3.7 2.87c2.16-2 3.73-4.94 3.73-8.55z" />
+                  <path fill="#FBBC05" d="M5.24 14.79a7.12 7.12 0 0 1 0-4.32L1.39 7.56C.5 9.35 0 11.45 0 13.5c0 2.05.5 4.15 1.39 5.94l3.85-2.99c-.45-.69-.73-1.48-.73-2.15z" />
+                  <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.7-2.87c-1.12.75-2.55 1.2-4.26 1.2-3.1 0-5.8-1.63-6.76-4.51L1.39 16.9C3.39 20.79 7.35 23 12 23z" />
                 </svg>
                 <span>Google</span>
               </button>
-              
-              <button 
-                type="button" 
+
+              <button
+                type="button"
                 className="flex items-center justify-center gap-2 rounded-xl border border-[#3D2D27]/12 bg-white py-2.5 text-xs font-semibold text-[#3D2D27] hover:bg-[#FAF9F5] transition-all cursor-pointer hover:scale-[1.01] active:scale-98"
               >
                 <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.2.67-2.92 1.49-.62.72-1.16 1.86-1.02 2.98 1.09.08 2.2-.57 2.95-1.41z"/>
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.2.67-2.92 1.49-.62.72-1.16 1.86-1.02 2.98 1.09.08 2.2-.57 2.95-1.41z" />
                 </svg>
                 <span>Apple</span>
               </button>
@@ -222,7 +220,7 @@ export default function LoginPage() {
             {/* Back to Login page */}
             <motion.div variants={itemVariants} className="text-center border-t border-[#3D2D27]/8 pt-4 text-[11px] text-[#7A6258] font-medium">
               Don't have a travel profile?{' '}
-              <button 
+              <button
                 type="button"
                 onClick={() => router.push('/signup')}
                 className="text-[#C29367] hover:text-[#3D2D27] font-bold hover:underline cursor-pointer"
@@ -234,7 +232,7 @@ export default function LoginPage() {
           </form>
 
         </motion.div>
-        
+
       </AuthRightLayout>
 
     </main>

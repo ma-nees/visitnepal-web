@@ -53,12 +53,12 @@ export default function Post({
             <div>
               <h3
                 onClick={() => onUserClick?.(post.userId)}
-                className="text-[11px] font-bold text-[#3D2D27] cursor-pointer hover:text-[var(--caramel)] transition-colors"
+                className="text-[11px] font-bold text-[#17212B] cursor-pointer hover:text-[#0552A2] transition-colors"
               >
                 {post.userName}
               </h3>
-              <div className="flex items-center gap-1 text-[8px] font-mono text-[#A89286] mt-0.5">
-                <span className="text-[var(--caramel)] font-bold uppercase">{post.userRole}</span>
+              <div className="flex items-center gap-1 text-[8px] font-mono text-[#64748B] mt-0.5">
+                <span className="text-[#0552A2] font-bold uppercase">{post.userRole}</span>
                 {post.location && (
                   <>
                     <span>·</span>
@@ -68,11 +68,11 @@ export default function Post({
               </div>
             </div>
           </div>
-          <span className="text-[8px] font-mono text-[#A89286]">{post.timestamp}</span>
+          <span className="text-[8px] font-mono text-[#64748B]">{post.timestamp}</span>
         </div>
 
         {/* Content */}
-        <p className="px-4 py-2 text-[11px] text-[#7A6258] leading-relaxed">{post.content}</p>
+        <p className="px-4 py-2 text-[11px] text-[#475569] leading-relaxed">{post.content}</p>
 
         {/* Image */}
         {post.image && (
@@ -97,7 +97,7 @@ export default function Post({
           <button
             onClick={() => onLike?.(post.id)}
             className={`flex items-center gap-1.5 text-[10px] font-medium transition-colors cursor-pointer ${
-              post.likedByUser ? 'text-pink-500' : 'text-[#A89286] hover:text-pink-500'
+              post.likedByUser ? 'text-pink-500' : 'text-[#64748B] hover:text-pink-500'
             }`}
           >
             <svg
@@ -115,7 +115,7 @@ export default function Post({
           
           <button
             onClick={() => setShowCommentInput(!showCommentInput)}
-            className="flex items-center gap-1.5 text-[10px] font-medium text-[#A89286] hover:text-[var(--caramel)] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-[10px] font-medium text-[#64748B] hover:text-[#0552A2] transition-colors cursor-pointer"
           >
             <svg
               viewBox="0 0 24 24"
@@ -167,7 +167,7 @@ export default function Post({
               style={{
                 background: 'rgba(255,255,255,0.7)',
                 border: '1px solid rgba(194,147,103,0.3)',
-                color: '#3D2D27',
+                color: '#17212B',
               }}
             />
           </div>
@@ -288,3 +288,4 @@ export default function Post({
     </div>
   );
 }
+

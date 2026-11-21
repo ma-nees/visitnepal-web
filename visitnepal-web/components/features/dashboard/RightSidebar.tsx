@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import NepalBackgroundMap from '@/components/features/chat/NepalBackgroundMap';
 import WeatherTelemetry from '@/components/features/chat/WeatherTelemetry';
 import CoPlannerHub from '@/components/features/chat/CoPlannerHub';
@@ -66,33 +67,25 @@ export default function RightSidebar({
 
   return (
     <aside
+      className="hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-white border-l border-slate-200 transition-all duration-300"
       style={{
-        background: 'rgba(252, 249, 242, 0.72)',
-        backdropFilter: 'blur(18px)',
-        WebkitBackdropFilter: 'blur(18px)',
-        borderLeft: '1px solid rgba(194,147,103,0.1)',
-        boxShadow: 'none',
         width: rightCollapsed 
           ? '56px' 
           : (isFullExpanded 
-            ? `calc(100vw - ${collapsed ? '56px' : '232px'})` 
+            ? `calc(100vw - ${collapsed ? '64px' : '240px'})` 
             : '360px'),
-        transition: 'width 0.35s cubic-bezier(.4,0,.2,1)',
-        overflowY: 'auto',
-        overflowX: 'hidden',
       }}
-      className="hidden xl:flex flex-col flex-shrink-0 h-full select-none animate-in slide-in-from-right duration-500 relative z-30"
     >
       {/* Collapse Toggle (Only when collapsed) */}
       {rightCollapsed && (
-        <div className="flex flex-col items-center gap-1 py-3 border-b border-[var(--waffle)]/15">
+        <div className="flex flex-col items-center gap-2 py-4 border-b border-slate-100">
           <button
             onClick={() => { onRightCollapsedChange(false); onIsFullExpandedChange(false); }}
-            className="p-1.5 rounded-lg text-[var(--caramel)] hover:bg-[var(--vanilla)] transition-all cursor-pointer flex items-center justify-center"
-            title="Expand Sidebar"
+            className="p-2 rounded-xl text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+            title="Expand Intelligence Drawer"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
         </div>
@@ -103,58 +96,42 @@ export default function RightSidebar({
         {rightSidebarTab === 'chat' ? (
           /* ── CHAT SECTION ───────────────────────────────────────────── */
           !rightCollapsed ? (
-            <div className="flex flex-col flex-1 min-h-0 p-3.5 relative">
-              {/* Telemetry Switcher & Section Title */}
-              <div 
-                style={{
-                  position: 'sticky',
-                  top: 0,
-                  zIndex: 20,
-                  background: 'rgba(252, 249, 242, 0.94)',
-                  backdropFilter: 'blur(18px)',
-                  WebkitBackdropFilter: 'blur(18px)',
-                  margin: '-14px -14px 12px -14px',
-                  padding: '14px 14px 10px 14px',
-                }}
-                className="flex items-center justify-between border-b border-[var(--waffle)]/20 shadow-xs"
-              >
-                <span className="text-[10.5px] font-mono font-bold text-[var(--caramel)] uppercase tracking-wider">
-                  {chatViewState === 'inbox' ? 'Chats Inbox' : 'Conversation'}
+            <div className="flex flex-col flex-1 min-h-0 p-4 relative">
+              {/* Header */}
+              <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md pb-3 mb-2 flex items-center justify-between border-b border-slate-100">
+                <span className="text-[11px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">
+                  {chatViewState === 'inbox' ? 'Expedition Dispatches' : 'Active Conversation'}
                 </span>
                 
-                {/* Integrated Expand + Collapse Pill */}
-                <div className="flex items-center gap-0.5 bg-[var(--vanilla)]/70 p-0.5 rounded-lg border border-[var(--waffle)]/20 shadow-sm shrink-0">
-                  {/* 4-corner maximize icon — expands sidebar full width */}
+                <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-200">
                   <button
                     onClick={() => {
                       const next = !isFullExpanded;
                       onRightCollapsedChange(false);
                       onIsFullExpandedChange(next);
-                      if (next) onExpandedChannelIdChange(null); // reset so placeholder shows
+                      if (next) onExpandedChannelIdChange(null);
                     }}
-                    className={`p-1 rounded-md transition-all cursor-pointer flex items-center justify-center ${
+                    className={`p-1 rounded-md transition-colors cursor-pointer flex items-center justify-center ${
                       (!rightCollapsed && isFullExpanded)
-                        ? 'bg-[var(--caramel)] text-white shadow-sm' 
-                        : 'text-[#A89286] hover:text-[var(--foreground)]'
+                        ? 'bg-[#0552A2] text-white shadow-xs' 
+                        : 'text-slate-400 hover:text-slate-700'
                     }`}
-                    style={{ width: '20px', height: '20px' }}
-                    title={isFullExpanded ? 'Restore Sidebar' : 'Expand Sidebar Full Width'}
+                    style={{ width: '22px', height: '22px' }}
+                    title={isFullExpanded ? 'Standard Width' : 'Full Width Split'}
                   >
                     {isFullExpanded ? (
-                      /* Compress / restore icon when already full */
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/>
                         <line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>
                       </svg>
                     ) : (
-                      /* 4-corner outward expand icon */
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
                         <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
                       </svg>
                     )}
                   </button>
-                  {/* Right collapse arrow */}
+
                   <button
                     onClick={() => {
                       if (isFullExpanded) {
@@ -163,41 +140,30 @@ export default function RightSidebar({
                         onRightCollapsedChange(true);
                       }
                     }}
-                    className={`p-1 rounded-md transition-all cursor-pointer flex items-center justify-center ${
-                      rightCollapsed 
-                        ? 'bg-[var(--caramel)] text-white shadow-sm font-bold' 
-                        : 'text-[#A89286] hover:text-[var(--foreground)]'
-                    }`}
-                    style={{ width: '20px', height: '20px' }}
-                    title="Collapse Sidebar"
+                    className="p-1 rounded-md text-slate-400 hover:text-slate-700 transition-colors cursor-pointer flex items-center justify-center"
+                    style={{ width: '22px', height: '22px' }}
+                    title="Collapse Drawer"
                   >
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
                     </svg>
                   </button>
                 </div>
               </div>
 
               {isFullExpanded ? (
-                /* ── EXPANDED SPLIT: WhatsApp-style ──────────────────── */
-                <div className="flex flex-1 min-h-0 gap-0 overflow-hidden">
-
-                  {/* LEFT PANEL — chat list */}
-                  <div
-                    style={{ width: '270px', borderRight: '1px solid rgba(194,147,103,0.08)' }}
-                    className="flex-shrink-0 flex flex-col overflow-hidden"
-                  >
-                    {/* Search */}
-                    <div className="p-2 border-b border-[var(--waffle)]/10">
-                      <div className="relative">
-                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
-                          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--caramel)" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        </span>
-                        <input type="text" placeholder="Search conversations..." className="w-full bg-[var(--vanilla)]/70 border border-[var(--waffle)]/20 rounded-xl pl-6 pr-3 py-1.5 text-[9px] text-[var(--foreground)] placeholder-[#A89286]/55 focus:outline-none focus:border-[var(--caramel)]/40 transition-all" />
-                      </div>
+                /* ── EXPANDED SPLIT VIEW ──────────────────── */
+                <div className="flex flex-1 min-h-0 gap-0 overflow-hidden divide-x divide-slate-100">
+                  {/* Channels column */}
+                  <div className="w-72 flex-shrink-0 flex flex-col overflow-hidden">
+                    <div className="p-2 border-b border-slate-100">
+                      <input 
+                        type="text" 
+                        placeholder="Search dispatches..." 
+                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2]" 
+                      />
                     </div>
-                    {/* Channel List */}
-                    <div className="flex-1 overflow-y-auto flex flex-col gap-0.5 p-1.5 scrollbar-none">
+                    <div className="flex-1 overflow-y-auto flex flex-col gap-1 p-2 scrollbar-thin">
                       {channels.map((chan) => {
                         const lastMsg = chan.messages[chan.messages.length - 1];
                         const isAi = chan.id === 'ch-ai';
@@ -206,126 +172,101 @@ export default function RightSidebar({
                           <button
                             key={chan.id}
                             onClick={() => onExpandedChannelIdChange(chan.id)}
-                            className={`w-full flex items-center gap-2.5 px-2 py-2.5 rounded-lg transition-all duration-150 text-left cursor-pointer group ${
+                            className={`w-full flex items-center gap-2.5 p-2 rounded-xl transition-colors text-left cursor-pointer ${
                               expandedChannelId === chan.id
-                                ? 'bg-[var(--caramel)]/8'
-                                : 'hover:bg-[var(--vanilla)]/50'
+                                ? 'bg-[#0552A2]/10 border border-[#0552A2]/20'
+                                : 'hover:bg-slate-50 border border-transparent'
                             }`}
                           >
                             <div className="relative shrink-0">
-                              <img src={chan.avatar} alt={chan.name} className="h-8 w-8 rounded-full object-cover" />
-                              <span className={`absolute bottom-0 right-0 h-2 w-2 rounded-full border-2 border-white ${isAi ? 'bg-purple-500 animate-pulse' : 'bg-emerald-500'}`} />
+                              <img src={chan.avatar} alt={chan.name} className="h-9 w-9 rounded-full object-cover border border-slate-200" />
+                              <span className={`absolute bottom-0 right-0 h-2 w-2 rounded-full border-2 border-white ${isAi ? 'bg-[#0552A2] animate-pulse' : 'bg-emerald-500'}`} />
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between gap-1">
-                                <h4 className={`text-[10.5px] font-semibold truncate leading-none ${expandedChannelId === chan.id ? 'text-[var(--caramel)]' : 'text-[var(--foreground)]'}`}>{chan.name}</h4>
-                                <span className="text-[7px] font-mono text-[#A89286] shrink-0">{lastMsg ? lastMsg.timestamp : '—'}</span>
+                                <h4 className={`text-xs font-bold truncate leading-none ${expandedChannelId === chan.id ? 'text-[#0552A2]' : 'text-[#17212B]'}`}>{chan.name}</h4>
+                                <span className="text-[9px] font-mono text-slate-400 shrink-0">{lastMsg ? lastMsg.timestamp : '—'}</span>
                               </div>
-                              <p className="text-[8.5px] text-[#A89286] truncate mt-0.5 leading-tight">
-                                {lastMsg ? (isMeLast ? `You: ${lastMsg.isVoice ? '🎙 Voice' : lastMsg.text}` : lastMsg.text) : <span className="italic opacity-40">No messages</span>}
+                              <p className="text-[10px] text-slate-500 truncate mt-1 leading-tight">
+                                {lastMsg ? (isMeLast ? `You: ${lastMsg.isVoice ? '🎙 Voice' : lastMsg.text}` : lastMsg.text) : 'No messages'}
                               </p>
                             </div>
-                            {chan.unread && <span className="h-1.5 w-1.5 rounded-full bg-[var(--caramel)] shrink-0" />}
+                            {chan.unread && <span className="h-2 w-2 rounded-full bg-[#EC1F27] shrink-0" />}
                           </button>
                         );
                       })}
                     </div>
                   </div>
 
-                  {/* RIGHT PANEL — conversation or placeholder */}
-                  <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                    {expandedChannelId ? renderSingleChatView(channels.find(c => c.id === expandedChannelId) || channels[0], false) : (
-                      /* Beautiful "Visit Nepal" branded welcome placeholder */
-                      <div className="flex flex-col items-center justify-center flex-1 gap-6 px-8 text-center animate-in fade-in duration-500">
-                        {/* Premium Glow Mountain Logo */}
-                        <div 
-                          style={{ 
-                            background: 'linear-gradient(135deg, rgba(194,147,103,0.12) 0%, rgba(245,234,210,0.4) 100%)', 
-                            border: '1px solid rgba(194,147,103,0.25)',
-                            boxShadow: '0 8px 32px rgba(194,147,103,0.08)'
-                          }} 
-                          className="h-20 w-20 rounded-3xl flex items-center justify-center shadow-sm relative overflow-hidden"
-                        >
-                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--caramel)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="filter drop-shadow-sm">
-                            <path d="M8 3L4 11h8L8 3z" />
-                            <path d="M16 8l-5 9h10L16 8z" />
-                            <path d="M12 12l-3 6h6l-3-6z" />
-                            <path d="M2 20h20" strokeWidth="2" />
-                          </svg>
+                  {/* Conversation column */}
+                  <div className="flex-1 flex flex-col min-h-0 overflow-hidden pl-4">
+                    {expandedChannelId ? (
+                      renderSingleChatView(channels.find(c => c.id === expandedChannelId) || channels[0], false)
+                    ) : (
+                      <div className="flex flex-col items-center justify-center flex-1 gap-4 px-8 text-center">
+                        <div className="relative h-16 w-32">
+                          <Image src="/logo.png" alt="Visit Nepal Logo" fill className="object-contain" unoptimized />
                         </div>
-                        
-                        <div className="flex flex-col gap-2.5 max-w-[280px]">
-                          <h3 className="text-[12.5px] font-mono font-bold tracking-widest text-[var(--caramel)] uppercase">VISIT NEPAL</h3>
-                          <p className="text-[9.5px] text-[#A89286] font-mono leading-relaxed">
-                            Welcome to your luxury travel dashboard. Select a conversation from the left to coordinate your Himalayan itinerary with local Sherpa guides, AURA AI, or premium concierge services.
-                          </p>
-                        </div>
-
-                        {/* Quick Action Pills */}
-                        <div className="flex flex-wrap gap-1.5 justify-center mt-2 max-w-[320px]">
-                          {channels.map(chan => (
-                            <button 
-                              key={chan.id} 
-                              onClick={() => onExpandedChannelIdChange(chan.id)} 
-                              className="flex items-center gap-1.5 bg-[var(--vanilla)] border border-[var(--waffle)]/25 hover:border-[var(--caramel)]/50 text-[8.5px] font-mono text-[#7A6258] hover:text-[var(--foreground)] px-3 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs hover:scale-103"
-                            >
-                              <img src={chan.avatar} alt={chan.name} className="h-4 w-4 rounded-full object-cover border border-white" />
-                              <span>{chan.name.split(' ')[0]}</span>
-                            </button>
-                          ))}
-                        </div>
+                        <h3 className="text-sm font-bold text-[#17212B]">Select an Expedition Dispatch</h3>
+                        <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
+                          Connect with your Sherpa guides, Himalayan rescue coordinators, or luxury lodge hosts in real time.
+                        </p>
                       </div>
                     )}
                   </div>
                 </div>
-              ) : chatViewState === 'inbox' ? (
-                /* ── WHATSAPP-STYLE INBOX LIST ─────────────────────────── */
-                <ChatsList
-                  channels={channels}
-                  onActiveChannelIdChange={onActiveChannelIdChange}
-                  onChatViewStateChange={onChatViewStateChange}
-                />
               ) : (
-                renderSingleChatView(activeChannelObj, true)
+                /* ── COMPACT SINGLE VIEW ──────────────────── */
+                chatViewState === 'inbox' ? (
+                  <ChatsList
+                    channels={channels}
+                    onActiveChannelIdChange={onActiveChannelIdChange}
+                    onChatViewStateChange={onChatViewStateChange}
+                  />
+                ) : (
+                  renderSingleChatView(activeChannelObj, true)
+                )
               )}
             </div>
-          ) : (
-            /* Collapsed Chat View */
-            <div className="flex flex-col gap-5 py-4 items-center">
-              {channels.map((chan) => (
-                <div 
-                  key={chan.id}
-                  onClick={() => { onRightCollapsedChange(false); onActiveChannelIdChange(chan.id); }}
-                  className="h-9.5 w-9.5 rounded-full overflow-hidden border-2 border-[var(--caramel)]/30 cursor-pointer hover:border-[var(--caramel)] hover:scale-105 transition-all flex items-center justify-center bg-[var(--vanilla)] relative"
-                  title={chan.name}
-                >
-                  <img src={chan.avatar} alt={chan.name} className="h-full w-full object-cover" />
-                  <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border border-white animate-pulse" />
-                </div>
-              ))}
-            </div>
-          )
+          ) : null
         ) : (
-          /* ── TELEMETRY / STATUS VIEW ────────────────────────────────── */
-          <div className="flex flex-col gap-6 p-4">
-            {/* 1. Dynamic Weather Telemetry */}
-            <WeatherTelemetry
-              rightCollapsed={rightCollapsed}
-              weather={weather}
-            />
+          /* ── TELEMETRY & INTEL SECTION ───────────────────────────── */
+          !rightCollapsed ? (
+            <div className="flex flex-col flex-1 min-h-0 p-4 gap-4 overflow-y-auto scrollbar-thin">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[11px] font-mono font-bold text-[#0552A2] uppercase tracking-wider">
+                    Himalayan Intel & Weather
+                  </span>
+                </div>
+                <button
+                  onClick={() => onRightCollapsedChange(true)}
+                  className="p-1 rounded-md text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                  title="Collapse"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </div>
 
-            {/* 2. Nepal Map */}
-            {!rightCollapsed && (
-              <div className="flex flex-col gap-1.5 px-1 overflow-hidden">
-                <span className="text-[9px] font-mono font-bold text-[var(--caramel)] uppercase tracking-wider">Nepal Territory Map</span>
-                <div className="h-[200px] w-full flex items-center justify-center relative select-none">
+              {/* Weather Telemetry */}
+              <WeatherTelemetry rightCollapsed={false} weather={weather} />
+
+              {/* Geographic Locator Map */}
+              <div className="bg-[#F8FAFC] border border-slate-200/80 rounded-2xl p-3 flex flex-col gap-2 relative overflow-hidden">
+                <div className="flex items-center justify-between z-10 relative">
+                  <span className="text-[10px] font-mono font-bold text-slate-600 uppercase tracking-wider">Topographic Map</span>
+                  <span className="text-[9px] font-mono text-[#0552A2] font-semibold">27.7172° N, 85.3240° E</span>
+                </div>
+                <div className="h-36 w-full rounded-xl overflow-hidden relative border border-slate-200/50 bg-white">
                   <NepalBackgroundMap isSidebar={true} />
                 </div>
               </div>
-            )}
 
-            {/* ── 3. CO-PLANNER HUB ─────────────────────────────── */}
-            {!rightCollapsed && (
+              {/* Co-Planner Hub */}
               <CoPlannerHub
                 calendarMarks={calendarMarks}
                 onCalendarMarksChange={onCalendarMarksChange}
@@ -334,8 +275,8 @@ export default function RightSidebar({
                 companyNote={companyNote}
                 onCompanyNoteChange={onCompanyNoteChange}
               />
-            )}
-          </div>
+            </div>
+          ) : null
         )}
       </div>
     </aside>
