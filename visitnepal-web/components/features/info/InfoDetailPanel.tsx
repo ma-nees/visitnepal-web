@@ -319,52 +319,62 @@ export default function InfoDetailPanel({
             </div>
           </motion.div>
 
-          {/* Flat Horizontal Telemetry Row */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-0 py-4 border-y border-[#92C4EA]/15">
+          {/* Unified Telemetry Information Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {/* Altitude */}
-            <div className="flex items-center gap-2.5 px-3 md:border-r border-[#92C4EA]/12">
-              <Mountain className="h-4.5 w-4.5 text-amber-600 shrink-0" />
+            <div className="rounded-[12px] bg-white p-2 sm:p-2.5 border border-[#0552A2]/10 shadow-[0_2px_6px_-3px_rgba(15,42,74,0.05)] flex items-center gap-2">
+              <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+                <Mountain className="h-3.5 w-3.5" />
+              </div>
               <div className="min-w-0">
-                <span className="text-[7.5px] font-mono uppercase tracking-widest text-[#64748B] block leading-none">Altitude Peak</span>
-                <span className="text-xs font-black text-[#17212B] mt-1.5 block leading-none truncate">{data.elevation || '5,364 m'}</span>
+                <span className="text-[9.5px] font-medium text-[#64748B] block leading-none">Altitude Peak</span>
+                <span className="text-xs font-bold tracking-tight text-[#17212B] mt-1 block leading-none truncate">{data.elevation || '5,364 m'}</span>
               </div>
             </div>
 
             {/* Difficulty */}
-            <div className="flex items-center gap-2.5 px-3 md:border-r border-[#92C4EA]/12">
-              <Activity className="h-4.5 w-4.5 text-rose-500 shrink-0" />
+            <div className="rounded-[12px] bg-white p-2 sm:p-2.5 border border-[#0552A2]/10 shadow-[0_2px_6px_-3px_rgba(15,42,74,0.05)] flex items-center gap-2">
+              <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+                <Activity className="h-3.5 w-3.5" />
+              </div>
               <div className="min-w-0">
-                <span className="text-[7.5px] font-mono uppercase tracking-widest text-[#64748B] block leading-none">Difficulty</span>
-                <span className="text-xs font-black text-[#17212B] mt-1.5 block leading-none truncate">
+                <span className="text-[9.5px] font-medium text-[#64748B] block leading-none">Difficulty</span>
+                <span className="text-xs font-bold tracking-tight text-[#17212B] mt-1 block leading-none truncate">
                   {isLuxury ? 'VIP Assisted' : (data.difficulty || 'Challenging')}
                 </span>
               </div>
             </div>
 
             {/* Peak Temp */}
-            <div className="flex items-center gap-2.5 px-3 md:border-r border-[#92C4EA]/12">
-              <CloudSun className="h-4.5 w-4.5 text-sky-500 shrink-0" />
+            <div className="rounded-[12px] bg-white p-2 sm:p-2.5 border border-[#0552A2]/10 shadow-[0_2px_6px_-3px_rgba(15,42,74,0.05)] flex items-center gap-2">
+              <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+                <CloudSun className="h-3.5 w-3.5" />
+              </div>
               <div className="min-w-0">
-                <span className="text-[7.5px] font-mono uppercase tracking-widest text-[#64748B] block leading-none">Peak Temp</span>
-                <span className="text-xs font-black text-[#17212B] mt-1.5 block leading-none truncate">{data.weather?.temp || '-6°C'}</span>
+                <span className="text-[9.5px] font-medium text-[#64748B] block leading-none">Peak Temp</span>
+                <span className="text-xs font-bold tracking-tight text-[#17212B] mt-1 block leading-none truncate">{data.weather?.temp || '-6°C'}</span>
               </div>
             </div>
 
             {/* Duration */}
-            <div className="flex items-center gap-2.5 px-3 md:border-r border-[#92C4EA]/12">
-              <Clock className="h-4.5 w-4.5 text-[#0552A2] shrink-0" />
+            <div className="rounded-[12px] bg-white p-2 sm:p-2.5 border border-[#0552A2]/10 shadow-[0_2px_6px_-3px_rgba(15,42,74,0.05)] flex items-center gap-2">
+              <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+                <Clock className="h-3.5 w-3.5" />
+              </div>
               <div className="min-w-0">
-                <span className="text-[7.5px] font-mono uppercase tracking-widest text-[#64748B] block leading-none">Est Duration</span>
-                <span className="text-xs font-black text-[#17212B] mt-1.5 block leading-none font-mono">{calculatedDuration} Days</span>
+                <span className="text-[9.5px] font-medium text-[#64748B] block leading-none">Est Duration</span>
+                <span className="text-xs font-bold tracking-tight text-[#17212B] mt-1 block leading-none">{calculatedDuration} Days</span>
               </div>
             </div>
 
             {/* Accommodations */}
-            <div className="flex items-center gap-2.5 px-3">
-              <Compass className="h-4.5 w-4.5 text-emerald-600 shrink-0" />
+            <div className="rounded-[12px] bg-white p-2 sm:p-2.5 border border-[#0552A2]/10 shadow-[0_2px_6px_-3px_rgba(15,42,74,0.05)] flex items-center gap-2 col-span-2 sm:col-span-1">
+              <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+                <Compass className="h-3.5 w-3.5" />
+              </div>
               <div className="min-w-0">
-                <span className="text-[7.5px] font-mono uppercase tracking-widest text-[#64748B] block leading-none">Accommodations</span>
-                <span className="text-xs font-black text-[#17212B] mt-1.5 block leading-none truncate">
+                <span className="text-[9.5px] font-medium text-[#64748B] block leading-none">Accommodations</span>
+                <span className="text-xs font-bold tracking-tight text-[#17212B] mt-1 block leading-none truncate">
                   {isLuxury ? 'Quantum Domes' : 'Tea Houses'}
                 </span>
               </div>

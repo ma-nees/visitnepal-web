@@ -235,7 +235,7 @@ export default function DestinationsSection() {
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
-                      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#0552A2] shadow-sm">
+                      <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-[14px] text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
                         {dest.region}
                       </div>
                     </div>

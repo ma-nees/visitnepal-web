@@ -192,39 +192,41 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
 
           {/* Right: Contextual Travel Telemetry Card */}
-          <div className="lg:w-80 shrink-0 bg-zinc-50/80 rounded-2xl p-4 border border-zinc-200/80 flex flex-col justify-between gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-[#0552A2] flex items-center gap-1.5">
-                <CloudSun className="h-3.5 w-3.5 text-amber-500" />
+          <div className="lg:w-64 shrink-0 bg-white rounded-[14px] p-3.5 border border-[#0552A2]/10 shadow-[0_3px_12px_-4px_rgba(15,42,74,0.07)] flex flex-col justify-between gap-2">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-[#0552A2] flex items-center gap-1.5">
+                <span className="h-5 w-5 rounded-[6px] bg-[#F2F8FD] border border-[#0552A2]/10 flex items-center justify-center">
+                  <CloudSun className="h-3 w-3 text-[#0552A2]" />
+                </span>
                 <span>Station Telemetry</span>
               </span>
-              <span className="text-[10px] font-mono text-zinc-500 font-semibold">
-                Pokhara, Nepal (822m)
+              <span className="text-[10px] text-[#64748B] font-medium">
+                Pokhara (822m)
               </span>
             </div>
 
             <div className="flex items-baseline justify-between">
-              <div>
-                <span className="text-2xl font-bold font-serif text-[#17212B]">18°C</span>
-                <span className="text-xs text-[#4B5563] ml-2">Partly Cloudy</span>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-lg font-bold tracking-tight text-[#17212B]">18°C</span>
+                <span className="text-[10px] text-[#64748B]">Partly Cloudy</span>
               </div>
-              <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200/60">
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-[6px] border border-emerald-200/70">
                 Window: Clear
               </span>
             </div>
 
-            <div className="pt-2 border-t border-zinc-200/60 grid grid-cols-3 gap-2 text-[10px] text-[#4B5563] font-mono text-center">
+            <div className="pt-2 border-t border-[#0552A2]/8 grid grid-cols-3 gap-2 text-[10px] text-[#64748B] text-center">
               <div>
-                <span className="text-zinc-400 block">Wind</span>
-                <span className="font-bold text-[#17212B]">8 km/h NW</span>
+                <span className="text-[#94A3B8] block">Wind</span>
+                <span className="font-semibold text-[#17212B] mt-0.5 block">8 km/h NW</span>
               </div>
               <div>
-                <span className="text-zinc-400 block">Humidity</span>
-                <span className="font-bold text-[#17212B]">62%</span>
+                <span className="text-[#94A3B8] block">Humidity</span>
+                <span className="font-semibold text-[#17212B] mt-0.5 block">62%</span>
               </div>
               <div>
-                <span className="text-zinc-400 block">UV Index</span>
-                <span className="font-bold text-[#17212B]">Moderate</span>
+                <span className="text-[#94A3B8] block">UV Index</span>
+                <span className="font-semibold text-[#17212B] mt-0.5 block">Moderate</span>
               </div>
             </div>
           </div>
@@ -234,65 +236,73 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 2: TRAVEL OVERVIEW STATISTIC CARDS
       ========================================================================= */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-shadow">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="p-3.5 rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-semibold tracking-wide text-[#64748B]">
               Upcoming Trips
             </span>
-            <div className="h-8 w-8 rounded-xl bg-blue-50 text-[#0552A2] flex items-center justify-center">
-              <Calendar className="h-4 w-4" />
+            <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+              <Calendar className="h-3.5 w-3.5" />
             </div>
           </div>
-          <div className="text-3xl font-bold font-serif text-[#17212B]">{UPCOMING_TRIPS.length}</div>
-          <span className="text-[11px] text-emerald-600 font-semibold block mt-1">
-            Next: Annapurna ABC in 21d
-          </span>
+          <div className="mt-1.5">
+            <div className="text-xl font-bold tracking-tight text-[#17212B] leading-none">{UPCOMING_TRIPS.length}</div>
+            <span className="text-[10px] text-[#0552A2] font-medium block mt-1">
+              Next: Annapurna ABC in 21d
+            </span>
+          </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-shadow">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
+        <div className="p-3.5 rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-semibold tracking-wide text-[#64748B]">
               Places Explored
             </span>
-            <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-              <MapPin className="h-4 w-4" />
+            <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+              <MapPin className="h-3.5 w-3.5" />
             </div>
           </div>
-          <div className="text-3xl font-bold font-serif text-[#17212B]">8</div>
-          <span className="text-[11px] text-[#4B5563] block mt-1">
-            Across 4 Provinces
-          </span>
+          <div className="mt-1.5">
+            <div className="text-xl font-bold tracking-tight text-[#17212B] leading-none">8</div>
+            <span className="text-[10px] text-[#64748B] font-medium block mt-1">
+              Across 4 Provinces
+            </span>
+          </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-shadow">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
+        <div className="p-3.5 rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-semibold tracking-wide text-[#64748B]">
               Wishlist Saved
             </span>
-            <div className="h-8 w-8 rounded-xl bg-rose-50 text-[#EC1F27] flex items-center justify-center">
-              <Heart className="h-4 w-4" />
+            <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+              <Heart className="h-3.5 w-3.5" />
             </div>
           </div>
-          <div className="text-3xl font-bold font-serif text-[#17212B]">{wishlist.length}</div>
-          <span className="text-[11px] text-[#4B5563] block mt-1">
-            Himalayan Sanctuaries
-          </span>
+          <div className="mt-1.5">
+            <div className="text-xl font-bold tracking-tight text-[#17212B] leading-none">{wishlist.length}</div>
+            <span className="text-[10px] text-[#64748B] font-medium block mt-1">
+              Himalayan Sanctuaries
+            </span>
+          </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-shadow">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
+        <div className="p-3.5 rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-semibold tracking-wide text-[#64748B]">
               Completed
             </span>
-            <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-              <CheckCircle2 className="h-4 w-4" />
+            <div className="h-7 w-7 rounded-[8px] bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] flex items-center justify-center shrink-0">
+              <CheckCircle2 className="h-3.5 w-3.5" />
             </div>
           </div>
-          <div className="text-3xl font-bold font-serif text-[#17212B]">4</div>
-          <span className="text-[11px] text-[#4B5563] block mt-1">
-            124 km Total Trekked
-          </span>
+          <div className="mt-1.5">
+            <div className="text-xl font-bold tracking-tight text-[#17212B] leading-none">4</div>
+            <span className="text-[10px] text-[#64748B] font-medium block mt-1">
+              124 km Total Trekked
+            </span>
+          </div>
         </div>
       </div>
 

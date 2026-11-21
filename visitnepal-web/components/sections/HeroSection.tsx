@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import heroImage from '../../public/hero-himalayan-peaks.png';
 
 export default function HeroSection() {
   return (
@@ -11,13 +12,14 @@ export default function HeroSection() {
       {/* Background Himalayan Peaks & Prayer Flags — LCP Prioritized */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-himalayan-peaks.png"
+          src={heroImage}
           alt="Visit Nepal — Snow-capped Himalayan peaks and Tibetan prayer flags under a clear alpine sky"
           fill
           priority
           loading="eager"
+          decoding="sync"
           fetchPriority="high"
-          quality={85}
+          quality={75}
           sizes="100vw"
           className="object-cover object-center"
         />

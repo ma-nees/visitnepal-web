@@ -209,10 +209,10 @@ export default function CultureSection() {
 
                 {/* Badges */}
                 <div className="absolute top-6 left-6 flex items-center gap-2">
-                  <span className="bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold font-mono uppercase tracking-wider text-[#EC1F27] shadow-sm">
+                  <span className="bg-white px-3.5 py-1.5 rounded-[14px] text-xs font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
                     UNESCO Inscribed {selectedSite.year}
                   </span>
-                  <span className="bg-[#0552A2]/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-semibold text-white">
+                  <span className="bg-[#0552A2] px-3.5 py-1.5 rounded-[14px] text-xs font-semibold text-white shadow-[0_4px_14px_-2px_rgba(5,82,162,0.25)]">
                     {selectedSite.location}
                   </span>
                 </div>
