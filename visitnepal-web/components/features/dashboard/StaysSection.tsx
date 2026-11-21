@@ -65,7 +65,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Boutique Lodging List
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">
               Hotels & Eco-Stays
             </h2>
             <p className="text-xs text-[#475569]">Book certified rooms equipped with heated blankets, local food menus, and mountain views.</p>
@@ -73,22 +73,30 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
 
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredStays.map(stay => (
-              <div 
+              <div
                 key={stay.id}
                 onClick={() => setSelectedStay(stay)}
-                className="group bg-[var(--card-bg)] border border-[#92C4EA]/35 rounded-2xl overflow-hidden hover:border-[#0552A2]/50 transition-all duration-300 shadow-[0_4px_12px_rgba(61,45,39,0.01)] cursor-pointer"
+                className="group bg-white border border-[#0552A2]/12 rounded-[20px] overflow-hidden hover:border-[#0552A2]/40 hover:shadow-[0_10px_28px_-8px_rgba(15,42,74,0.12)] transition-all duration-300 cursor-pointer flex flex-col"
               >
-                <img src={stay.image} alt={stay.name} className="w-full h-40 object-cover border-b border-[#92C4EA]/20" />
-                <div className="p-5 flex flex-col gap-2">
-                  <div className="flex justify-between items-center text-[9px] font-mono font-bold text-[#0552A2]">
+                <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-[#17212B]">
+                  <img
+                    src={stay.image}
+                    alt={stay.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-5 sm:p-6 flex flex-col gap-2 flex-1">
+                  <div className="flex justify-between items-center text-xs font-semibold text-[#0552A2]">
                     <span>{stay.type}</span>
                     <span>★ {stay.rating}</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#17212B] mt-0.5">{stay.name}</h3>
-                  <p className="text-[10px] text-[#64748B] font-mono">{stay.location}</p>
-                  <p className="text-xs text-[#475569] leading-relaxed line-clamp-2 mt-1">{stay.description}</p>
-                  
-                  <span className="text-xs font-mono font-bold text-[#0552A2] mt-2 block">
+                  <h3 className="text-lg sm:text-xl font-bold font-serif text-[#17212B] group-hover:text-[#0552A2] transition-colors mt-0.5">
+                    {stay.name}
+                  </h3>
+                  <p className="text-xs text-[#64748B] font-medium">{stay.location}</p>
+                  <p className="text-sm text-[#475569] leading-relaxed line-clamp-2 mt-1">{stay.description}</p>
+
+                  <span className="text-sm font-bold text-[#0552A2] mt-2 block">
                     From ${stay.price}/night • Plan Booking
                   </span>
                 </div>
@@ -105,7 +113,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Transit Systems
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Himalayan Transportation</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Himalayan Transportation</h2>
             <p className="text-xs text-[#475569]">Airport shuttles, high-speed charter flights, and private rugged 4x4 vehicles for valley roads.</p>
           </motion.div>
 

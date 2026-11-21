@@ -289,7 +289,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Confirmed Vouchers
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Ecosystem Bookings</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Ecosystem Bookings</h2>
             <p className="text-xs text-[#475569]">Holographic check-in codes, guide listings, and invoice schedules generated under your credentials.</p>
           </motion.div>
 
@@ -333,7 +333,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Historical Ledger
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Past Journeys</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Past Journeys</h2>
             <p className="text-xs text-[#475569]">Archived trips, high peak climbs successfully navigated, and past guide reviews.</p>
           </motion.div>
 
@@ -359,7 +359,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Communication Terminal
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Ecosystem Channels</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Ecosystem Channels</h2>
             <p className="text-xs text-[#475569]">Chat in real-time with certified guides, host owners, or your cognitive AI butler.</p>
           </motion.div>
 

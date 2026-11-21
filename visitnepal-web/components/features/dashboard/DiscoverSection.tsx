@@ -604,7 +604,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                   <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                     Traveler Diaries
                   </span>
-                  <h2 className="text-xl font-bold tracking-tight text-[#17212B]">Community Chronicles</h2>
+                  <h2 className="text-2xl sm:text-3xl font-bold font-serif tracking-tight text-[#17212B]">Community Chronicles</h2>
                   <p className="text-xs text-[#475569]">Share your journeys and check out live updates from fellow adventurers in Nepal.</p>
                 </div>
 
@@ -943,29 +943,41 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Trending Travels
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Popular Journeys</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Popular Journeys</h2>
               <p className="text-xs text-[#475569]">Most loved paths by worldwide travelers seeking adventure, peace, and culture.</p>
             </motion.div>
 
-            {/* Simple list cards */}
-            <div className="flex flex-col gap-4">
+            {/* Full-bleed image cards */}
+            <div className="flex flex-col gap-5">
               {DESTINATIONS.slice(0, 3).map((d, index) => (
                 <motion.div
                   variants={itemVariants}
                   key={d.id}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="bg-[#F2F8FD]/20 border border-[#92C4EA]/30 rounded-2xl p-4.5 flex flex-col md:flex-row gap-5 items-center hover:bg-[#F2F8FD]/50 hover:border-[#0552A2]/40 transition-all duration-200 cursor-pointer active:scale-[0.995] group"
+                  className="bg-white border border-[#0552A2]/12 rounded-[20px] overflow-hidden flex flex-col md:flex-row items-stretch hover:border-[#0552A2]/40 hover:shadow-[0_10px_28px_-8px_rgba(15,42,74,0.12)] transition-all duration-200 cursor-pointer active:scale-[0.995] group"
                 >
-                  <img src={d.image} alt={d.name} className="w-full md:w-36 h-24 object-cover rounded-xl border border-[#92C4EA]/40 shrink-0" />
-                  <div className="flex-1 flex flex-col gap-1 text-left w-full">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono font-bold text-white bg-[#0552A2] px-2 py-0.5 rounded">
+                  <div className="relative w-full md:w-72 lg:w-80 h-48 md:h-auto min-h-[176px] shrink-0 overflow-hidden bg-[#17212B]">
+                    <img
+                      src={d.image}
+                      alt={d.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center gap-2 text-left">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-[11px] font-bold text-white bg-[#0552A2] px-3 py-1 rounded-full">
                         #{index + 1} Trending
                       </span>
-                      <span className="text-[9px] font-mono text-[#64748B]">{d.elevation}</span>
+                      <span className="text-xs font-semibold text-[#0552A2] bg-[#F2F8FD] px-2.5 py-0.5 rounded-full">
+                        {d.elevation}
+                      </span>
                     </div>
-                    <h3 className="text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors mt-1">{d.name}</h3>
-                    <p className="text-xs text-[#475569] leading-relaxed">{d.description}</p>
+                    <h3 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B] group-hover:text-[#0552A2] transition-colors mt-1">
+                      {d.name}
+                    </h3>
+                    <p className="text-sm text-[#475569] leading-relaxed">
+                      {d.description}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -980,7 +992,7 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Sightseeing Matrix
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Iconic Landmarks</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Iconic Landmarks</h2>
               <p className="text-xs text-[#475569]">The spiritual monuments, ancient valleys, and high glaciers defining our geography.</p>
             </motion.div>
 
@@ -989,13 +1001,25 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
                 <div
                   key={d.id}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="bg-[var(--card-bg)] border border-[#92C4EA]/30 rounded-2xl p-4 flex flex-col gap-3.5 hover:border-[#0552A2]/40 transition-all duration-200 cursor-pointer active:scale-[0.99] group"
+                  className="bg-white border border-[#0552A2]/12 rounded-[20px] overflow-hidden flex flex-col hover:border-[#0552A2]/40 hover:shadow-[0_10px_28px_-8px_rgba(15,42,74,0.12)] transition-all duration-200 cursor-pointer active:scale-[0.99] group"
                 >
-                  <img src={d.image} alt={d.name} className="w-full h-32 object-cover rounded-xl border border-[#92C4EA]/20" />
-                  <div className="flex flex-col gap-1 text-xs text-left">
-                    <h3 className="font-bold text-sm text-[#17212B] group-hover:text-[#0552A2] transition-colors">{d.name}</h3>
-                    <p className="text-[#64748B] font-mono text-[9px]">{d.region} • {d.elevation}</p>
-                    <p className="text-[#475569] leading-relaxed mt-1 text-[11px]">{d.description}</p>
+                  <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-[#17212B]">
+                    <img
+                      src={d.image}
+                      alt={d.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5 flex flex-col gap-1.5 text-left flex-1">
+                    <span className="text-xs font-semibold text-[#0552A2]">
+                      {d.region} • {d.elevation}
+                    </span>
+                    <h3 className="font-bold font-serif text-lg text-[#17212B] group-hover:text-[#0552A2] transition-colors">
+                      {d.name}
+                    </h3>
+                    <p className="text-sm text-[#475569] leading-relaxed mt-0.5">
+                      {d.description}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -1010,28 +1034,32 @@ export default function DiscoverSection({ activeId, onNavigate }: DiscoverSectio
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                 Curated Gold Tier
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Top 5 Destinations</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Top 5 Destinations</h2>
               <p className="text-xs text-[#475569]">The supreme selection representing Trekking, Spiritual peace, Wildlife, Heritage, and desert camps.</p>
             </motion.div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               {DESTINATIONS.map((d, idx) => (
                 <motion.div
                   variants={itemVariants}
                   key={d.id}
                   onClick={() => onNavigate ? onNavigate(d.id) : router.push('/info/' + d.id)}
-                  className="bg-[#F2F8FD]/20 border border-[#92C4EA]/30 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:border-[#0552A2]/30 transition-all duration-200 cursor-pointer active:scale-[0.995] group"
+                  className="bg-white border border-[#0552A2]/12 rounded-[20px] overflow-hidden flex flex-col md:flex-row items-stretch shadow-xs hover:border-[#0552A2]/40 hover:shadow-[0_10px_28px_-8px_rgba(15,42,74,0.12)] transition-all duration-200 cursor-pointer active:scale-[0.995] group"
                 >
-                  <div className="w-full md:w-56 h-36 relative shrink-0">
-                    <img src={d.image} alt={d.name} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 left-3 h-7 w-7 rounded-full bg-[#0552A2] text-white flex items-center justify-center font-black text-xs font-mono shadow-sm">
+                  <div className="w-full md:w-72 lg:w-80 h-48 md:h-auto min-h-[176px] relative shrink-0 overflow-hidden bg-[#17212B]">
+                    <img src={d.image} alt={d.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute top-3 left-3 h-8 w-8 rounded-full bg-[#0552A2] text-white flex items-center justify-center font-bold text-xs shadow-sm">
                       0{idx + 1}
                     </div>
                   </div>
-                  <div className="p-5 flex flex-col justify-center gap-2 text-left">
-                    <h3 className="text-base font-bold text-[#17212B] group-hover:text-[#0552A2] transition-colors">{d.name}</h3>
-                    <p className="text-xs text-[#475569] leading-relaxed">{d.details}</p>
-                    <p className="text-[9px] font-mono text-[#0552A2] uppercase font-bold">{d.region} Region • {d.elevation}</p>
+                  <div className="p-5 sm:p-6 flex flex-col justify-center gap-2 text-left flex-1">
+                    <span className="text-xs font-semibold text-[#0552A2]">
+                      {d.region} Region • {d.elevation}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B] group-hover:text-[#0552A2] transition-colors">
+                      {d.name}
+                    </h3>
+                    <p className="text-sm text-[#475569] leading-relaxed">{d.details}</p>
                   </div>
                 </motion.div>
               ))}

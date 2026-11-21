@@ -99,7 +99,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Cert. Sherpas & Naturalists
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Sherpas & Mountain Guides</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Sherpas & Mountain Guides</h2>
             <p className="text-xs text-[#475569]">Hire native Himalayan navigators certified for high altitude routes, wildlife tracking, and translation support.</p>
           </motion.div>
 
@@ -160,7 +160,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Gov Registry Access
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Permits & Approvals</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Permits & Approvals</h2>
             <p className="text-xs text-[#475569]">Apply for standard conservation area permits and special mountaineering clearances online.</p>
           </motion.div>
 

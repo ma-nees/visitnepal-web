@@ -39,7 +39,7 @@ export default function AdminSection({ activeId }: AdminSectionProps) {
             <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
               Operations Control
             </span>
-            <h2 className="text-2xl font-black tracking-tight text-[#17212B]">Database & Analytics</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-[#17212B]">Database & Analytics</h2>
             <p className="text-xs text-[#475569]">Track high-altitude tourism metrics, guide densities, and monthly ecosystem revenue yields.</p>
           </motion.div>
 
