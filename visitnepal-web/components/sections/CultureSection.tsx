@@ -87,7 +87,7 @@ const festivals: Festival[] = [
       'Feasts of spiced goat curry & beaten rice',
     ],
     location: 'Nationwide — across every mountain village & city',
-    imageUrl: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/festivals/dashain.webp',
     quote: 'The return of family, blessings of elders, and laughter on hilltop swings under crystal autumn skies.',
   },
   {
@@ -106,7 +106,7 @@ const festivals: Festival[] = [
       'Bhai Tika: seven-colored sibling blessings',
     ],
     location: 'Kathmandu Valley, Patan & Mountain Homestays',
-    imageUrl: 'https://images.unsplash.com/photo-1508672019048-805b876b67e2?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/festivals/tihar.webp',
     quote: 'Golden warmth spilling from every carved window, welcoming light into homes illuminated by faith.',
   },
   {
@@ -125,7 +125,7 @@ const festivals: Festival[] = [
       'Sharing spiced lassi and traditional sweets',
     ],
     location: 'Basantapur Durbar, Pokhara Lakeside & Terai Plains',
-    imageUrl: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/festivals/holi.webp',
     quote: 'A sea of crimson, gold, and sky-blue washing away divisions as spring breathes life into the Himalayas.',
   },
   {
@@ -144,7 +144,7 @@ const festivals: Festival[] = [
       'Distribution of blessed liquor from Sweta Bhairab mask',
     ],
     location: 'Historic Old Kathmandu Durbar Square',
-    imageUrl: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/festivals/indra-jatra.webp',
     quote: 'Hypnotic drums echo off centuries-old bricks as the Living Goddess blesses an ocean of reverent devotees.',
   },
 ];
@@ -303,143 +303,202 @@ export default function CultureSection() {
             </p>
           </div>
 
-          {/* Interactive Seasonal Timeline Selector (No generic cards!) */}
-          <div className="flex flex-wrap items-center gap-3 mb-10 pb-4 border-b border-zinc-100">
+          {/* Clean Segmented Festival Selector with Full Marigold Toran */}
+          <div className="bg-[#F8FAFD] p-2 rounded-[22px] border border-[#0552A2]/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-8">
             {festivals.map((fest) => {
               const isActive = activeFestival.id === fest.id;
+              const shortMonth = fest.month.split('(')[0].trim();
               return (
                 <button
                   key={fest.id}
                   onClick={() => setActiveFestival(fest)}
-                  className={`group px-5 py-3 rounded-2xl transition-all duration-300 text-left cursor-pointer flex items-center gap-3 border ${isActive
-                    ? 'bg-[#0552A2] text-white border-[#0552A2] shadow-md'
-                    : 'bg-white border-zinc-200 text-[#17212B] hover:border-[#0552A2]/40'
+                  className={`relative overflow-hidden px-4 pt-24 sm:pt-24 lg:pt-[104px] pb-4 rounded-[18px] transition-all duration-200 text-left cursor-pointer flex items-end justify-between gap-3 border ${isActive
+                    ? 'bg-white border-[#0552A2]/25 shadow-[0_8px_22px_-6px_rgba(15,42,74,0.14)]'
+                    : 'bg-white/70 border-[#0552A2]/8 hover:bg-white'
                     }`}
                 >
-                  <span className={`w-2.5 h-2.5 rounded-full shrink-0 transition-colors ${isActive ? 'bg-[#FDB716]' : 'bg-zinc-300 group-hover:bg-[#0552A2]'
-                    }`} />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-sm font-bold font-serif leading-none ${isActive ? 'text-white' : 'text-[#17212B]'}`}>
-                        {fest.name}
-                      </span>
-                      <span className={`text-[10px] font-mono ${isActive ? 'text-white/80' : 'text-gray-400'}`}>
-                        {fest.month.split('–')[0].trim()}
-                      </span>
-                    </div>
-                    <span className={`text-[11px] block mt-0.5 ${isActive ? 'text-blue-100' : 'text-[#4B5563]'}`}>
+                  {/* Full Unclipped Marigold & Jasmine Toran aligned across the top edge */}
+                  <div className="pointer-events-none select-none absolute top-0 inset-x-0 aspect-[3/2] w-full">
+                    <Image
+                      src="/festivals/box-design.webp"
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-contain object-top"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div className="relative z-10 min-w-0">
+                    <span
+                      className={`text-base sm:text-lg font-black font-serif tracking-tight block truncate ${isActive ? 'text-[#0552A2]' : 'text-[#17212B]'
+                        }`}
+                    >
+                      {fest.name}
+                    </span>
+                    <span className="text-[11px] font-medium text-[#64748B] block mt-0.5 truncate">
                       {fest.season}
                     </span>
                   </div>
+
+                  <span
+                    className={`relative z-10 text-[10px] font-semibold px-2.5 py-1 rounded-full shrink-0 ${isActive
+                      ? 'bg-[#F2F8FD] text-[#0552A2]'
+                      : 'text-[#64748B] bg-[#F4F7FA]'
+                      }`}
+                  >
+                    {shortMonth}
+                  </span>
                 </button>
               );
             })}
           </div>
 
-          {/* Featured Festival Showcase Stage (Editorial 2-Column Split) */}
+          {/* Featured Festival Showcase Stage — Clean White Box with Full Theme Visibility */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFestival.id}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="relative overflow-hidden rounded-[24px] bg-white text-[#17212B] border border-[#0552A2]/10 shadow-[0_12px_36px_-12px_rgba(15,42,74,0.08)]"
             >
-              {/* Left Column: Festival Narrative & Cultural Immersion */}
-              <div className="lg:col-span-7 flex flex-col gap-6">
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="px-3 py-1 rounded-full bg-[#EC1F27]/10 text-[#EC1F27] text-xs font-bold uppercase tracking-wider font-mono">
-                      {activeFestival.season} • {activeFestival.month}
-                    </span>
-                    <span className="text-xs font-mono text-[#0552A2] font-semibold">
-                      {activeFestival.duration} Celebration
-                    </span>
-                  </div>
-
-                  <h4 className="text-3xl sm:text-4xl font-bold font-serif text-[#17212B]">
-                    {activeFestival.name}
-                    <span className="block text-sm font-normal font-sans text-gray-500 mt-1">
-                      {activeFestival.nepaliName}
-                    </span>
-                  </h4>
-
-                  <p className="text-sm font-bold text-[#EC1F27] uppercase tracking-wider mt-2">
-                    {activeFestival.theme}
-                  </p>
-                </div>
-
-                <p className="text-body text-[#4B5563] leading-relaxed">
-                  {activeFestival.description}
-                </p>
-
-                {/* Cultural Quote Callout */}
-                <div className="p-5 rounded-2xl bg-zinc-50/70 border-l-4 border-[#0552A2] text-sm italic font-serif text-[#17212B]">
-                  “{activeFestival.quote}”
-                </div>
-
-                {/* Ritual Highlights */}
-                <div>
-                  <span className="text-xs uppercase font-mono tracking-wider font-bold text-[#17212B] block mb-3">
-                    Sacred Rituals & Experiences:
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {activeFestival.rituals.map((ritual, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-2.5 text-xs text-[#17212B] font-medium p-2.5 rounded-xl bg-white border border-zinc-200"
-                      >
-                        <CheckCircle2 className="h-4 w-4 text-[#0552A2] shrink-0" />
-                        <span>{ritual}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Location Footer */}
-                <div className="pt-4 border-t border-zinc-100 flex items-center justify-between text-xs text-[#4B5563]">
-                  <div className="flex items-center gap-1.5">
-                    <MapPin className="h-4 w-4 text-[#0552A2]" />
-                    <span>Best witnessed in: <strong className="text-[#17212B]">{activeFestival.location}</strong></span>
-                  </div>
-
-                  <a
-                    href="#plan-your-trip"
-                    className="inline-flex items-center gap-1 font-bold text-[#0552A2] hover:underline"
-                  >
-                    <span>Plan Around This Festival</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Column: Visual Stage with Festival Atmosphere */}
-              <div className="lg:col-span-5">
-                <div className="relative aspect-[4/3] sm:aspect-[4/3] lg:aspect-[1/1] rounded-3xl overflow-hidden bg-[#17212B] shadow-xl">
+              {activeFestival.id === 'tihar' ? (
+                /* Special Tihar Layout: Marigold flower garlands aligned along top-left & top-right borders */
+                <div className="relative min-h-[420px] sm:min-h-[460px] flex items-center justify-center">
                   <Image
                     src={activeFestival.imageUrl}
                     alt={activeFestival.name}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 42vw"
-                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 90vw"
+                    className="object-cover object-top pointer-events-none select-none"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
 
-                  <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <span className="text-[11px] font-mono tracking-wider uppercase text-[#FDB716] font-bold block mb-1">
-                      Cultural Essence
-                    </span>
-                    <h5 className="text-xl font-bold font-serif text-white mb-1">
-                      {activeFestival.name}
-                    </h5>
-                    <p className="text-xs text-white/80">
-                      {activeFestival.theme}
+                  <div className="relative z-10 max-w-2xl mx-auto px-12 sm:px-24 lg:px-28 py-12 sm:py-14 text-center flex flex-col items-center gap-5">
+                    <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs font-semibold tracking-[0.14em] uppercase text-[#0552A2]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FDB716]" />
+                      <span>{activeFestival.season}</span>
+                      <span className="text-[#CBD5E1]">•</span>
+                      <span className="text-[#64748B]">{activeFestival.month}</span>
+                      <span className="text-[#CBD5E1]">•</span>
+                      <span className="text-[#64748B]">{activeFestival.duration}</span>
+                    </div>
+
+                    <div>
+                      <h4 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif text-[#17212B] tracking-tight leading-tight">
+                        {activeFestival.name}
+                      </h4>
+                      <span className="block text-sm text-[#64748B] mt-1.5">
+                        {activeFestival.nepaliName} — {activeFestival.theme}
+                      </span>
+                    </div>
+
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
+                      {activeFestival.description}
                     </p>
+
+                    <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-[#64748B]">
+                      {activeFestival.rituals.slice(0, 3).map((ritual, idx) => (
+                        <React.Fragment key={idx}>
+                          {idx > 0 && <span className="text-[#CBD5E1]">•</span>}
+                          <span>{ritual}</span>
+                        </React.Fragment>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 mt-1 border-t border-[#0552A2]/10 w-full flex flex-wrap items-center justify-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-2 text-xs text-[#64748B]">
+                        <MapPin className="h-3.5 w-3.5 text-[#0552A2] shrink-0" />
+                        <span>{activeFestival.location}</span>
+                      </div>
+
+                      <a
+                        href="#plan-your-trip"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0552A2] text-white hover:bg-[#043e7b] text-xs font-bold tracking-wide transition-colors shrink-0"
+                      >
+                        <span>Plan Around This Festival</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                /* Clean Minimal White Split Layout: Unobstructed Text Left + 100% Visible Theme Artwork Right */
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center p-7 sm:p-10 lg:p-12">
+                  <div className="lg:col-span-6 flex flex-col gap-5">
+                    <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold tracking-[0.14em] uppercase text-[#0552A2]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#EC1F27]" />
+                      <span>{activeFestival.season}</span>
+                      <span className="text-[#CBD5E1]">•</span>
+                      <span className="text-[#64748B]">{activeFestival.month}</span>
+                      <span className="text-[#CBD5E1]">•</span>
+                      <span className="text-[#64748B]">{activeFestival.duration}</span>
+                    </div>
+
+                    <div>
+                      <h4 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif text-[#17212B] tracking-tight leading-tight">
+                        {activeFestival.name}
+                      </h4>
+                      <span className="block text-sm text-[#64748B] mt-1.5">
+                        {activeFestival.nepaliName} — {activeFestival.theme}
+                      </span>
+                    </div>
+
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
+                      {activeFestival.description}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-[#64748B]">
+                      {activeFestival.rituals.slice(0, 3).map((ritual, idx) => (
+                        <React.Fragment key={idx}>
+                          {idx > 0 && <span className="text-[#CBD5E1]">•</span>}
+                          <span>{ritual}</span>
+                        </React.Fragment>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 border-t border-[#0552A2]/10 flex flex-wrap items-center justify-between gap-4">
+                      <div className="flex items-center gap-2 text-xs text-[#64748B]">
+                        <MapPin className="h-3.5 w-3.5 text-[#0552A2] shrink-0" />
+                        <span>{activeFestival.location}</span>
+                      </div>
+
+                      <a
+                        href="#plan-your-trip"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0552A2] text-white hover:bg-[#043e7b] text-xs font-bold tracking-wide transition-colors shrink-0"
+                      >
+                        <span>Plan Around This Festival</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-6">
+                    <div
+                      className={`relative w-full overflow-hidden ${activeFestival.id === 'holi' || activeFestival.id === 'indra-jatra'
+                        ? 'h-[300px] sm:h-[380px] lg:h-[440px]'
+                        : 'h-[260px] sm:h-[320px] lg:h-[380px]'
+                        }`}
+                    >
+                      <Image
+                        src={activeFestival.imageUrl}
+                        alt={activeFestival.name}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 45vw"
+                        className={`object-contain ${activeFestival.id === 'holi'
+                          ? 'scale-[1.35] sm:scale-[1.45]'
+                          : activeFestival.id === 'indra-jatra'
+                            ? 'scale-[1.22] sm:scale-[1.3]'
+                            : ''
+                          }`}
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
