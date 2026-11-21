@@ -131,7 +131,7 @@ export default function PlanYourTripSection() {
   return (
     <section
       id="plan-your-trip"
-      className="pt-20 md:pt-28 pb-6 md:pb-8 bg-white text-[#17212B] scroll-mt-12"
+      className="pt-10 md:pt-16 pb-6 md:pb-8 bg-white text-[#17212B] scroll-mt-12"
       aria-labelledby="plan-heading"
     >
       <div className="container">

@@ -115,12 +115,12 @@ export default function ExperiencesSection() {
   return (
     <section
       id="experiences"
-      className="pt-10 md:pt-14 pb-12 md:pb-16 bg-white scroll-mt-12 text-[#17212B]"
+      className="pt-4 sm:pt-6 pb-10 md:pb-14 bg-white scroll-mt-12 text-[#17212B]"
       aria-labelledby="experiences-heading"
     >
       <div className="container">
         {/* Section Header */}
-        <div className="max-w-2xl mb-16">
+        <div className="max-w-2xl mb-8 sm:mb-10">
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2 h-2 rounded-full bg-[#FDB716]" />
             <span className="text-caption text-[#0552A2]">Curated Journeys</span>

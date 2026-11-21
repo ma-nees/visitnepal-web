@@ -4,29 +4,41 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-[#17212B] pt-6 md:pt-8 pb-12 border-t border-zinc-200 select-none">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <footer className="bg-white text-[#17212B] pt-6 md:pt-8 pb-12 border-t border-zinc-200 select-none overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-6 max-w-7xl w-full">
         {/* Main Footer Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-zinc-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10 pb-12 border-b border-zinc-100">
           {/* Brand & Mission Column */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            <Link href="/" className="inline-block relative h-12 w-44 transition-transform duration-200 hover:scale-[1.02]">
-              <Image
-                src="/logo.png"
-                alt="Visit Nepal Official Logo"
-                fill
-                unoptimized
-                className="object-contain object-left"
-              />
-            </Link>
-            <p className="text-[#5A6578] text-sm leading-relaxed max-w-sm mt-1">
-              Naturally Nepal — Once is Not Enough. Dedicated to promoting sustainable Himalayan travel, authentic cultural heritage, and safe alpine expeditions across Nepal.
-            </p>
-            <div className="flex items-center gap-2.5 mt-2">
-              <span className="h-2 w-2 rounded-full bg-[#EC1F27] animate-pulse" />
-              <span className="text-[11px] uppercase tracking-widest text-[#0552A2] font-bold">
-                Official Nepal Tourism Board
-              </span>
+          <div className="lg:col-span-4 w-full">
+            {/* Mobile: Horizontal side-by-side row (Logo on Left, Text on Right); Desktop: Stacked */}
+            <div className="flex flex-row md:flex-col items-center md:items-start gap-3.5 sm:gap-4 md:gap-4 w-full">
+              {/* Visit Nepal Logo (Fixed width, flex-shrink: 0 to prevent squeezing) */}
+              <Link
+                href="/"
+                className="relative shrink-0 w-24 sm:w-28 md:w-44 h-14 sm:h-16 md:h-12 transition-transform duration-200 hover:scale-[1.02] flex items-center justify-start"
+              >
+                <Image
+                  src="/logo.png"
+                  alt="Visit Nepal Official Logo"
+                  fill
+                  unoptimized
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 176px"
+                  className="object-contain object-left"
+                />
+              </Link>
+
+              {/* Description & Badge (Takes remaining width with flex: 1, min-width: 0 and wraps naturally) */}
+              <div className="flex-1 min-w-0">
+                <p className="text-[#5A6578] text-xs sm:text-sm leading-relaxed">
+                  Naturally Nepal — Once is Not Enough. Dedicated to promoting sustainable Himalayan travel, authentic cultural heritage, and safe alpine expeditions across Nepal.
+                </p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#EC1F27] animate-pulse shrink-0" />
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#0552A2] font-bold truncate">
+                    Official Nepal Tourism Board
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 

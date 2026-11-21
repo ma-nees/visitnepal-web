@@ -4,12 +4,9 @@ import Navigation from '@/components/sections/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
 import StorytellingSection from '@/components/sections/StorytellingSection';
 import DestinationsSection from '@/components/sections/DestinationsSection';
+import ExperiencesSection from '@/components/sections/ExperiencesSection';
 import CultureSection from '@/components/sections/CultureSection';
 import Footer from '@/components/sections/Footer';
-
-const ExperiencesSection = dynamic(() => import('@/components/sections/ExperiencesSection'), {
-  loading: () => <section id="experiences" className="py-24 md:py-32 bg-[#F2F8FD] min-h-[720px]" aria-hidden="true" />,
-});
 
 // Code-split below-the-fold interactive console so it does not block initial hydration
 const PlanYourTripSection = dynamic(

@@ -79,10 +79,14 @@ export default function Footer() {
       <div className="container">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <Logo variant="default" size="lg" className="mb-4" />
-            <p className="text-body-sm text-[#5A6578] leading-relaxed max-w-xs">
-              Discover the extraordinary landscapes, ancient cultures, and unforgettable journeys of Nepal.
-            </p>
+            <div className="flex flex-row md:flex-col items-center md:items-start gap-4 w-full">
+              <div className="shrink-0">
+                <Logo variant="default" size="lg" className="mb-0 md:mb-4" />
+              </div>
+              <p className="flex-1 min-w-0 text-body-sm text-[#5A6578] leading-relaxed max-w-xs">
+                Discover the extraordinary landscapes, ancient cultures, and unforgettable journeys of Nepal.
+              </p>
+            </div>
           </div>
 
           <nav aria-label="Explore">

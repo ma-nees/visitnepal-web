@@ -156,12 +156,12 @@ export default function CultureSection() {
   return (
     <section
       id="culture"
-      className="pt-14 md:pt-20 pb-16 md:pb-24 bg-white text-[#17212B] scroll-mt-12"
+      className="pt-8 md:pt-12 pb-12 md:pb-16 bg-white text-[#17212B] scroll-mt-12"
       aria-labelledby="culture-heading"
     >
       <div className="container">
         {/* Section Heading */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-8 sm:mb-10">
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2 h-2 rounded-full bg-[#EC1F27]" />
             <span className="text-caption text-[#0552A2]">Living Antiquity</span>

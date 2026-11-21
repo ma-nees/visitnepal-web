@@ -87,7 +87,7 @@ export default function DestinationsSection() {
   return (
     <section
       id="destinations"
-      className="pt-14 md:pt-18 pb-10 md:pb-14 bg-white scroll-mt-12 text-[#17212B]"
+      className="pt-10 md:pt-14 pb-4 sm:pb-6 bg-white scroll-mt-12 text-[#17212B]"
       aria-labelledby="destinations-heading"
     >
       <div className="container">
@@ -267,7 +267,7 @@ export default function DestinationsSection() {
             </div>
 
             {/* Subtle Progress Indicator Dots */}
-            <div className="flex justify-center items-center gap-1.5 mt-8">
+            <div className="flex justify-center items-center gap-1.5 mt-4 sm:mt-5">
               {rotatingPool.map((dest, idx) => (
                 <button
                   key={dest.id}
