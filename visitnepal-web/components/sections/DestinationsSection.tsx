@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,9 +29,6 @@ const itemVariants = {
 
 export default function DestinationsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const resetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Rotating pool of non-featured destinations from mockData
   const rotatingPool = useMemo(() => {
@@ -41,48 +38,15 @@ export default function DestinationsSection() {
     return filtered.length > 0 ? filtered : pool;
   }, [activeTab]);
 
-  // Triple cloned items for infinite seamless sliding loop
-  const displayItems = useMemo(() => {
+  // Ensure marquee track is sufficiently populated to cover wide viewports
+  const marqueePool = useMemo(() => {
     if (rotatingPool.length === 0) return [];
-    return [...rotatingPool, ...rotatingPool, ...rotatingPool];
+    let list = [...rotatingPool];
+    while (list.length < 8) {
+      list = [...list, ...rotatingPool];
+    }
+    return list;
   }, [rotatingPool]);
-
-  // Reset carousel index when category tab changes
-  useEffect(() => {
-    setIsTransitioning(false);
-    setCarouselIndex(0);
-    const t = setTimeout(() => setIsTransitioning(true), 50);
-    return () => clearTimeout(t);
-  }, [activeTab]);
-
-  // Silky smooth one-by-one auto-rotation in a continuous loop
-  useEffect(() => {
-    if (rotatingPool.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setCarouselIndex((prev) => {
-        const next = prev + 1;
-        // When we reach rotatingPool.length, schedule invisible reset back to 0
-        if (next === rotatingPool.length) {
-          if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
-          resetTimerRef.current = setTimeout(() => {
-            setIsTransitioning(false);
-            setCarouselIndex(0);
-            setTimeout(() => {
-              setIsTransitioning(true);
-            }, 50);
-          }, 850);
-        }
-        return next;
-      });
-    }, 3200);
-
-    return () => {
-      clearInterval(interval);
-      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
-    };
-  }, [rotatingPool.length]);
 
   return (
     <section
@@ -210,78 +174,102 @@ export default function DestinationsSection() {
             </div>
           </div>
 
-          {/* Smooth Continuous One-by-One Infinite Looping Carousel Track */}
-          <div className="pt-2 overflow-hidden">
-            <div
-              className="flex -mx-3 [--cards-per-view:1] sm:[--cards-per-view:2] lg:[--cards-per-view:4] will-change-transform"
-              style={{
-                transform: `translateX(calc(-${carouselIndex} * 100% / var(--cards-per-view)))`,
-                transition: isTransitioning
-                  ? 'transform 850ms cubic-bezier(0.22, 1, 0.36, 1)'
-                  : 'none',
-              }}
-            >
-              {displayItems.map((dest, idx) => (
-                <div
-                  key={`${dest.id}-${idx}`}
-                  className="w-full sm:w-1/2 lg:w-1/4 px-3 shrink-0"
-                >
-                  <div className="group flex flex-col h-full rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
-                    <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
-                      <Image
-                        src={dest.imageUrl}
-                        alt={dest.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-[14px] text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
-                        {dest.region}
-                      </div>
-                    </div>
-
-                    <div className="p-6 flex flex-col justify-between flex-1 gap-4">
-                      <div>
-                        <span className="text-[11px] font-mono text-[#0552A2] font-semibold block mb-1">
-                          {dest.altitude}
-                        </span>
-                        <h4 className="text-lg font-bold text-[#17212B] font-serif group-hover:text-[#0552A2] transition-colors line-clamp-1">
-                          {dest.name}
-                        </h4>
-                        <p className="text-xs text-[#4B5563] mt-2 leading-relaxed line-clamp-3">
-                          {dest.shortDescription}
-                        </p>
+          {/* Continuous Infinite Marquee of Destination Cards */}
+          <div className="pt-2 overflow-hidden pause-marquee relative [mask-image:linear-gradient(to_right,transparent,black_1%,black_99%,transparent)]">
+            <div className="flex select-none">
+              {/* Primary Track */}
+              <div className="flex gap-6 shrink-0 pr-6 animate-marquee-infinite">
+                {marqueePool.map((dest, idx) => (
+                  <div
+                    key={`track1-${dest.id}-${idx}`}
+                    className="w-[280px] sm:w-[320px] lg:w-[340px] shrink-0"
+                  >
+                    <div className="group flex flex-col h-full rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
+                      <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
+                        <Image
+                          src={dest.imageUrl}
+                          alt={dest.name}
+                          fill
+                          sizes="(max-width: 768px) 280px, 340px"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                        <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-[14px] text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
+                          {dest.region}
+                        </div>
                       </div>
 
-                      <a
-                        href="#plan-your-trip"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0552A2] group-hover:underline pt-2 border-t border-[#0552A2]/10"
-                      >
-                        <span>View Journey Details</span>
-                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </a>
+                      <div className="p-6 flex flex-col justify-between flex-1 gap-4">
+                        <div>
+                          <span className="text-[11px] font-mono text-[#0552A2] font-semibold block mb-1">
+                            {dest.altitude}
+                          </span>
+                          <h4 className="text-lg font-bold text-[#17212B] font-serif group-hover:text-[#0552A2] transition-colors line-clamp-1">
+                            {dest.name}
+                          </h4>
+                          <p className="text-xs text-[#4B5563] mt-2 leading-relaxed line-clamp-3">
+                            {dest.shortDescription}
+                          </p>
+                        </div>
+
+                        <a
+                          href="#plan-your-trip"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0552A2] group-hover:underline pt-2 border-t border-[#0552A2]/10"
+                        >
+                          <span>View Journey Details</span>
+                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            {/* Subtle Progress Indicator Dots */}
-            <div className="flex justify-center items-center gap-1.5 mt-4 sm:mt-5">
-              {rotatingPool.map((dest, idx) => (
-                <button
-                  key={dest.id}
-                  onClick={() => {
-                    setIsTransitioning(true);
-                    setCarouselIndex(idx);
-                  }}
-                  aria-label={`Jump to ${dest.name}`}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === carouselIndex % rotatingPool.length
-                    ? 'w-7 bg-[#0552A2]'
-                    : 'w-2 bg-zinc-300 hover:bg-zinc-400'
-                    }`}
-                />
-              ))}
+              {/* Duplicate Track for Seamless Infinite Loop */}
+              <div className="flex gap-6 shrink-0 pr-6 animate-marquee-infinite" aria-hidden="true">
+                {marqueePool.map((dest, idx) => (
+                  <div
+                    key={`track2-${dest.id}-${idx}`}
+                    className="w-[280px] sm:w-[320px] lg:w-[340px] shrink-0"
+                  >
+                    <div className="group flex flex-col h-full rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
+                      <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
+                        <Image
+                          src={dest.imageUrl}
+                          alt={dest.name}
+                          fill
+                          sizes="(max-width: 768px) 280px, 340px"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                        <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-[14px] text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
+                          {dest.region}
+                        </div>
+                      </div>
+
+                      <div className="p-6 flex flex-col justify-between flex-1 gap-4">
+                        <div>
+                          <span className="text-[11px] font-mono text-[#0552A2] font-semibold block mb-1">
+                            {dest.altitude}
+                          </span>
+                          <h4 className="text-lg font-bold text-[#17212B] font-serif group-hover:text-[#0552A2] transition-colors line-clamp-1">
+                            {dest.name}
+                          </h4>
+                          <p className="text-xs text-[#4B5563] mt-2 leading-relaxed line-clamp-3">
+                            {dest.shortDescription}
+                          </p>
+                        </div>
+
+                        <a
+                          href="#plan-your-trip"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0552A2] group-hover:underline pt-2 border-t border-[#0552A2]/10"
+                        >
+                          <span>View Journey Details</span>
+                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>

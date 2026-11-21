@@ -358,3 +358,23 @@ a,
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+
+/* ─── Continuous Infinite Marquee ─────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee-infinite {
+  animation: marquee-scroll 45s linear infinite;
+  will-change: transform;
+}
+
+.pause-marquee:hover .animate-marquee-infinite,
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
