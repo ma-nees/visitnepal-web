@@ -14,16 +14,39 @@ import AccountSection from '@/components/features/dashboard/AccountSection';
 import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter } from 'next/navigation';
-
-// ─── Icon primitives (inline SVG) ─────────────────────────────────────────────
-const Icon = ({ d, size = 16 }: { d: string; size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d={d} />
-  </svg>
-);
+import {
+  Home,
+  SlidersHorizontal,
+  Compass,
+  Flame,
+  Landmark,
+  Trophy,
+  Activity,
+  Mountain,
+  MountainSnow,
+  PawPrint,
+  Sparkles,
+  Leaf,
+  Zap,
+  Hotel,
+  Car,
+  UserCheck,
+  TicketCheck,
+  UserPlus,
+  Building2,
+  MapPinPlus,
+  ShieldCheck,
+  MessageSquare,
+  LucideIcon,
+} from 'lucide-react';
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
-type NavItem = { label: string; icon: string; id: string; badge?: string };
+type NavItem = { 
+  label: string; 
+  icon: LucideIcon | React.ComponentType<{ size?: number; className?: string }> | string; 
+  id: string; 
+  badge?: string 
+};
 type NavGroup = { title: string; items: NavItem[] };
 
 // ─── Sidebar Data ─────────────────────────────────────────────────────────────
@@ -31,47 +54,47 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: 'Discover',
     items: [
-      { id: 'home',        label: 'Home',            icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
-      { id: 'customize',   label: 'Customize Trip',  icon: 'M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z' },
-      { id: 'explore',     label: 'Explore',         icon: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z' },
-      { id: 'popular',     label: 'Popular',         icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
-      { id: 'attractions', label: 'Attractions',     icon: 'M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z' },
-      { id: 'top5',        label: 'Top 5 Destinations', icon: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' },
+      { id: 'home',        label: 'Home',                icon: Home },
+      { id: 'customize',   label: 'Customize Trip',      icon: SlidersHorizontal },
+      { id: 'explore',     label: 'Explore',             icon: Compass },
+      { id: 'popular',     label: 'Popular',             icon: Flame },
+      { id: 'attractions', label: 'Attractions',         icon: Landmark },
+      { id: 'top5',        label: 'Top 5 Destinations',  icon: Trophy },
     ],
   },
   {
     title: 'Activities & Travel',
     items: [
-      { id: 'activities',     label: 'Activities',          icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
-      { id: 'trekking',       label: 'Trekking',            icon: 'M3 17l4-8 4 4 4-6 4 10' },
-      { id: 'mountaineering', label: 'Mountaineering',      icon: 'M8 3l4 8 5-5 5 13H2L8 3z' },
-      { id: 'wildlife',       label: 'Wildlife',            icon: 'M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z' },
-      { id: 'cultural',       label: 'Cultural & Religious',  icon: 'M12 22V12M12 12C12 12 7 9 7 4a5 5 0 0110 0c0 5-5 8-5 8z' },
-      { id: 'ecotourism',     label: 'Eco Tourism',         icon: 'M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z' },
-      { id: 'adventure',      label: 'Adventure',           icon: 'M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z' },
+      { id: 'activities',     label: 'Activities',             icon: Activity },
+      { id: 'trekking',       label: 'Trekking',               icon: Mountain },
+      { id: 'mountaineering', label: 'Mountaineering',         icon: MountainSnow },
+      { id: 'wildlife',       label: 'Wildlife',               icon: PawPrint },
+      { id: 'cultural',       label: 'Cultural & Religious',   icon: Sparkles },
+      { id: 'ecotourism',     label: 'Eco Tourism',            icon: Leaf },
+      { id: 'adventure',      label: 'Adventure',              icon: Zap },
     ],
   },
   {
     title: 'Stays & Transport',
     items: [
-      { id: 'hotels',        label: 'Hotels',          icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
-      { id: 'transportation', label: 'Transportation', icon: 'M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v9a2 2 0 01-2 2h-3' },
+      { id: 'hotels',         label: 'Hotels',                 icon: Hotel },
+      { id: 'transportation', label: 'Transportation',        icon: Car },
     ],
   },
   {
     title: 'Guides & Permits',
     items: [
-      { id: 'guides',  label: 'Guides',  icon: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2' },
-      { id: 'permits', label: 'Permits', icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
+      { id: 'guides',  label: 'Guides',  icon: UserCheck },
+      { id: 'permits', label: 'Permits', icon: TicketCheck },
     ],
   },
   {
     title: 'Host & List',
     items: [
-      { id: 'becomehost',     label: 'Become a Host',        icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
-      { id: 'listproperty',   label: 'List Your Property',   icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
-      { id: 'listattraction', label: 'List an Attraction',   icon: 'M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z' },
-      { id: 'listpermit',     label: 'Permit Authority',     icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
+      { id: 'becomehost',     label: 'Become a Host',        icon: UserPlus },
+      { id: 'listproperty',   label: 'List Your Property',   icon: Building2 },
+      { id: 'listattraction', label: 'List an Attraction',   icon: MapPinPlus },
+      { id: 'listpermit',     label: 'Permit Authority',     icon: ShieldCheck },
     ],
   },
 ];
@@ -908,7 +931,7 @@ export default function DashboardPage() {
             active === 'home' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={19} />
+          <Home size={19} />
           <span className="text-[10px] font-mono">Home</span>
         </button>
         <button 
@@ -917,7 +940,7 @@ export default function DashboardPage() {
             active === 'explore' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" size={19} />
+          <Compass size={19} />
           <span className="text-[10px] font-mono">Explore</span>
         </button>
         <button 
@@ -929,7 +952,7 @@ export default function DashboardPage() {
             floatingChatOpen ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" size={19} />
+          <MessageSquare size={19} />
           <span className="absolute top-1 right-3 h-2 w-2 rounded-full bg-[#EC1F27]" />
           <span className="text-[10px] font-mono">Dispatch</span>
         </button>
@@ -939,7 +962,7 @@ export default function DashboardPage() {
             active === 'hotels' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" size={19} />
+          <Hotel size={19} />
           <span className="text-[10px] font-mono">Stays</span>
         </button>
         <button 
@@ -948,7 +971,7 @@ export default function DashboardPage() {
             active === 'customize' ? 'text-[#0552A2] font-bold' : 'text-slate-400'
           }`}
         >
-          <Icon d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" size={19} />
+          <SlidersHorizontal size={19} />
           <span className="text-[10px] font-mono">Customizer</span>
         </button>
       </div>

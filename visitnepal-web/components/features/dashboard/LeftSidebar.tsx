@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 export interface NavItem {
   id: string;
   label: string;
-  icon: string;
+  icon: LucideIcon | React.ComponentType<{ size?: number; className?: string }> | string;
   badge?: string;
 }
 
@@ -63,7 +64,11 @@ function SidebarItem({
           isActive ? 'text-[#0552A2] opacity-100' : 'text-slate-400 group-hover:text-slate-600'
         }`}
       >
-        <Icon d={icon} size={17} />
+        {typeof icon === 'string' ? (
+          <Icon d={icon} size={17} />
+        ) : (
+          React.createElement(icon, { size: 17, className: 'shrink-0' })
+        )}
       </span>
 
       {!collapsed && (
