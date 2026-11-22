@@ -680,20 +680,20 @@ export const INFO_REGISTRY: Record<string, InfoItem> = {
 
 // ─── HELPER TO NORMALIZE USER SLUGS ──────────────────────────────────────────
 export const getNormalizedKey = (slug: string): string => {
-  const s = slug.toLowerCase().replace(/_/g, '-');
-  if (s.includes('everest-base') || s.includes('everest')) return 'mount-everest-base-camp';
+  const s = (slug || '').toLowerCase().replace(/_/g, '-');
   if (s.includes('everest-quantum-domes')) return 'everest-quantum-domes';
-  if (s.includes('phewa-lake') || s.includes('phewa-lake-pokhara')) return 'phewa-lake-pokhara';
-  if (s.includes('phewa-lakeside-mirror')) return 'phewa-lakeside-mirror';
-  if (s.includes('boudhanath') || s.includes('boudha')) return 'boudhanath-stupa';
-  if (s.includes('chitwan-wildlife') || s.includes('chitwan-wildlife-sanctuary')) return 'chitwan-wildlife-sanctuary';
-  if (s.includes('mustang-kingdom') || s.includes('mustang') || s.includes('manthang') || s.includes('lo-manthang')) return 'lo-manthang-upper-mustang';
-  if (s.includes('mustang-kingdom-Forbidden')) return 'mustang-kingdom';
-  if (s.includes('muktinath')) return 'muktinath-temple';
-  if (s.includes('annapurna') || s.includes('annapurna-base-camp')) return 'annapurna-base-camp';
-  if (s.includes('safari') || s.includes('river') || s.includes('chitwan-river-safari')) return 'chitwan-river-safari';
-  if (s.includes('caves') || s.includes('upper-mustang-caves')) return 'upper-mustang-caves';
+  if (s.includes('everest')) return 'mount-everest-base-camp';
   if (s.includes('paragliding') || s.includes('pokhara-paragliding-arena')) return 'pokhara-paragliding-arena';
+  if (s.includes('phewa-lakeside-mirror')) return 'phewa-lakeside-mirror';
+  if (s.includes('phewa') || s.includes('pokhara')) return 'phewa-lake-pokhara';
+  if (s.includes('boudhanath') || s.includes('boudha') || s.includes('kathmandu')) return 'boudhanath-stupa';
+  if (s.includes('river-safari') || s.includes('chitwan-river-safari')) return 'chitwan-river-safari';
+  if (s.includes('chitwan')) return 'chitwan-wildlife-sanctuary';
+  if (s.includes('mustang-caves') || s.includes('upper-mustang-caves')) return 'upper-mustang-caves';
+  if (s.includes('mustang-kingdom')) return 'mustang-kingdom';
+  if (s.includes('mustang') || s.includes('lo-manthang') || s.includes('manthang')) return 'lo-manthang-upper-mustang';
+  if (s.includes('muktinath')) return 'muktinath-temple';
+  if (s.includes('annapurna')) return 'annapurna-base-camp';
   if (s.includes('trekking') || s.includes('trek')) return 'trekking';
   if (s.includes('mountaineering') || s.includes('mountain')) return 'mountaineering';
   if (s.includes('wildlife')) return 'wildlife';

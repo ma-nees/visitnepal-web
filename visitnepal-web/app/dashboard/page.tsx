@@ -757,6 +757,7 @@ function DashboardContent() {
                 onBack={() => handleActiveChange(previousActive)}
                 rightCollapsed={rightCollapsed}
                 setRightCollapsed={setRightCollapsed}
+                hideFloatingChat={true}
               />
             </motion.div>
           ) : (

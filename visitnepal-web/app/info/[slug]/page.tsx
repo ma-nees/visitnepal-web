@@ -20,7 +20,7 @@ export default function InfoDetailPage() {
   const router = useRouter();
   const rawSlug = params?.slug as string;
   const normalizedKey = getNormalizedKey(rawSlug);
-  const data = INFO_REGISTRY[normalizedKey];
+  const data = INFO_REGISTRY[normalizedKey] || INFO_REGISTRY['mount-everest-base-camp'];
 
   // Shell UI Layout States
   const [collapsed, setCollapsed] = useState(false);

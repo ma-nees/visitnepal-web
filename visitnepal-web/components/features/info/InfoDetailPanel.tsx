@@ -107,17 +107,19 @@ interface InfoDetailPanelProps {
   onBack?: () => void;
   rightCollapsed?: boolean;
   setRightCollapsed?: (collapsed: boolean) => void;
+  hideFloatingChat?: boolean;
 }
 
 export default function InfoDetailPanel({ 
   slug, 
   onBack, 
   rightCollapsed = false, 
-  setRightCollapsed 
+  setRightCollapsed,
+  hideFloatingChat = false,
 }: InfoDetailPanelProps) {
   const router = useRouter();
   const normalizedKey = getNormalizedKey(slug);
-  const data = INFO_REGISTRY[normalizedKey];
+  const data = INFO_REGISTRY[normalizedKey] || INFO_REGISTRY['mount-everest-base-camp'];
 
   // Customizer states
   const [isLuxury, setIsLuxury] = useState(false);
@@ -869,7 +871,8 @@ export default function InfoDetailPanel({
       )}
 
       {/* Global Floating Messenger Toggle */}
-      <div className={`fixed bottom-6 right-6 z-[100] font-sans flex flex-col items-end ${!rightCollapsed ? 'xl:hidden' : ''}`}>
+      {!hideFloatingChat && (
+        <div className={`fixed bottom-6 right-6 z-[100] font-sans flex flex-col items-end ${!rightCollapsed ? 'xl:hidden' : ''}`}>
         {floatingChatOpen ? (
           <div 
             style={{
@@ -1030,6 +1033,7 @@ export default function InfoDetailPanel({
           {floatingChatOpen ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
         </button>
       </div>
+      )}
 
     </div>
   );
