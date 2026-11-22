@@ -60,13 +60,6 @@ function SidebarItem({
         }`}
         style={{ fontSize: '12px' }}
       >
-        {/* Active Pill Accent Indicator */}
-        <span
-          className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#0552A2] transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-50'
-          }`}
-        />
-
         {/* Icon Container: Fixed width & positioning prevents any horizontal jumping */}
         <span
           className={`h-6 w-6 shrink-0 flex items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-105 ${
@@ -249,20 +242,7 @@ export default function LeftSidebar({
           ))}
         </nav>
 
-        {/* Footer Support / Portal Tag */}
-        <div
-          className={`border-t border-slate-100 bg-slate-50/70 text-left overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            collapsed ? 'h-0 opacity-0 p-0 border-transparent pointer-events-none' : 'h-auto opacity-100 p-2.5'
-          }`}
-        >
-          <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className="text-[10px] font-mono text-slate-500 font-medium truncate">NTB System Active</span>
-          </div>
-          <p className="text-[9px] text-slate-400 mt-0.5 leading-snug whitespace-nowrap">
-            Nepal Tourism Board Portal
-          </p>
-        </div>
+
       </aside>
 
       {/* ── 2. MOBILE SLIDE-IN DRAWER WITH BACKDROP ───────────────────────── */}
@@ -308,16 +288,7 @@ export default function LeftSidebar({
               ))}
             </nav>
 
-            {/* Mobile Footer */}
-            <div className="p-4 border-t border-slate-200 bg-slate-50/90 text-left">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs font-mono text-slate-600 font-semibold">NTB Expedition Portal</span>
-              </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                Official Government Tourism Services
-              </p>
-            </div>
+
           </div>
         </div>
       )}
