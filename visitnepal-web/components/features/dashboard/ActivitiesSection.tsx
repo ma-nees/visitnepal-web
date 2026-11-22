@@ -441,7 +441,6 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-slate-200/70">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#EC1F27]" />
                 <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase">
                   Curated Himalayan Expedition Catalog
                 </span>

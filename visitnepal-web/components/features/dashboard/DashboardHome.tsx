@@ -225,8 +225,8 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 1: DASHBOARD WELCOME & CONTEXTUAL TELEMETRY BANNER
       ========================================================================= */}
-      <div className="relative overflow-hidden rounded-2xl bg-[#0552A2] text-white shadow-md p-3.5 sm:p-4 md:p-5">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
+      <div className="relative overflow-hidden rounded-2xl bg-[#0552A2] text-white shadow-md p-3.5 sm:p-4">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
           {/* Left: Personalized Greeting & Primary CTAs */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -256,7 +256,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
               </p>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2.5 mt-3 flex-wrap">
+              <div className="flex items-center gap-2.5 mt-2.5 flex-wrap">
                 <button
                   onClick={() => onNavigate?.('customize')}
                   className="px-4 py-2 rounded-full bg-white text-[#0552A2] text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-[#F2F8FD] hover:shadow-sm flex items-center justify-center gap-2 cursor-pointer shrink-0"
@@ -275,8 +275,8 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
               </div>
             </div>
 
-            {/* Right: Seamless Transparent Flight Route Animation to Nepal (No white card) */}
-            <div className="shrink-0 flex items-center justify-center self-center w-full sm:w-[340px] md:w-[380px] lg:w-[430px] overflow-hidden">
+            {/* Right: Seamless Compact Flight Route Animation to Nepal (No unusual space) */}
+            <div className="shrink-0 flex items-center justify-center self-center w-full md:w-[320px] lg:w-[370px] overflow-hidden">
               <FlightRouteAnimation
                 variant="banner"
                 destinationLabel="Nepal"

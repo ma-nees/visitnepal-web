@@ -87,8 +87,10 @@ export default function FlightRouteAnimation({
 
     // High-DPI setup for razor-sharp clarity
     const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 2 : 2;
+    const isBanner = variant === 'banner';
     const baseWidth = 960;
-    const baseHeight = 540;
+    // Banner mode trims dead vertical space (path fits in Y 27..400)
+    const baseHeight = isBanner ? 430 : 540;
     canvas.width = baseWidth * dpr;
     canvas.height = baseHeight * dpr;
 
@@ -123,7 +125,6 @@ export default function FlightRouteAnimation({
     );
 
     // Color theme configuration
-    const isBanner = variant === 'banner';
     const trailColor = isBanner ? 'rgba(255, 255, 255, 0.92)' : '#3B0643';
     const planeColor = isBanner ? '#FFFFFF' : '#3B0643';
 
@@ -397,8 +398,10 @@ export default function FlightRouteAnimation({
 
   return (
     <div
-      className={`w-full aspect-[16/9] relative select-none flex items-center justify-center ${
-        variant === 'banner' ? 'bg-transparent' : 'bg-white'
+      className={`w-full relative select-none flex items-center justify-center ${
+        variant === 'banner'
+          ? 'aspect-[2.23/1] max-h-[145px] sm:max-h-[160px] bg-transparent'
+          : 'aspect-[16/9] bg-white'
       } ${className}`}
     >
       <canvas
