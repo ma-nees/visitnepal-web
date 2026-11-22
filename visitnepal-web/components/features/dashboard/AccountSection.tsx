@@ -603,7 +603,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
           {/* Header */}
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5 text-left">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-bold tracking-widest text-[#0552A2] uppercase bg-[#0552A2]/10 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold tracking-wider text-white uppercase bg-[#0552A2] px-3 py-1 rounded-full shadow-xs">
                 AI Travel Synthesizer • Expedition Engine
               </span>
             </div>
@@ -630,7 +630,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
                 const isSelected = selectedBlueprintId === bp.id;
                 const difficultyColor = 
                   bp.difficulty === 'Challenging' ? 'bg-rose-500 text-white' :
-                  bp.difficulty === 'Moderate' ? 'bg-amber-500 text-white' :
+                  bp.difficulty === 'Moderate' ? 'bg-[#FE9A00] text-white font-bold' :
                   'bg-emerald-500 text-white';
 
                 return (
