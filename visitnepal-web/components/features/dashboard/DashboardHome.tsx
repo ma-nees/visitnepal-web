@@ -206,7 +206,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
   const displayedActivity = showAllActivity ? RECENT_ACTIVITY_LOG : RECENT_ACTIVITY_LOG.slice(0, 5);
 
   return (
-    <div className="w-full space-y-4 sm:space-y-6 pb-6 sm:pb-8 text-left">
+    <div className="w-full space-y-3 sm:space-y-4 pb-4 sm:pb-6 text-left">
       {/* Toast Notification */}
       <AnimatePresence>
         {toastMessage && (
@@ -225,7 +225,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 1: DASHBOARD WELCOME & CONTEXTUAL TELEMETRY BANNER
       ========================================================================= */}
-      <div className="relative overflow-hidden rounded-2xl bg-[#0552A2] text-white shadow-md p-3.5 sm:p-4">
+      <div className="relative overflow-hidden rounded-2xl bg-[#0552A2] text-white shadow-md p-3 sm:p-3.5">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
           {/* Left: Personalized Greeting & Primary CTAs */}
           <div className="flex-1 min-w-0">
@@ -289,8 +289,8 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 2: TRAVEL OVERVIEW STATISTIC CARDS
       ========================================================================= */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
-        <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[90px] sm:min-h-[100px]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
+        <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[78px] sm:min-h-[86px]">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] sm:text-[11px] font-semibold tracking-wide text-[#64748B] truncate">
               Upcoming Trips
@@ -307,7 +307,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
         </div>
 
-        <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[90px] sm:min-h-[100px]">
+        <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[78px] sm:min-h-[86px]">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] sm:text-[11px] font-semibold tracking-wide text-[#64748B] truncate">
               Places Explored
@@ -324,7 +324,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
         </div>
 
-        <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[90px] sm:min-h-[100px]">
+        <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[78px] sm:min-h-[86px]">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] sm:text-[11px] font-semibold tracking-wide text-[#64748B] truncate">
               Wishlist Saved
@@ -341,7 +341,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
         </div>
 
-        <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[90px] sm:min-h-[100px]">
+        <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-[14px] bg-white border border-[#0552A2]/10 shadow-[0_2px_8px_-3px_rgba(15,42,74,0.06)] hover:shadow-[0_6px_16px_-5px_rgba(5,82,162,0.12)] transition-shadow flex flex-col justify-between min-h-[78px] sm:min-h-[86px]">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] sm:text-[11px] font-semibold tracking-wide text-[#64748B] truncate">
               Completed
@@ -362,9 +362,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 3: MAIN DUAL-COLUMN LAYOUT (PRIMARY FEED + CONTEXTUAL ASIDE)
       ========================================================================= */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 sm:gap-6 items-start">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-3.5 sm:gap-4.5 items-start">
         {/* ─── LEFT COLUMN (7 COLS on XL, 8 COLS on 2XL): TRIPS, PLANNING & RECOMMENDATIONS ───────── */}
-        <div className="xl:col-span-7 2xl:col-span-8 space-y-6 sm:space-y-8 min-w-0">
+        <div className="xl:col-span-7 2xl:col-span-8 space-y-4 sm:space-y-5 min-w-0">
           {/* 3.1 YOUR UPCOMING JOURNEYS */}
           <div>
             <div className="flex flex-wrap items-end justify-between mb-4 sm:mb-5 gap-3">
@@ -428,7 +428,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                   </div>
 
                   {/* Trip Content */}
-                  <div className="p-4 sm:p-5 md:p-6 flex-1 flex flex-col justify-between gap-3 sm:gap-4 min-w-0">
+                  <div className="p-3.5 sm:p-4 md:p-4.5 flex-1 flex flex-col justify-between gap-2.5 sm:gap-3 min-w-0">
                     <div>
                       <div className="flex items-center gap-2 text-xs font-mono text-[#4B5563] mb-1.5 flex-wrap">
                         <span className="flex items-center gap-1">
@@ -515,7 +515,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 {displayedDrafts.map((draft) => (
                   <div
                     key={draft.id}
-                    className="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between gap-3.5 sm:gap-4 min-w-0"
+                    className="p-3 sm:p-3.5 rounded-xl bg-white border border-zinc-200/80 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between gap-2.5 sm:gap-3 min-w-0"
                   >
                     <div className="flex items-start gap-3 min-w-0">
                       <div className="relative h-11 w-11 sm:h-12 sm:w-12 rounded-xl overflow-hidden shrink-0 bg-zinc-100">
@@ -654,7 +654,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                       </div>
                     </div>
 
-                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
+                    <div className="p-3 sm:p-3.5 flex-1 flex flex-col justify-between gap-2 sm:gap-2.5">
                       <div>
                         <h4 className="text-sm sm:text-base font-bold font-serif text-[#17212B] group-hover:text-[#0552A2] transition-colors leading-snug">
                           {dest.name}
@@ -685,7 +685,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
 
           {/* 3.4 TRAVEL INSPIRATION (EDITORIAL ESSAYS) */}
-          <div className="pt-6 border-t border-zinc-200">
+          <div className="pt-4 sm:pt-5 border-t border-zinc-200">
             <div className="mb-4 sm:mb-5">
               <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] block mb-0.5">
                 Editorial Dispatch
@@ -750,9 +750,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
         </div>
 
         {/* ─── RIGHT COLUMN (5 COLS on XL, 4 COLS on 2XL): QUICK ACTIONS, BOOKINGS & TIMELINE ─────── */}
-        <div className="xl:col-span-5 2xl:col-span-4 space-y-4 sm:space-y-5 w-full min-w-0">
+        <div className="xl:col-span-5 2xl:col-span-4 space-y-3 sm:space-y-3.5 w-full min-w-0">
           {/* 4.1 QUICK ACTIONS */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-xs">
+          <div className="p-3 sm:p-3.5 rounded-xl bg-white border border-zinc-200/80 shadow-xs">
             <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] mb-3">
               Quick Travel Actions
             </h3>
@@ -804,7 +804,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
 
           {/* 4.2 MY BOOKINGS OVERVIEW */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-xs">
+          <div className="p-3 sm:p-3.5 rounded-xl bg-white border border-zinc-200/80 shadow-xs">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
@@ -820,7 +820,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
             </div>
 
             {/* Status Filter Tabs */}
-            <div className="flex items-center gap-1 mb-3.5 border-b border-zinc-100 pb-2 flex-wrap">
+            <div className="flex items-center gap-1 mb-3 border-b border-zinc-100 pb-2 flex-wrap">
               {(['All', 'Confirmed', 'Upcoming', 'Pending'] as const).map((s) => (
                 <button
                   key={s}
@@ -835,11 +835,11 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
               ))}
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {displayedBookings.map((b) => (
                 <div
                   key={b.id}
-                  className="p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/30 hover:shadow-xs transition-all flex flex-col gap-1.5"
+                  className="p-2.5 sm:p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/30 hover:shadow-xs transition-all flex flex-col gap-1.5"
                 >
                   <div className="flex items-center justify-between gap-1.5">
                     <span className="text-[10px] font-mono uppercase font-bold text-[#0552A2] tracking-wider">
@@ -879,8 +879,8 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
 
           {/* 4.3 SAVED WISHLIST OVERVIEW */}
-          <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-zinc-200/80 shadow-xs">
-            <div className="flex items-center justify-between mb-4">
+          <div className="p-3 sm:p-3.5 rounded-xl bg-white border border-zinc-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
                 Saved Wishlist ({wishlist.length})
               </h3>
@@ -897,7 +897,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 Your wishlist is empty. Explore destinations to save your dreams!
               </p>
             ) : (
-              <div className="space-y-2.5 max-h-[360px] overflow-y-auto pr-1 scrollbar-thin">
+              <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1 scrollbar-thin">
                 {wishlist.map((item) => (
                   <div
                     key={item.id}
@@ -940,8 +940,8 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           </div>
 
           {/* 4.4 RECENT TRAVEL ACTIVITY TIMELINE (NOT A SOCIAL FEED!) */}
-          <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-zinc-200/80 shadow-xs">
-            <div className="flex items-center justify-between mb-4">
+          <div className="p-3 sm:p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2]">
                 Recent Travel Log
               </h3>
@@ -953,7 +953,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
               </button>
             </div>
 
-            <div className="relative pl-5 border-l-2 border-zinc-200 space-y-4">
+            <div className="relative pl-5 border-l-2 border-zinc-200 space-y-3">
               {displayedActivity.map((log) => {
                 const style = getActivityStyle(log);
                 const IconComponent = style.icon;

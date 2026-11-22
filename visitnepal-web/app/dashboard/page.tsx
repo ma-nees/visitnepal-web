@@ -779,7 +779,7 @@ function DashboardContent() {
               </div>
 
               {/* Main scrollable body */}
-              <main className="flex-1 overflow-y-auto p-2.5 sm:p-3.5 md:p-4 pb-16 md:pb-4 min-h-0 relative z-10 scrollbar-thin">
+              <main className="flex-1 overflow-y-auto p-2 sm:p-2.5 md:p-3 pb-12 md:pb-3 min-h-0 relative z-10 scrollbar-thin">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={active}

@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTravelStore, Stay } from '@/store/useTravelStore';
 import {
@@ -44,6 +45,11 @@ const REGIONS = [
 
 export default function StaysSection({ activeId }: StaysSectionProps) {
   const { stays, addBooking } = useTravelStore();
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -438,10 +444,10 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               transition={{ duration: 0.22, ease: 'easeOut' }}
               className="w-full max-w-xl bg-white border border-slate-200 rounded-3xl p-6 shadow-2xl relative text-left"
             >
-              <button 
-                onClick={() => setSelectedStay(null)}
-                className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
-              >
+                <button 
+                  onClick={() => setSelectedStay(null)}
+                  className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+                >
                 <X className="w-4 h-4" />
               </button>
 
