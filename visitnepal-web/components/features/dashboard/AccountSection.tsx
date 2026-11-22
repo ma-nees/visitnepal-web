@@ -436,7 +436,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-center text-[9px] font-mono text-zinc-500">
                     <span className="bg-slate-100 px-2 py-0.5 rounded font-bold">{b.invoiceNo}</span>
-                    <span className="font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded uppercase">{b.status}</span>
+                    <span className="font-bold text-white bg-emerald-500 px-2 py-0.5 rounded uppercase">{b.status}</span>
                   </div>
                   <h3 className="text-sm font-bold text-[#17212B] mt-1">{b.title}</h3>
                   <p className="text-xs text-[#475569] leading-relaxed">{b.details}</p>

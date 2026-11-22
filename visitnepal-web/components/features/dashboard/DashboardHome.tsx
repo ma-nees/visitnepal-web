@@ -900,11 +900,11 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                     <div className="flex items-center gap-1.5">
                       <span className="font-mono text-xs font-bold text-[#17212B]">{b.cost}</span>
                       <span
-                        className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full ${b.status === 'Confirmed'
-                          ? 'bg-emerald-100 text-emerald-800'
+                        className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full text-white ${b.status === 'Confirmed'
+                          ? 'bg-emerald-500'
                           : b.status === 'Upcoming'
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'bg-amber-100 text-amber-800'
+                            ? 'bg-[#0552A2]'
+                            : 'bg-amber-500'
                           }`}
                       >
                         {b.status}
