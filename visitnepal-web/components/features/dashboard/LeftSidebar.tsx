@@ -177,24 +177,33 @@ export default function LeftSidebar({
     <>
       {/* ── 1. DESKTOP / TABLET IN-FLOW SIDEBAR ───────────────────────────── */}
       <aside
-        className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 z-20 will-change-[width] overflow-hidden transition-[width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'w-[54px]' : 'w-[204px]'
+        className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 z-30 will-change-[width] relative transition-[width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'w-[54px]' : 'w-[204px]'
           }`}
       >
         {/* Sticky Header / Toggle Bar */}
         <div
-          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-2.5 flex items-center h-11 shrink-0 ${collapsed ? 'justify-center' : 'justify-end'
-            }`}
+          className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 flex items-center h-11 shrink-0 relative"
         >
-          {/* Toggle Button: Smooth rotation & hover transition */}
+          {/* Header Label when expanded */}
+          <div
+            className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'
+              }`}
+          >
+            <span className="text-[10px] font-mono font-bold tracking-wider text-slate-400 uppercase whitespace-nowrap">
+              Navigation
+            </span>
+          </div>
+
+          {/* Expand / Collapse Button: Centered directly on the vertical dividing line */}
           <button
             onClick={() => onCollapsedChange(!collapsed)}
-            className="p-1 rounded-md text-slate-400 hover:text-[#0552A2] hover:bg-slate-200/50 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
+            className="absolute -right-3 top-2.5 z-40 h-6 w-6 rounded-full bg-white border border-slate-200 shadow-xs hover:shadow-sm hover:border-[#0552A2]/40 text-slate-500 hover:text-[#0552A2] hover:bg-slate-50 flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95"
             title={collapsed ? 'Expand Sidebar (Ctrl+B)' : 'Collapse Sidebar (Ctrl+B)'}
             aria-label={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             <svg
-              width="15"
-              height="15"
+              width="13"
+              height="13"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
