@@ -260,7 +260,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                   Visit Nepal Personal Portal
                 </span>
 
-                <span className="text-[9px] font-mono text-emerald-100 bg-transparent px-2 py-0.5 rounded-full font-semibold border border-emerald-400/30">
+                <span className="text-[9px] font-mono text-[#FDB716] bg-transparent px-2 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
                   Passport US98127398
                 </span>
                 <span className="text-[9px] font-mono text-[#FDB716] bg-transparent px-2 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
@@ -315,7 +315,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 <span className="text-base font-bold tracking-tight text-[#17212B]">18°C</span>
                 <span className="text-[10px] text-[#64748B]">Partly Cloudy</span>
               </div>
-              <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/70">
+              <span className="text-[9px] font-bold text-white bg-emerald-500 px-2 py-0.5 rounded-full">
                 Window: Clear
               </span>
             </div>
@@ -638,7 +638,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                     onClick={() => setActiveRecCategory(cat)}
                     className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-colors shrink-0 cursor-pointer ${activeRecCategory === cat
                       ? 'bg-[#0552A2] text-white shadow-xs'
-                      : 'bg-zinc-100 text-[#4B5563] hover:bg-zinc-200'
+                      : 'bg-white border border-zinc-200/80 text-[#4B5563] hover:border-[#0552A2]/40 hover:text-[#0552A2]'
                       }`}
                   >
                     {cat}
@@ -811,9 +811,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
             <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
               <button
                 onClick={() => onNavigate?.('customize')}
-                className="p-2.5 sm:p-3 rounded-xl bg-zinc-50 border border-zinc-200/70 hover:border-[#0552A2]/40 hover:bg-blue-50/40 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group"
+                className="p-2.5 sm:p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/40 hover:bg-blue-50/20 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group shadow-2xs"
               >
-                <div className="h-7 w-7 rounded-lg bg-blue-50 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
+                <div className="h-7 w-7 rounded-lg bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-xs font-bold text-[#17212B] truncate block w-full">Plan a Trip</span>
@@ -822,9 +822,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
               <button
                 onClick={() => onNavigate?.('hotels')}
-                className="p-2.5 sm:p-3 rounded-xl bg-zinc-50 border border-zinc-200/70 hover:border-[#0552A2]/40 hover:bg-blue-50/40 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group"
+                className="p-2.5 sm:p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/40 hover:bg-blue-50/20 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group shadow-2xs"
               >
-                <div className="h-7 w-7 rounded-lg bg-blue-50 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
+                <div className="h-7 w-7 rounded-lg bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
                   <Hotel className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-xs font-bold text-[#17212B] truncate block w-full">Find Stays</span>
@@ -833,9 +833,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
               <button
                 onClick={() => onNavigate?.('explore')}
-                className="p-2.5 sm:p-3 rounded-xl bg-zinc-50 border border-zinc-200/70 hover:border-[#0552A2]/40 hover:bg-blue-50/40 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group"
+                className="p-2.5 sm:p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/40 hover:bg-blue-50/20 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group shadow-2xs"
               >
-                <div className="h-7 w-7 rounded-lg bg-blue-50 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
+                <div className="h-7 w-7 rounded-lg bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
                   <Compass className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-xs font-bold text-[#17212B] truncate block w-full">Destinations</span>
@@ -844,9 +844,9 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
               <button
                 onClick={() => onNavigate?.('permits')}
-                className="p-2.5 sm:p-3 rounded-xl bg-zinc-50 border border-zinc-200/70 hover:border-[#0552A2]/40 hover:bg-blue-50/40 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group"
+                className="p-2.5 sm:p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/40 hover:bg-blue-50/20 text-left transition-all cursor-pointer flex flex-col justify-between min-w-0 overflow-hidden group shadow-2xs"
               >
-                <div className="h-7 w-7 rounded-lg bg-blue-50 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
+                <div className="h-7 w-7 rounded-lg bg-[#F2F8FD] border border-[#0552A2]/10 text-[#0552A2] group-hover:bg-[#0552A2] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mb-2">
                   <ShieldCheck className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-xs font-bold text-[#17212B] truncate block w-full">Permits</span>
@@ -879,7 +879,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                   onClick={() => setBookingFilter(s)}
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full transition-colors cursor-pointer shrink-0 ${bookingFilter === s
                     ? 'bg-[#0552A2] text-white'
-                    : 'text-zinc-500 hover:bg-zinc-100'
+                    : 'bg-white border border-zinc-200/80 text-zinc-600 hover:border-[#0552A2]/40 hover:text-[#0552A2]'
                     }`}
                 >
                   {s}
@@ -891,7 +891,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
               {displayedBookings.map((b) => (
                 <div
                   key={b.id}
-                  className="p-3 rounded-xl bg-zinc-50/70 border border-zinc-200/60 hover:bg-white hover:shadow-xs transition-all flex flex-col gap-1.5"
+                  className="p-3 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/30 hover:shadow-xs transition-all flex flex-col gap-1.5"
                 >
                   <div className="flex items-center justify-between gap-1.5">
                     <span className="text-[10px] font-mono uppercase font-bold text-[#0552A2] tracking-wider">
@@ -953,7 +953,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 {wishlist.map((item) => (
                   <div
                     key={item.id}
-                    className="p-2 sm:p-2.5 rounded-xl bg-zinc-50/70 border border-zinc-200/60 flex items-center justify-between gap-3 group"
+                    className="p-2 sm:p-2.5 rounded-xl bg-white border border-zinc-200/80 hover:border-[#0552A2]/30 flex items-center justify-between gap-3 group"
                   >
                     <div
                       onClick={() => handleDestinationClick(item.slug)}
