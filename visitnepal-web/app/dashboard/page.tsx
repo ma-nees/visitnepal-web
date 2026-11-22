@@ -13,6 +13,7 @@ import StaysSection from '@/components/features/dashboard/StaysSection';
 import GuidesPermitsSection from '@/components/features/dashboard/GuidesPermitsSection';
 import AccountSection from '@/components/features/dashboard/AccountSection';
 import HostSection from '@/components/features/dashboard/HostSection';
+import DashboardSearchBar from '@/components/features/dashboard/DashboardSearchBar';
 import { useTravelStore } from '@/store/useTravelStore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -589,6 +590,18 @@ function DashboardContent() {
           </Link>
         </div>
 
+        {/* Global Search Bar in Top Header */}
+        <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-2 sm:mx-4">
+          <DashboardSearchBar
+            className="w-full"
+            onSelect={(item) => {
+              if (item.targetId) {
+                handleActiveChange(item.targetId);
+              }
+            }}
+          />
+        </div>
+
         {/* Global Controls & Traveler Gateway */}
         <div className="flex items-center gap-3 relative">
           {/* Chat / Dispatches button */}
@@ -755,26 +768,12 @@ function DashboardContent() {
               transition={{ duration: 0.2, ease: 'easeOut' }}
               className="flex-1 flex flex-col min-w-0 relative bg-white transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
-              {/* Context breadcrumb & Search toolbar */}
-              <div className="h-11 shrink-0 flex items-center justify-between px-3 sm:px-4 bg-white border-b border-slate-200 select-none relative z-10 gap-2 sm:gap-3">
+              {/* Context breadcrumb toolbar */}
+              <div className="h-11 shrink-0 flex items-center justify-between px-3 sm:px-4 bg-white border-b border-slate-200 select-none relative z-20">
                 <div className="flex items-center gap-2 text-xs font-mono text-slate-400 min-w-0">
                   <span className="uppercase tracking-wider font-semibold text-slate-500 truncate">{activeDetails.groupTitle}</span>
                   <span className="text-slate-300 shrink-0">/</span>
                   <span className="text-[#0552A2] font-bold truncate">{activeDetails.itemLabel}</span>
-                </div>
-
-                <div className="flex items-center w-48 sm:w-64 max-w-xs relative shrink-0">
-                  <span className="absolute left-2.5 text-slate-400 flex items-center justify-center pointer-events-none">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="11" cy="11" r="8" />
-                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                  </span>
-                  <input
-                    type="text"
-                    placeholder="Search destinations, guides..."
-                    className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-8 pr-3 h-7.5 py-0 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
-                  />
                 </div>
               </div>
 

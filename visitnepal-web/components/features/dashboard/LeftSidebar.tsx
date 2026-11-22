@@ -59,12 +59,6 @@ function SidebarItem({
           }`}
         style={{ fontSize: '12px' }}
       >
-        {/* Active Pill Accent Indicator */}
-        <span
-          className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#0552A2] transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-50'
-            }`}
-        />
-
         {/* Icon Container: Fixed width & positioning prevents any horizontal jumping */}
         <span
           className={`h-6 w-6 shrink-0 flex items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-105 ${isActive ? 'text-[#0552A2]' : 'text-slate-400 group-hover:text-slate-700'
