@@ -310,9 +310,9 @@ export default function DashboardPage() {
 
   const renderSingleChatView = (activeChan: typeof channels[0], showBackButton: boolean) => {
     return (
-      <div className="flex flex-col flex-1 min-h-0 px-1 py-1">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2.5 shrink-0">
-          <div className="flex items-center gap-2.5 min-w-0">
+      <div className="flex flex-col flex-1 min-h-0 w-full overflow-hidden px-1 py-1">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-2 shrink-0 gap-2 w-full">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             {showBackButton && (
               <button
                 onClick={() => setChatViewState('inbox')}
@@ -325,23 +325,23 @@ export default function DashboardPage() {
               </button>
             )}
 
-            <div className="relative h-9 w-9 rounded-full overflow-hidden border border-slate-200 shrink-0">
+            <div className="relative h-8 w-8 sm:h-9 sm:w-9 rounded-full overflow-hidden border border-slate-200 shrink-0">
               <img src={activeChan.avatar} alt={activeChan.name} className="h-full w-full object-cover" />
               <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-white" />
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="text-xs font-bold text-[#17212B] truncate leading-tight">{activeChan.name}</h4>
               <span className="text-[9px] font-mono text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
-                <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-ping" />
-                Active Link
+                <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-ping shrink-0" />
+                <span className="truncate">Active Link</span>
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 shrink-0">
+          <div className="flex items-center gap-0.5 shrink-0">
             <button
               onClick={() => handleActionAlert("Connecting satellite voice dispatch...", activeChan.name)}
-              className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+              className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
               title="Voice Call"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -350,7 +350,7 @@ export default function DashboardPage() {
             </button>
             <button
               onClick={() => handleActionAlert("Starting video link...", activeChan.name)}
-              className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+              className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
               title="Video Link"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -360,7 +360,7 @@ export default function DashboardPage() {
             </button>
             <button
               onClick={() => setRightSidebarTab('telemetry')}
-              className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
+              className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer"
               title="Telemetry Details"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -372,18 +372,18 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-2 min-h-0 my-1 py-1 scrollbar-thin">
+        <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-2 min-h-0 my-1 py-1 scrollbar-thin w-full">
           {activeChan.messages.map((msg) => {
             const isMe = msg.sender === 'user';
             return (
-              <div key={msg.id} className={`flex items-start gap-2.5 max-w-[85%] ${isMe ? 'self-end flex-row-reverse' : 'self-start flex-row'}`}>
+              <div key={msg.id} className={`flex items-start gap-2 max-w-[90%] sm:max-w-[85%] ${isMe ? 'self-end flex-row-reverse' : 'self-start flex-row'}`}>
                 {!isMe && (
-                  <img src={activeChan.avatar} alt={activeChan.name} className="h-7 w-7 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
+                  <img src={activeChan.avatar} alt={activeChan.name} className="h-6 w-6 sm:h-7 sm:w-7 rounded-full object-cover border border-slate-200 mt-0.5 shrink-0" />
                 )}
-                <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                  <div className="relative group">
+                <div className={`flex flex-col min-w-0 ${isMe ? 'items-end' : 'items-start'}`}>
+                  <div className="relative group max-w-full">
                     <div
-                      className={`rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-xs relative flex flex-col ${isMe
+                      className={`rounded-2xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs leading-relaxed shadow-xs relative flex flex-col break-words [overflow-wrap:anywhere] max-w-full ${isMe
                         ? 'bg-[#0552A2] text-white rounded-tr-xs'
                         : 'bg-white text-[#17212B] border border-slate-200/90 rounded-tl-xs'
                         }`}
@@ -408,12 +408,12 @@ export default function DashboardPage() {
                           👍
                         </span>
                       ) : msg.translatedText ? (
-                        <div className="flex flex-col gap-1">
-                          <span className="italic text-[11px] opacity-80 leading-normal">"{msg.text}"</span>
-                          <span className="font-semibold border-t border-slate-200/40 pt-1 mt-0.5 text-xs">{msg.translatedText}</span>
+                        <div className="flex flex-col gap-1 min-w-0">
+                          <span className="italic text-[11px] opacity-80 leading-normal break-words [overflow-wrap:anywhere]">"{msg.text}"</span>
+                          <span className="font-semibold border-t border-slate-200/40 pt-1 mt-0.5 text-xs break-words [overflow-wrap:anywhere]">{msg.translatedText}</span>
                         </div>
                       ) : (
-                        <span>{msg.text}</span>
+                        <span className="break-words [overflow-wrap:anywhere]">{msg.text}</span>
                       )}
 
                       <div className="flex items-center justify-between gap-3 mt-1.5 shrink-0 select-none">
@@ -438,8 +438,9 @@ export default function DashboardPage() {
                     </div>
 
                     <div
-                      className="absolute top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-md border border-slate-200 rounded-full px-2 py-0.5 scale-90"
-                      style={isMe ? { right: 'calc(100% + 6px)' } : { left: 'calc(100% + 6px)' }}
+                      className={`absolute -top-7 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-md border border-slate-200 rounded-full px-1.5 py-0.5 scale-90 ${
+                        isMe ? 'right-0' : 'left-0'
+                      }`}
                     >
                       {['❤️', '👍', '😂', '😮', '🏔️', '🙏'].map(emoji => (
                         <button
@@ -471,7 +472,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="flex gap-1.5 overflow-x-auto pb-2 pt-2 select-none scrollbar-none border-t border-slate-100 shrink-0">
+        <div className="flex gap-1.5 overflow-x-auto pb-2 pt-2 select-none scrollbar-none border-t border-slate-100 shrink-0 w-full touch-pan-x">
           {(activeChan.id === 'ch-ai'
             ? ['Everest Weather', 'Permit Status', 'Buddhist Monasteries', 'Altitude Plan']
             : activeChan.id === 'ch-g1'
@@ -481,7 +482,7 @@ export default function DashboardPage() {
             <button
               key={chip}
               onClick={() => setChatInput(chip)}
-              className="text-[10px] font-mono bg-slate-50 border border-slate-200 hover:border-[#0552A2] text-[#0552A2] hover:bg-[#0552A2] hover:text-white px-2.5 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap"
+              className="text-[10px] font-mono bg-slate-50 border border-slate-200 hover:border-[#0552A2] text-[#0552A2] hover:bg-[#0552A2] hover:text-white px-2.5 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap shrink-0"
             >
               {chip}
             </button>
@@ -489,7 +490,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Input Bar */}
-        <div className="shrink-0 flex items-center gap-2 pt-2 border-t border-slate-100">
+        <div className="shrink-0 flex items-center gap-1.5 sm:gap-2 pt-2 border-t border-slate-100 w-full min-w-0">
           <button
             onClick={() => handleActionAlert("Opening documents attachment...", activeChan.name)}
             className="h-8 w-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#0552A2] hover:bg-slate-50 transition-colors cursor-pointer shrink-0 border border-slate-200"
@@ -513,7 +514,7 @@ export default function DashboardPage() {
               if (e.key === 'Enter') handleSendMessage();
             }}
             placeholder="Type message..."
-            className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-3.5 py-2 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
+            className="flex-1 min-w-0 bg-slate-50 border border-slate-200 rounded-full px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
           />
 
           {chatInput.trim() === '' ? (
@@ -591,45 +592,6 @@ export default function DashboardPage() {
 
         {/* Global Controls & Traveler Gateway */}
         <div className="flex items-center gap-3 relative">
-          {/* Weather status pill */}
-          <button
-            onClick={() => {
-              if (!rightCollapsed && rightSidebarTab === 'telemetry') {
-                setRightCollapsed(true);
-              } else {
-                setRightSidebarTab('telemetry');
-                setRightCollapsed(false);
-              }
-            }}
-            className="hidden md:flex items-center gap-2 bg-slate-50 border border-slate-200 hover:border-[#0552A2]/40 hover:bg-[#EAF3FB] px-3 py-1.5 rounded-full cursor-pointer transition-colors"
-            title="Toggle Himalayan Weather & Telemetry"
-          >
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[11px] font-mono text-[#0552A2] font-semibold">{weather.region.split('(')[0].trim()}</span>
-            <span className="text-[11px] font-bold text-slate-700">{weather.temp}</span>
-          </button>
-
-          {/* Intelligence drawer button */}
-          <button
-            onClick={() => {
-              if (!rightCollapsed && rightSidebarTab === 'telemetry') {
-                setRightCollapsed(true);
-              } else {
-                setRightSidebarTab('telemetry');
-                setRightCollapsed(false);
-              }
-            }}
-            className={`p-2 rounded-xl transition-colors cursor-pointer flex items-center justify-center relative ${rightSidebarTab === 'telemetry' && !rightCollapsed
-              ? 'bg-[#0552A2]/10 text-[#0552A2]'
-              : 'text-slate-500 hover:text-[#0552A2] hover:bg-slate-50'
-              }`}
-            title="Himalayan Weather & Telemetry"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-            </svg>
-          </button>
-
           {/* Chat / Dispatches button */}
           <button
             onClick={() => {
@@ -973,7 +935,7 @@ export default function DashboardPage() {
                     <div ref={floatingChatEndRef} />
                   </div>
 
-                  <div className="p-3 border-t border-slate-200 bg-white flex items-center gap-2 shrink-0">
+                  <div className="p-3 border-t border-slate-200 bg-white flex items-center gap-2 shrink-0 w-full min-w-0">
                     <input
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
@@ -981,7 +943,7 @@ export default function DashboardPage() {
                         if (e.key === 'Enter') handleSendMessage();
                       }}
                       placeholder="Write message..."
-                      className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2]"
+                      className="flex-1 min-w-0 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-xs text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2]"
                     />
                     <button
                       onClick={handleSendMessage}

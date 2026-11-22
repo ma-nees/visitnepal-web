@@ -106,7 +106,7 @@ export default function Navigation() {
             : 'bg-transparent py-5 sm:py-6'
         }`}
       >
-        <div className="w-full px-3.5 sm:px-6 md:px-8 max-w-[1440px] mx-auto flex items-center justify-between">
+        <div className="w-full px-3.5 sm:px-6 md:px-8 flex items-center justify-between">
           {/* Logo with official Visit Nepal identity */}
           <Link
             href="/"
@@ -122,14 +122,12 @@ export default function Navigation() {
           >
             <div className="relative h-10 w-[50px] sm:h-12 sm:w-[58px] transition-transform duration-300 group-hover:scale-[1.02]">
               <Image
-                src={scrolled || mobileMenuOpen ? "/logo.png" : "/logo-white.png"}
+                src="/logo.png"
                 alt="Visit Nepal Official Logo"
                 fill
                 unoptimized
                 sizes="(max-width: 640px) 50px, 58px"
-                className={`object-contain object-left transition-all duration-300 ${
-                  scrolled || mobileMenuOpen ? '' : 'drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]'
-                }`}
+                className="object-contain object-left transition-all duration-300"
                 onError={(e) => {
                   (e.currentTarget as HTMLElement).style.display = 'none';
                 }}
@@ -144,11 +142,7 @@ export default function Navigation() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`text-xs uppercase tracking-[0.14em] font-semibold transition-colors duration-200 relative group py-1 ${
-                  scrolled || mobileMenuOpen
-                    ? 'text-[#17212B] hover:text-[#0552A2]'
-                    : 'text-white/90 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]'
-                }`}
+                className="text-xs uppercase tracking-[0.14em] font-semibold transition-colors duration-200 relative group py-1 text-[#17212B] hover:text-[#0552A2]"
               >
                 <span>{link.label}</span>
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#0552A2] scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
@@ -166,11 +160,7 @@ export default function Navigation() {
                   router.push('/login');
                 }
               }}
-              className={`flex items-center gap-1.5 text-xs font-semibold tracking-wider transition-colors duration-200 ${
-                scrolled || mobileMenuOpen
-                  ? 'text-[#17212B] hover:text-[#0552A2]'
-                  : 'text-white/90 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]'
-              }`}
+              className="flex items-center gap-1.5 text-xs font-semibold tracking-wider transition-colors duration-200 text-[#17212B] hover:text-[#0552A2]"
             >
               <User className="h-3.5 w-3.5" />
               <span>{currentUser?.loggedIn && currentUser?.otpVerified ? 'Dashboard' : 'Sign In'}</span>
@@ -179,11 +169,7 @@ export default function Navigation() {
             <a
               href="#plan-your-trip"
               onClick={(e) => handleNavClick(e, '#plan-your-trip')}
-              className={`text-xs uppercase tracking-wider font-bold px-5 py-2.5 rounded-full transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-sm ${
-                scrolled || mobileMenuOpen
-                  ? 'bg-[#0552A2] text-white hover:bg-[#043e7b] hover:shadow-[0_4px_16px_rgba(5,82,162,0.3)]'
-                  : 'bg-white text-[#0552A2] hover:bg-white/90 hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)]'
-              }`}
+              className="text-xs uppercase tracking-wider font-bold px-5 py-2.5 rounded-full transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-sm bg-[#0552A2] text-white hover:bg-[#043e7b] hover:shadow-[0_4px_16px_rgba(5,82,162,0.3)]"
             >
               <span>Plan Your Trip</span>
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -195,17 +181,13 @@ export default function Navigation() {
             <a
               href="#plan-your-trip"
               onClick={(e) => handleNavClick(e, '#plan-your-trip')}
-              className={`text-[11px] uppercase tracking-wider font-bold px-3.5 py-1.5 rounded-full sm:hidden transition-colors ${
-                scrolled || mobileMenuOpen ? 'bg-[#0552A2] text-white' : 'bg-white text-[#0552A2]'
-              }`}
+              className="text-[11px] uppercase tracking-wider font-bold px-3.5 py-1.5 rounded-full sm:hidden transition-colors bg-[#0552A2] text-white"
             >
               Plan
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl transition-colors ${
-                scrolled || mobileMenuOpen ? 'text-[#17212B] hover:bg-zinc-100' : 'text-white hover:bg-white/10'
-              }`}
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl transition-colors text-[#17212B] hover:bg-zinc-100"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -227,7 +209,7 @@ export default function Navigation() {
                 ease: [0.16, 1, 0.3, 1],
               }}
               style={{ transformOrigin: 'top center' }}
-              className="absolute left-0 right-0 top-full bg-white/98 backdrop-blur-2xl rounded-b-[32px] sm:rounded-b-[36px] shadow-[0_28px_60px_-15px_rgba(0,0,0,0.35),0_12px_24px_-8px_rgba(5,82,162,0.15)] px-6 pt-2 pb-8 sm:px-8 border-b border-[#0552A2]/10 max-h-[calc(100dvh-80px)] overflow-y-auto lg:hidden"
+              className="absolute left-0 right-0 top-full bg-white/98 backdrop-blur-2xl rounded-b-xl shadow-[0_28px_60px_-15px_rgba(0,0,0,0.35),0_12px_24px_-8px_rgba(5,82,162,0.15)] px-6 pt-2 pb-8 sm:px-8 border-b border-[#0552A2]/10 max-h-[calc(100dvh-80px)] overflow-y-auto lg:hidden"
             >
               <nav className="flex flex-col gap-1">
                 {navLinks.map((link, idx) => (

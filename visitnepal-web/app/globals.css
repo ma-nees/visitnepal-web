@@ -1,47 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --color-sky-blue: #92C4EA;
-  --color-deep-blue: #0552A2;
+  --color-sky-blue: #92c4ea;
+  --color-deep-blue: #0552a2;
   --color-deep-blue-hover: #043e7b;
-  --color-nepal-red: #EC1F27;
-  --color-golden-yellow: #FDB716;
-  --color-pure-white: #FFFFFF;
-  --color-glacier-white: #FFFFFF;
-  --color-foreground: #17212B;
-  --color-muted: #4B5563;
-  --color-muted-light: #9CA3AF;
-  --color-surface-muted: #FFFFFF;
-  --color-surface: #FFFFFF;
+  --color-nepal-red: #ec1f27;
+  --color-golden-yellow: #fdb716;
+  --color-pure-white: #ffffff;
+  --color-glacier-white: #ffffff;
+  --color-foreground: #17212b;
+  --color-muted: #4b5563;
+  --color-muted-light: #9ca3af;
+  --color-surface-muted: #ffffff;
+  --color-surface: #ffffff;
   --color-border: rgba(5, 82, 162, 0.1);
   --color-border-subtle: rgba(23, 33, 43, 0.08);
 
   --font-heading: var(--font-oswald), "Oswald", sans-serif;
   --font-serif: var(--font-oswald), "Oswald", sans-serif;
   --font-sans: var(--font-noto-sans), "Noto Sans", sans-serif;
-  --font-condensed: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
+  --font-condensed:
+    var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 @theme {
-  --color-sky-blue: #92C4EA;
-  --color-deep-blue: #0552A2;
+  --color-sky-blue: #92c4ea;
+  --color-deep-blue: #0552a2;
   --color-deep-blue-hover: #043e7b;
-  --color-nepal-red: #EC1F27;
-  --color-golden-yellow: #FDB716;
-  --color-pure-white: #FFFFFF;
-  --color-glacier-white: #FFFFFF;
-  --color-foreground: #17212B;
-  --color-muted: #4B5563;
-  --color-muted-light: #9CA3AF;
-  --color-surface-muted: #FFFFFF;
-  --color-surface: #FFFFFF;
+  --color-nepal-red: #ec1f27;
+  --color-golden-yellow: #fdb716;
+  --color-pure-white: #ffffff;
+  --color-glacier-white: #ffffff;
+  --color-foreground: #17212b;
+  --color-muted: #4b5563;
+  --color-muted-light: #9ca3af;
+  --color-surface-muted: #ffffff;
+  --color-surface: #ffffff;
   --color-border: rgba(5, 82, 162, 0.1);
   --color-border-subtle: rgba(23, 33, 43, 0.08);
 
   --font-serif: var(--font-oswald), "Oswald", sans-serif;
   --font-heading: var(--font-oswald), "Oswald", sans-serif;
   --font-sans: var(--font-noto-sans), "Noto Sans", sans-serif;
-  --font-condensed: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
+  --font-condensed:
+    var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 html {
@@ -53,7 +55,7 @@ html,
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-pure-white, #FFFFFF);
+  background-color: var(--color-pure-white, #ffffff);
   color: var(--color-foreground);
   font-family: var(--font-sans);
   overflow-x: clip;
@@ -132,18 +134,18 @@ img[src=""] {
 
 /* ─── Dashboard Pure White Theme ─────────────────────────────────────────── */
 .dashboard-theme {
-  --color-glacier-white: #FFFFFF;
-  --color-pure-white: #FFFFFF;
-  --color-surface: #FFFFFF;
-  --color-surface-muted: #FFFFFF;
-  background-color: #FFFFFF !important;
+  --color-glacier-white: #ffffff;
+  --color-pure-white: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #ffffff;
+  background-color: #ffffff !important;
 }
 
 /* Ensure clean pure white on all dashboard surfaces, sidebars & cards */
 .dashboard-theme .bg-white,
 .dashboard-theme .bg-\[\#FFFFFF\],
 .dashboard-theme .bg-\[\#ffffff\] {
-  background-color: #FFFFFF !important;
+  background-color: #ffffff !important;
 }
 
 .dashboard-theme .bg-white\/95 {
@@ -237,14 +239,17 @@ img[src=""] {
   align-items: center;
   justify-content: center;
   gap: 0.625rem;
-  background-color: #0552A2;
-  color: #FFFFFF;
+  background-color: #0552a2;
+  color: #ffffff;
   padding: 0.875rem 1.75rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
   box-shadow: 0 4px 14px rgba(5, 82, 162, 0.22);
   text-decoration: none;
   cursor: pointer;
@@ -266,20 +271,23 @@ img[src=""] {
   justify-content: center;
   gap: 0.625rem;
   background-color: transparent;
-  color: #0552A2;
+  color: #0552a2;
   border: 1.5px solid rgba(5, 82, 162, 0.35);
   padding: 0.875rem 1.75rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
   text-decoration: none;
   cursor: pointer;
 }
 
 .btn-secondary:hover {
-  border-color: #0552A2;
+  border-color: #0552a2;
   background-color: rgba(5, 82, 162, 0.04);
   transform: translateY(-1px);
 }
@@ -290,67 +298,50 @@ img[src=""] {
   justify-content: center;
   gap: 0.5rem;
   background: transparent;
-  color: #17212B;
+  color: #17212b;
   padding: 0.625rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.8125rem;
   font-weight: 600;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   cursor: pointer;
 }
 
 .btn-ghost:hover {
   background-color: rgba(5, 82, 162, 0.06);
-  color: #0552A2;
+  color: #0552a2;
 }
 
 /* Gradients */
 .gradient-text-gold {
-  background: linear-gradient(135deg, #FDB716 0%, #D97706 100%);
+  background: linear-gradient(135deg, #fdb716 0%, #d97706 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-red {
-  background: linear-gradient(135deg, #EC1F27 0%, #B91C1C 100%);
+  background: linear-gradient(135deg, #ec1f27 0%, #b91c1c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-blue {
-  background: linear-gradient(135deg, #0552A2 0%, #92C4EA 100%);
+  background: linear-gradient(135deg, #0552a2 0%, #92c4ea 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Layout Utilities */
-.container {
-  width: 100%;
-  max-width: 96rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
+@layer utilities {
   .container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    padding-left: 3rem;
-    padding-right: 3rem;
   }
 }
 
@@ -374,7 +365,9 @@ img[src=""] {
 
 /* Accessibility & Performance: Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -524,4 +517,3 @@ img[src=""] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-
