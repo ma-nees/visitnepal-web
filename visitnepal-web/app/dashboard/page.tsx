@@ -438,9 +438,8 @@ export default function DashboardPage() {
                     </div>
 
                     <div
-                      className={`absolute -top-7 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-md border border-slate-200 rounded-full px-1.5 py-0.5 scale-90 ${
-                        isMe ? 'right-0' : 'left-0'
-                      }`}
+                      className={`absolute -top-7 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 flex items-center gap-0.5 bg-white shadow-md border border-slate-200 rounded-full px-1.5 py-0.5 scale-90 ${isMe ? 'right-0' : 'left-0'
+                        }`}
                     >
                       {['❤️', '👍', '😂', '😮', '🏔️', '🙏'].map(emoji => (
                         <button

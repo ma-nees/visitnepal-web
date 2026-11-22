@@ -31,8 +31,7 @@ export default function WeatherTelemetry({ rightCollapsed, weather }: WeatherTel
         <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
           Telemetry
         </span>
-        <span className="inline-flex items-center gap-1.5 text-[9px] font-medium text-slate-500">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <span className="text-[9px] font-medium text-slate-500">
           Live 10m Sync
         </span>
       </div>
@@ -46,7 +45,13 @@ export default function WeatherTelemetry({ rightCollapsed, weather }: WeatherTel
           <span className="text-xl font-bold tracking-tight text-[#0552A2] leading-none block">
             {weather.temp}
           </span>
-          <span className="inline-block text-[8px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 mt-1">
+          <span
+            className={`inline-block text-[8px] font-bold text-white px-2 py-0.5 rounded-full mt-1 ${
+              weather.alert?.toLowerCase().includes('warning')
+                ? 'bg-amber-500'
+                : 'bg-emerald-500'
+            }`}
+          >
             {weather.alert}
           </span>
         </div>
