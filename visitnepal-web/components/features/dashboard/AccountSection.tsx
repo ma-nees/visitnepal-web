@@ -979,35 +979,52 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
 
                       {/* Key Telemetry Grid */}
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-xs">
-                        <div className="bg-slate-50 border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center">
+                        <div className="bg-white border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center justify-center min-h-[76px] shadow-2xs">
                           <Clock className="w-3.5 h-3.5 text-[#0552A2] mb-1" />
                           <span className="text-[9px] text-[#64748B] uppercase">Duration</span>
-                          <span className="font-bold text-[#17212B]">{generatedItinerary.duration} Days</span>
+                          <span className="font-bold text-[#17212B] mt-0.5">{generatedItinerary.duration} Days</span>
                         </div>
-                        <div className="bg-slate-50 border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center">
+                        <div className="bg-white border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center justify-center min-h-[76px] shadow-2xs">
                           <Mountain className="w-3.5 h-3.5 text-[#0552A2] mb-1" />
                           <span className="text-[9px] text-[#64748B] uppercase">Peak Altitude</span>
-                          <span className="font-bold text-[#17212B]">{generatedItinerary.maxAlt || '4,130m'}</span>
+                          {(() => {
+                            const raw = generatedItinerary.maxAlt || '4,130m';
+                            const match = raw.match(/^([^\s]+)\s*(.*)$/);
+                            const altValue = match ? match[1] : raw;
+                            const altLocation = match && match[2] ? match[2].replace(/[()]/g, '') : null;
+                            return (
+                              <div className="flex flex-col items-center mt-0.5 min-w-0 max-w-full">
+                                <span className="font-bold text-[#17212B] leading-tight">{altValue}</span>
+                                {altLocation && (
+                                  <span className="text-[8.5px] text-[#64748B] font-medium truncate max-w-full leading-tight">
+                                    {altLocation}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </div>
-                        <div className="bg-slate-50 border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center">
+                        <div className="bg-white border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center justify-center min-h-[76px] shadow-2xs">
                           <Compass className="w-3.5 h-3.5 text-[#0552A2] mb-1" />
                           <span className="text-[9px] text-[#64748B] uppercase">Trail Distance</span>
-                          <span className="font-bold text-[#17212B]">{generatedItinerary.distance || '115 km'}</span>
+                          <span className="font-bold text-[#17212B] mt-0.5">{generatedItinerary.distance || '115 km'}</span>
                         </div>
-                        <div className="bg-slate-50 border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center">
+                        <div className="bg-white border border-slate-200/80 p-2.5 rounded-xl flex flex-col items-center justify-center min-h-[76px] shadow-2xs">
                           <Hotel className="w-3.5 h-3.5 text-[#0552A2] mb-1" />
                           <span className="text-[9px] text-[#64748B] uppercase">Lodging Tier</span>
-                          <span className="font-bold text-[#17212B] capitalize">{selectedLodgingStyle}</span>
+                          <span className="font-bold text-[#17212B] capitalize mt-0.5">{selectedLodgingStyle}</span>
                         </div>
                       </div>
 
                       {/* Certified Guide Notice */}
                       {generatedItinerary.guideRequirement && (
-                        <div className="flex items-start gap-2.5 bg-slate-50 border border-slate-200/80 p-3 rounded-xl text-[11px] text-[#475569]">
-                          <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <div className="flex items-start gap-2.5 bg-white border border-slate-200/80 p-3 rounded-xl text-[11px] text-[#475569] shadow-2xs">
+                          <div className="h-5 w-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                            <ShieldCheck className="w-3 h-3 text-white" />
+                          </div>
                           <div className="flex-1">
                             <span className="font-bold text-[#17212B] font-mono uppercase text-[10px] block">Mandatory Safety Protocol</span>
-                            <span>{generatedItinerary.guideRequirement}</span>
+                            <span>{generatedItinerary.guideRequirement.replace(/^Mandatory\s+/i, '')}</span>
                           </div>
                         </div>
                       )}

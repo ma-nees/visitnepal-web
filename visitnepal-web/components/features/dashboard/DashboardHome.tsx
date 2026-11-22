@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTravelStore } from '@/store/useTravelStore';
 import {
@@ -12,8 +11,6 @@ import {
   Map,
   Clock,
   ArrowRight,
-  Bookmark,
-  BookmarkCheck,
   CheckCircle2,
   SlidersHorizontal,
   Hotel,
@@ -21,27 +18,15 @@ import {
   Plane,
   ShieldCheck,
   Sparkles,
-  ExternalLink,
-  ChevronRight,
-  ChevronDown,
-  TrendingUp,
   Heart,
-  FileText,
   FileCheck,
   UserCheck,
-  Sun,
-  Wind,
-  Check,
   X
 } from 'lucide-react';
 import {
-  UpcomingTrip,
   UPCOMING_TRIPS,
-  DraftTrip,
   DRAFT_TRIPS,
-  RecommendedDestination,
   RECOMMENDED_DESTINATIONS,
-  BookingItem,
   RECENT_BOOKINGS,
   ActivityLogItem,
   RECENT_ACTIVITY_LOG,
@@ -241,7 +226,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           SECTION 1: DASHBOARD WELCOME & CONTEXTUAL TELEMETRY BANNER
       ========================================================================= */}
       <div className="relative overflow-hidden rounded-2xl bg-[#0552A2] text-white shadow-md p-3.5 sm:p-4 md:p-5">
-        <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-4 sm:gap-5">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
           {/* Left: Personalized Greeting & Primary CTAs */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -288,6 +273,15 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                   <span>Explore Destinations</span>
                 </button>
               </div>
+            </div>
+
+            {/* Right: Seamless Transparent Flight Route Animation to Nepal (No white card) */}
+            <div className="shrink-0 flex items-center justify-center self-center w-full sm:w-[340px] md:w-[380px] lg:w-[430px] overflow-hidden">
+              <FlightRouteAnimation
+                variant="banner"
+                destinationLabel="Nepal"
+                onDestinationClick={() => onNavigate?.('explore')}
+              />
             </div>
         </div>
       </div>
