@@ -757,15 +757,15 @@ export default function DashboardPage() {
               className="flex-1 flex flex-col min-w-0 relative bg-white transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
               {/* Context breadcrumb & Search toolbar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-4 py-1.5 sm:py-2 bg-white border-b border-slate-200/70 select-none relative z-10 gap-2 sm:gap-3">
-                <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-                  <span className="uppercase tracking-wider font-semibold text-slate-500">{activeDetails.groupTitle}</span>
-                  <span className="text-slate-300">/</span>
-                  <span className="text-[#0552A2] font-bold">{activeDetails.itemLabel}</span>
+              <div className="h-11 shrink-0 flex items-center justify-between px-3 sm:px-4 bg-white border-b border-slate-200 select-none relative z-10 gap-2 sm:gap-3">
+                <div className="flex items-center gap-2 text-xs font-mono text-slate-400 min-w-0">
+                  <span className="uppercase tracking-wider font-semibold text-slate-500 truncate">{activeDetails.groupTitle}</span>
+                  <span className="text-slate-300 shrink-0">/</span>
+                  <span className="text-[#0552A2] font-bold truncate">{activeDetails.itemLabel}</span>
                 </div>
 
-                <div className="flex items-center w-full sm:max-w-xs relative">
-                  <span className="absolute left-3 text-slate-400 flex items-center justify-center pointer-events-none">
+                <div className="flex items-center w-48 sm:w-64 max-w-xs relative shrink-0">
+                  <span className="absolute left-2.5 text-slate-400 flex items-center justify-center pointer-events-none">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="11" cy="11" r="8" />
                       <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -773,8 +773,8 @@ export default function DashboardPage() {
                   </span>
                   <input
                     type="text"
-                    placeholder="Search destinations, guides, stays..."
-                    className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-9 pr-4 py-1.5 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
+                    placeholder="Search destinations, guides..."
+                    className="w-full bg-slate-50 border border-slate-200 text-xs rounded-full pl-8 pr-3 h-7.5 py-0 text-[#17212B] focus:outline-none focus:border-[#0552A2] focus:bg-white transition-colors"
                   />
                 </div>
               </div>

@@ -279,7 +279,7 @@ export default function InfoDetailPanel({
     <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
       
       {/* Breadcrumb Info Bar */}
-      <div className="flex items-center justify-between px-6 py-3 select-none relative z-10 border-b border-[#92C4EA]/15 shadow-[0_2px_12px_rgba(61,45,39,0.03)] bg-[#FFFEFA]/75 backdrop-blur-md sticky top-0">
+      <div className="h-11 shrink-0 flex items-center justify-between px-4 sm:px-6 select-none relative z-10 border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0">
         <div className="flex items-center gap-2 text-[10px] font-mono text-[#64748B]">
           <span className="uppercase tracking-wider font-bold">Discover</span>
           <span className="text-[#0552A2] opacity-60">/</span>
@@ -289,7 +289,7 @@ export default function InfoDetailPanel({
         {onBack && (
           <button
             onClick={onBack}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F2F8FD]/75 border border-[#0552A2]/25 text-[10px] font-mono font-bold text-[#0552A2] hover:bg-[#0552A2] hover:text-white transition-all duration-300 cursor-pointer active:scale-95 shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F2F8FD]/75 border border-[#0552A2]/25 text-[10px] font-mono font-bold text-[#0552A2] hover:bg-[#0552A2] hover:text-white transition-all duration-300 cursor-pointer active:scale-95 shadow-sm"
           >
             <ArrowLeft className="h-3 w-3" />
             <span>Return</span>

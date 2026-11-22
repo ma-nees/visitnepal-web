@@ -259,11 +259,11 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 <span className="text-[10px] font-bold text-[#92C4EA] uppercase tracking-wider font-mono">
                   Visit Nepal Personal Portal
                 </span>
-                <span className="h-1 w-1 rounded-full bg-emerald-400" />
-                <span className="text-[9px] font-mono text-emerald-100 bg-emerald-500/20 px-2 py-0.5 rounded-full font-semibold border border-emerald-400/30">
+
+                <span className="text-[9px] font-mono text-emerald-100 bg-transparent px-2 py-0.5 rounded-full font-semibold border border-emerald-400/30">
                   Passport US98127398
                 </span>
-                <span className="text-[9px] font-mono text-[#FDB716] bg-[#FDB716]/15 px-2 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
+                <span className="text-[9px] font-mono text-[#FDB716] bg-transparent px-2 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
                   Explorer Gold
                 </span>
               </div>

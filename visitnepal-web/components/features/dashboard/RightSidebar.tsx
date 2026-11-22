@@ -68,9 +68,9 @@ export default function RightSidebar({
   const renderContent = (isMobile: boolean = false) => {
     if (rightSidebarTab === 'chat') {
       return (
-        <div className="flex flex-col flex-1 min-h-0 p-3 sm:p-3.5 relative text-left w-full overflow-hidden">
+        <div className="flex flex-col flex-1 min-h-0 relative text-left w-full overflow-hidden">
           {/* Header */}
-          <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md pb-2 mb-2 flex items-center justify-between border-b border-slate-100 gap-2">
+          <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-3 sm:px-3.5 h-11 shrink-0 flex items-center justify-between border-b border-slate-200 gap-2">
             <span className="text-[11px] font-mono font-bold text-[#0552A2] uppercase tracking-wider truncate">
               {chatViewState === 'inbox' ? 'Expedition Dispatches' : 'Active Conversation'}
             </span>
@@ -125,46 +125,48 @@ export default function RightSidebar({
           </div>
 
           {/* Chat Inbox vs Conversation vs Multi-Column */}
-          {isFullExpanded && !isMobile ? (
-            <div className="flex-1 flex overflow-hidden gap-4">
-              <div className="w-80 shrink-0 border-r border-slate-100 pr-4 overflow-y-auto">
-                <ChatsList
-                  channels={channels}
-                  activeChannelId={activeChannelId}
-                  onSelectChannel={(id) => {
-                    onActiveChannelIdChange(id);
-                    onExpandedChannelIdChange(id);
-                  }}
-                  onExpandToggle={(id) => {
-                    onExpandedChannelIdChange(expandedChannelId === id ? null : id);
-                  }}
-                />
-              </div>
-              <div className="flex-1 flex flex-col min-w-0">
-                {renderSingleChatView(activeChannelObj, false)}
-              </div>
-            </div>
-          ) : (
-            chatViewState === 'inbox' ? (
-              <div className="flex-1 overflow-y-auto">
-                <ChatsList
-                  channels={channels}
-                  activeChannelId={activeChannelId}
-                  onSelectChannel={(id) => {
-                    onActiveChannelIdChange(id);
-                    onChatViewStateChange('conversation');
-                  }}
-                  onExpandToggle={(id) => {
-                    onExpandedChannelIdChange(expandedChannelId === id ? null : id);
-                  }}
-                />
+          <div className="flex-1 flex flex-col min-h-0 p-2.5 sm:p-3">
+            {isFullExpanded && !isMobile ? (
+              <div className="flex-1 flex overflow-hidden gap-4">
+                <div className="w-80 shrink-0 border-r border-slate-100 pr-4 overflow-y-auto">
+                  <ChatsList
+                    channels={channels}
+                    activeChannelId={activeChannelId}
+                    onSelectChannel={(id) => {
+                      onActiveChannelIdChange(id);
+                      onExpandedChannelIdChange(id);
+                    }}
+                    onExpandToggle={(id) => {
+                      onExpandedChannelIdChange(expandedChannelId === id ? null : id);
+                    }}
+                  />
+                </div>
+                <div className="flex-1 flex flex-col min-w-0">
+                  {renderSingleChatView(activeChannelObj, false)}
+                </div>
               </div>
             ) : (
-              <div className="flex-1 flex flex-col min-h-0">
-                {renderSingleChatView(activeChannelObj, true)}
-              </div>
-            )
-          )}
+              chatViewState === 'inbox' ? (
+                <div className="flex-1 overflow-y-auto">
+                  <ChatsList
+                    channels={channels}
+                    activeChannelId={activeChannelId}
+                    onSelectChannel={(id) => {
+                      onActiveChannelIdChange(id);
+                      onChatViewStateChange('conversation');
+                    }}
+                    onExpandToggle={(id) => {
+                      onExpandedChannelIdChange(expandedChannelId === id ? null : id);
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="flex-1 flex flex-col min-h-0">
+                  {renderSingleChatView(activeChannelObj, true)}
+                </div>
+              )
+            )}
+          </div>
         </div>
       );
     }
@@ -172,9 +174,8 @@ export default function RightSidebar({
     // Telemetry view
     return (
       <div className="flex flex-col flex-1 min-h-0 text-left overflow-y-auto">
-        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2.5 flex items-center justify-between border-b border-slate-100">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-3.5 h-11 shrink-0 flex items-center justify-between border-b border-slate-200">
+          <div className="flex items-center">
             <span className="text-[10px] font-semibold text-[#0552A2] uppercase tracking-[0.14em]">
               Himalayan Intel &amp; Weather
             </span>
@@ -258,9 +259,8 @@ export default function RightSidebar({
     <>
       {/* ── 1. DESKTOP PERSISTENT DRAWER (>= xl screens) ────────────────── */}
       <aside
-        className={`hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-white transition-all duration-300 overflow-hidden ${
-          rightCollapsed ? 'w-0 border-l-0' : 'border-l border-slate-200'
-        }`}
+        className={`hidden xl:flex flex-col shrink-0 h-full select-none relative z-30 bg-white transition-all duration-300 overflow-hidden ${rightCollapsed ? 'w-0 border-l-0' : 'border-l border-slate-200'
+          }`}
         style={{
           width: rightCollapsed
             ? '0px'

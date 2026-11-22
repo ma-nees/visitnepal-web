@@ -195,7 +195,7 @@ export default function LeftSidebar({
       >
         {/* Sticky Header / Toggle Bar */}
         <div
-          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-2.5 py-1.5 flex items-center h-10 ${
+          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-2.5 flex items-center h-11 shrink-0 ${
             collapsed ? 'justify-center' : 'justify-between'
           }`}
         >
