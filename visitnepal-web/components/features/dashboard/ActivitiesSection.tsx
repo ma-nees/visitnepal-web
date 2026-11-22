@@ -297,15 +297,15 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
 
   const getDifficultyBadge = (difficulty: string) => {
     if (difficulty.includes('Technical') || difficulty.includes('Extreme')) {
-      return 'bg-rose-50 text-rose-700 border-rose-200';
+      return 'bg-rose-600 text-white';
     }
     if (difficulty.includes('Challenging')) {
-      return 'bg-amber-50 text-amber-700 border-amber-200';
+      return 'bg-rose-500 text-white';
     }
     if (difficulty.includes('Moderate')) {
-      return 'bg-blue-50 text-[#0552A2] border-blue-200';
+      return 'bg-amber-500 text-white';
     }
-    return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+    return 'bg-emerald-500 text-white';
   };
 
   const getCategoryIcon = (category: string) => {
@@ -367,7 +367,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                 <Check className="h-7 w-7" strokeWidth={3} />
               </div>
 
-              <span className="text-[10px] font-mono font-bold tracking-widest text-emerald-700 uppercase bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-[10px] font-mono font-bold tracking-widest text-white uppercase bg-emerald-500 px-2.5 py-0.5 rounded-full">
                 Expedition Confirmed & Synced
               </span>
 
@@ -572,7 +572,7 @@ export default function ActivitiesSection({ activeId, onNavigate }: ActivitiesSe
                     </div>
 
                     <div className="absolute top-3.5 right-3.5">
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold border backdrop-blur-md shadow-xs ${getDifficultyBadge(act.difficulty)}`}>
+                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold shadow-xs ${getDifficultyBadge(act.difficulty)}`}>
                         {act.difficulty}
                       </span>
                     </div>

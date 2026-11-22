@@ -53,18 +53,22 @@ function SidebarItem({
       <button
         onClick={onClick}
         aria-label={label}
-        className={`w-full flex items-center h-8.5 px-2 rounded-lg transition-all duration-200 relative text-left cursor-pointer overflow-hidden ${
-          isActive
-            ? 'bg-[#0552A2]/10 text-[#0552A2] font-semibold shadow-xs'
-            : 'text-slate-600 hover:text-[#17212B] hover:bg-slate-200/50 font-medium'
-        }`}
+        className={`w-full flex items-center h-8.5 px-2 rounded-lg transition-all duration-200 relative text-left cursor-pointer overflow-hidden ${isActive
+          ? 'bg-[#0552A2]/10 text-[#0552A2] font-semibold shadow-xs'
+          : 'text-slate-600 hover:text-[#17212B] hover:bg-slate-200/50 font-medium'
+          }`}
         style={{ fontSize: '12px' }}
       >
+        {/* Active Pill Accent Indicator */}
+        <span
+          className={`absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#0552A2] transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-50'
+            }`}
+        />
+
         {/* Icon Container: Fixed width & positioning prevents any horizontal jumping */}
         <span
-          className={`h-6 w-6 shrink-0 flex items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-105 ${
-            isActive ? 'text-[#0552A2]' : 'text-slate-400 group-hover:text-slate-700'
-          }`}
+          className={`h-6 w-6 shrink-0 flex items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-105 ${isActive ? 'text-[#0552A2]' : 'text-slate-400 group-hover:text-slate-700'
+            }`}
         >
           {typeof icon === 'string' ? (
             <Icon d={icon} size={16} />
@@ -75,11 +79,10 @@ function SidebarItem({
 
         {/* Text Label & Badge: Smooth opacity and transform transition */}
         <div
-          className={`flex-1 min-w-0 flex items-center justify-between ml-2.5 whitespace-nowrap overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            collapsed
-              ? 'opacity-0 -translate-x-2 pointer-events-none max-w-0 ml-0'
-              : 'opacity-100 translate-x-0 max-w-[170px]'
-          }`}
+          className={`flex-1 min-w-0 flex items-center justify-between ml-2.5 whitespace-nowrap overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed
+            ? 'opacity-0 -translate-x-2 pointer-events-none max-w-0 ml-0'
+            : 'opacity-100 translate-x-0 max-w-[170px]'
+            }`}
         >
           <span className="truncate tracking-tight text-[12px] font-medium">
             {label}
@@ -87,11 +90,10 @@ function SidebarItem({
 
           {badge && (
             <span
-              className={`rounded-full text-[9px] font-mono font-bold px-1.5 py-0.2 leading-none shrink-0 ml-1.5 transition-colors ${
-                isActive
-                  ? 'bg-[#0552A2] text-white'
-                  : 'bg-slate-200/80 text-slate-600 group-hover:bg-[#0552A2]/15 group-hover:text-[#0552A2]'
-              }`}
+              className={`rounded-full text-[9px] font-mono font-bold px-1.5 py-0.2 leading-none shrink-0 ml-1.5 transition-colors ${isActive
+                ? 'bg-[#0552A2] text-white'
+                : 'bg-slate-200/80 text-slate-600 group-hover:bg-[#0552A2]/15 group-hover:text-[#0552A2]'
+                }`}
             >
               {badge}
             </span>
@@ -142,9 +144,8 @@ function SidebarGroup({
       {/* Group Title: Smoothly fades and collapses without abrupt DOM removal */}
       <div className="overflow-hidden">
         <p
-          className={`text-[9px] font-mono tracking-widest uppercase text-slate-400 px-3 pb-1 font-bold select-none whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            collapsed ? 'opacity-0 -translate-x-2 h-0 pb-0' : 'opacity-100 translate-x-0 h-auto'
-          }`}
+          className={`text-[9px] font-mono tracking-widest uppercase text-slate-400 px-3 pb-1 font-bold select-none whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'opacity-0 -translate-x-2 h-0 pb-0' : 'opacity-100 translate-x-0 h-auto'
+            }`}
         >
           {title}
         </p>
@@ -182,21 +183,18 @@ export default function LeftSidebar({
     <>
       {/* ── 1. DESKTOP / TABLET IN-FLOW SIDEBAR ───────────────────────────── */}
       <aside
-        className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 z-20 will-change-[width] overflow-hidden transition-[width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          collapsed ? 'w-[54px]' : 'w-[204px]'
-        }`}
+        className={`hidden md:flex flex-col shrink-0 h-full select-none bg-white border-r border-slate-200 z-20 will-change-[width] overflow-hidden transition-[width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'w-[54px]' : 'w-[204px]'
+          }`}
       >
         {/* Sticky Header / Toggle Bar */}
         <div
-          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-2.5 flex items-center h-11 shrink-0 ${
-            collapsed ? 'justify-center' : 'justify-between'
-          }`}
+          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-2.5 flex items-center h-11 shrink-0 ${collapsed ? 'justify-center' : 'justify-between'
+            }`}
         >
           {/* Header Label */}
           <div
-            className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100 pl-1'
-            }`}
+            className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100 pl-1'
+              }`}
           >
             <span className="text-[10px] font-mono font-bold tracking-wider text-slate-400 uppercase whitespace-nowrap">
               Navigation
@@ -219,9 +217,8 @@ export default function LeftSidebar({
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={`transition-transform duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                collapsed ? 'rotate-180' : 'rotate-0'
-              }`}
+              className={`transition-transform duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'rotate-180' : 'rotate-0'
+                }`}
             >
               <polyline points="15 18 9 12 15 6" />
             </svg>

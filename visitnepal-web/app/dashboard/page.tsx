@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DiscoverSection from '@/components/features/dashboard/DiscoverSection';
@@ -14,7 +14,7 @@ import GuidesPermitsSection from '@/components/features/dashboard/GuidesPermitsS
 import AccountSection from '@/components/features/dashboard/AccountSection';
 import HostSection from '@/components/features/dashboard/HostSection';
 import { useTravelStore } from '@/store/useTravelStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Home,
@@ -101,16 +101,16 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
-export default function DashboardPage() {
+function DashboardContent() {
   const router = useRouter();
-  const [active, setActive] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const sp = new URLSearchParams(window.location.search);
-      return sp.get('section') || sp.get('from') || 'home';
-    }
-    return 'home';
-  });
+  const searchParams = useSearchParams();
+  const querySection = searchParams.get('section') || searchParams.get('from') || 'home';
+  const [active, setActive] = useState(querySection);
   const [previousActive, setPreviousActive] = useState('explore');
+
+  useEffect(() => {
+    setActive(querySection);
+  }, [querySection]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -1031,5 +1031,19 @@ export default function DashboardPage() {
       </div>
 
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen w-screen items-center justify-center bg-white">
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-[#0552A2]" />
+        </div>
+      }
+    >
+      <DashboardContent />
+    </Suspense>
   );
 }

@@ -260,10 +260,16 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                   Visit Nepal Personal Portal
                 </span>
 
-                <span className="text-[9px] font-mono text-[#FDB716] bg-transparent px-2 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
+                <span
+                  style={{ backgroundColor: '#FDB716', color: '#0B2240' }}
+                  className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full shadow-2xs"
+                >
                   Passport US98127398
                 </span>
-                <span className="text-[9px] font-mono text-[#FDB716] bg-transparent px-2 py-0.5 rounded-full font-semibold border border-[#FDB716]/35">
+                <span
+                  style={{ backgroundColor: '#FDB716', color: '#0B2240' }}
+                  className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full shadow-2xs"
+                >
                   Explorer Gold
                 </span>
               </div>

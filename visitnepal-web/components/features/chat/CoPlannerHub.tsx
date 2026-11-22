@@ -5,10 +5,10 @@ import React from 'react';
 export interface CoPlannerHubProps {
   calendarMarks: Record<string, boolean>;
   onCalendarMarksChange: (updater: Record<string, boolean> | ((prev: Record<string, boolean>) => Record<string, boolean>)) => void;
-  userNote: string;
-  onUserNoteChange: (note: string) => void;
-  companyNote: string;
-  onCompanyNoteChange: (note: string) => void;
+  userNote?: string;
+  onUserNoteChange?: (note: string) => void;
+  companyNote?: string;
+  onCompanyNoteChange?: (note: string) => void;
 }
 
 export default function CoPlannerHub({
@@ -70,27 +70,6 @@ export default function CoPlannerHub({
               );
             })
           )}
-        </div>
-      </div>
-
-      {/* Shared Notes */}
-      <div className="flex flex-col gap-2 pt-0.5">
-        <div className="flex flex-col gap-1">
-          <span className="text-[9px] font-semibold text-slate-500 uppercase tracking-wider">Expedition Notes</span>
-          <textarea
-            value={userNote}
-            onChange={(e) => onUserNoteChange(e.target.value)}
-            placeholder="Private notes..."
-            rows={1}
-            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-[11px] text-[#17212B] placeholder-slate-400 focus:outline-none focus:border-[#0552A2] focus:bg-white resize-none"
-          />
-        </div>
-
-        <div className="border-l-2 border-[#0552A2] pl-2 py-0.5 flex flex-col gap-0.5">
-          <span className="text-[9px] font-semibold text-[#0552A2] uppercase tracking-wider">Guide Dispatch</span>
-          <p className="text-[10px] text-slate-600 leading-snug">
-            {companyNote || "Acclimatization day at Namche Bazaar (3,440m). Beacon active."}
-          </p>
         </div>
       </div>
     </div>

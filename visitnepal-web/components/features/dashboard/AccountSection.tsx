@@ -232,7 +232,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
                 <div>
                   <h3 className="font-bold text-sm text-[#17212B]">{currentUser.name}</h3>
                   <p className="text-[10px] text-[#64748B] font-mono mt-0.5">{currentUser.email}</p>
-                  <span className="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200/80 text-[9px] font-mono font-bold text-[#0552A2]">
+                  <span className="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-[#0552A2] text-white text-[9px] font-mono font-bold">
                     {currentUser.role} Account Active
                   </span>
                 </div>
@@ -629,9 +629,9 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
               {EXPEDITION_BLUEPRINTS.map((bp) => {
                 const isSelected = selectedBlueprintId === bp.id;
                 const difficultyColor = 
-                  bp.difficulty === 'Challenging' ? 'bg-rose-50 text-rose-700 border-rose-200' :
-                  bp.difficulty === 'Moderate' ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                  'bg-emerald-50 text-emerald-700 border-emerald-200';
+                  bp.difficulty === 'Challenging' ? 'bg-rose-500 text-white' :
+                  bp.difficulty === 'Moderate' ? 'bg-amber-500 text-white' :
+                  'bg-emerald-500 text-white';
 
                 return (
                   <div
@@ -680,7 +680,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${difficultyColor}`}>
+                          <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${difficultyColor}`}>
                             {bp.difficulty}
                           </span>
                           <span className="text-[11px] font-mono text-[#64748B]">
@@ -964,7 +964,7 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
                             <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-md bg-[#0552A2]/10 text-[#0552A2]">
                               {generatedItinerary.region}
                             </span>
-                            <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                            <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500 text-white">
                               {generatedItinerary.difficulty} Tier
                             </span>
                           </div>
@@ -1020,9 +1020,9 @@ export default function AccountSection({ activeId }: AccountSectionProps) {
                             {generatedItinerary.permits.map((p: string, idx: number) => (
                               <span
                                 key={idx}
-                                className="inline-flex items-center gap-1 text-[10px] font-mono bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-md"
+                                className="inline-flex items-center gap-1 text-[10px] font-mono bg-emerald-500 text-white px-2 py-0.5 rounded-full font-bold"
                               >
-                                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                                <CheckCircle2 className="w-3 h-3 text-white" />
                                 {p}
                               </span>
                             ))}

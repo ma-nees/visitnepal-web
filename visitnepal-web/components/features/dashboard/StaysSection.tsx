@@ -335,7 +335,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
               <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-[#0552A2]">$1,200 <span className="text-[10px] font-normal text-slate-500">/ flight leg</span></span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Available Daily</span>
+                <span className="text-[10px] font-mono text-white bg-emerald-500 font-bold px-2 py-0.5 rounded-full">Available Daily</span>
               </div>
             </div>
 
@@ -352,7 +352,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
               <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-[#0552A2]">$180 <span className="text-[10px] font-normal text-slate-500">/ day (with driver)</span></span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Includes Fuel</span>
+                <span className="text-[10px] font-mono text-white bg-emerald-500 font-bold px-2 py-0.5 rounded-full">Includes Fuel</span>
               </div>
             </div>
 
@@ -369,7 +369,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
               <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-[#0552A2]">$150 <span className="text-[10px] font-normal text-slate-500">/ traveler</span></span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">15kg Baggage</span>
+                <span className="text-[10px] font-mono text-white bg-emerald-500 font-bold px-2 py-0.5 rounded-full">15kg Baggage</span>
               </div>
             </div>
 
@@ -386,7 +386,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
               <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-[#0552A2]">$24 <span className="text-[10px] font-normal text-slate-500">/ round-trip</span></span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Express Entry</span>
+                <span className="text-[10px] font-mono text-white bg-emerald-500 font-bold px-2 py-0.5 rounded-full">Express Entry</span>
               </div>
             </div>
 
@@ -403,7 +403,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
               <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-[#0552A2]">$25 <span className="text-[10px] font-normal text-slate-500">/ day</span></span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">IPPG Compliant</span>
+                <span className="text-[10px] font-mono text-white bg-emerald-500 font-bold px-2 py-0.5 rounded-full">IPPG Compliant</span>
               </div>
             </div>
 
@@ -420,7 +420,7 @@ export default function StaysSection({ activeId }: StaysSectionProps) {
               </div>
               <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-[#0552A2]">$35 <span className="text-[10px] font-normal text-slate-500">/ transfer</span></span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Meet & Greet</span>
+                <span className="text-[10px] font-mono text-white bg-emerald-500 font-bold px-2 py-0.5 rounded-full">Meet & Greet</span>
               </div>
             </div>
           </motion.div>
