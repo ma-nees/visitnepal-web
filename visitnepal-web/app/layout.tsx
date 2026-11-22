@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Oswald, Noto_Sans, Roboto_Condensed, Dancing_Script } from "next/font/google";
+import {
+  Oswald,
+  Noto_Sans,
+  Roboto_Condensed,
+  Dancing_Script,
+} from "next/font/google";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -46,8 +51,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Visit Nepal — Naturally Nepal | Official Tourism Portal",
-  description: "Somewhere between earth and heaven. Discover extraordinary Himalayan landscapes, ancient UNESCO heritage, and unforgettable journeys across Nepal.",
+  title: "Visit Nepal Naturally Nepal | Official Tourism Portal",
+  description:
+    "Somewhere between earth and heaven. Discover extraordinary Himalayan landscapes, ancient UNESCO heritage, and unforgettable journeys across Nepal.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { destinations } from '@/lib/destinations';
-import { ArrowUpRight } from 'lucide-react';
+import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { destinations } from "@/lib/destinations";
+import { ArrowUpRight } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,12 +27,14 @@ const itemVariants = {
 };
 
 export default function DestinationsSection() {
-  const [activeTab, setActiveTab] = useState<'all' | 'mountains' | 'culture' | 'wildlife'>('all');
+  const [activeTab, setActiveTab] = useState<
+    "all" | "mountains" | "culture" | "wildlife"
+  >("all");
 
   // Rotating pool of non-featured destinations from mockData
   const rotatingPool = useMemo(() => {
     const pool = destinations.slice(3);
-    if (activeTab === 'all') return pool;
+    if (activeTab === "all") return pool;
     const filtered = pool.filter((d) => d.category === activeTab);
     return filtered.length > 0 ? filtered : pool;
   }, [activeTab]);
@@ -57,33 +59,34 @@ export default function DestinationsSection() {
         {/* Editorial Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#EC1F27]" />
-              <span className="text-caption text-[#0552A2]">Iconic Territories</span>
-            </div>
-            <h2 id="destinations-heading" className="text-heading-2 text-[#17212B] text-balance">
+            <h2
+              id="destinations-heading"
+              className="text-heading-2 text-[#17212B] text-balance"
+            >
               Places That Stay With You
             </h2>
             <p className="text-body-lg text-[#4B5563] mt-3 max-w-xl">
-              From the 8,000-meter amphitheaters of Khumbu to ancient stone alleys in Mustang and subtropical jungle sanctuaries.
+              From the 8,000-meter amphitheaters of Khumbu to ancient stone
+              alleys in Mustang and subtropical jungle sanctuaries.
             </p>
           </div>
 
           {/* Editorial Category Filter */}
           <div className="flex flex-wrap items-center gap-2">
             {[
-              { id: 'all', label: 'All Regions' },
-              { id: 'mountains', label: 'Himalayas & Alpine' },
-              { id: 'culture', label: 'Sacred Heritage' },
-              { id: 'wildlife', label: 'Lakes & Wildlife' },
+              { id: "all", label: "All Regions" },
+              { id: "mountains", label: "Himalayas & Alpine" },
+              { id: "culture", label: "Sacred Heritage" },
+              { id: "wildlife", label: "Lakes & Wildlife" },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`text-xs uppercase tracking-wider font-semibold px-4 py-2 rounded-full transition-all duration-200 cursor-pointer ${activeTab === tab.id
-                  ? 'bg-[#0552A2] text-white shadow-sm'
-                  : 'bg-white border border-zinc-200 text-[#17212B] hover:border-[#0552A2]'
-                  }`}
+                className={`text-xs uppercase tracking-wider font-semibold px-4 py-2 rounded-full transition-all duration-200 cursor-pointer ${
+                  activeTab === tab.id
+                    ? "bg-[#0552A2] text-white shadow-sm"
+                    : "bg-white border border-zinc-200 text-[#17212B] hover:border-[#0552A2]"
+                }`}
               >
                 {tab.label}
               </button>
@@ -96,13 +99,16 @@ export default function DestinationsSection() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
+          viewport={{ once: true, margin: "-60px" }}
           className="space-y-12"
         >
           {/* Top Hero Duo: Large Edge Feature + Complementary Column */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Lead Destination Feature (Everest) */}
-            <motion.div variants={itemVariants} className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[460px] lg:min-h-[540px] flex flex-col justify-end p-8 sm:p-12">
+            <motion.div
+              variants={itemVariants}
+              className="lg:col-span-8 group relative overflow-hidden rounded-xl bg-[#17212B] min-h-[460px] lg:min-h-[540px] flex flex-col justify-end p-8 sm:p-12"
+            >
               <Image
                 src={destinations[0].imageUrl}
                 alt={destinations[0].name}
@@ -146,7 +152,7 @@ export default function DestinationsSection() {
                 <motion.div
                   key={dest.id}
                   variants={itemVariants}
-                  className="flex-1 group relative overflow-hidden rounded-3xl bg-[#17212B] min-h-[250px] p-6 sm:p-8 flex flex-col justify-end"
+                  className="flex-1 group relative overflow-hidden rounded-xl bg-[#17212B] min-h-[250px] p-6 sm:p-8 flex flex-col justify-end"
                 >
                   <Image
                     src={dest.imageUrl}
@@ -183,7 +189,7 @@ export default function DestinationsSection() {
                     key={`track1-${dest.id}-${idx}`}
                     className="w-[280px] sm:w-[320px] lg:w-[340px] shrink-0"
                   >
-                    <div className="group flex flex-col h-full rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
+                    <div className="group flex flex-col h-full rounded-xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
                       <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                         <Image
                           src={dest.imageUrl}
@@ -192,7 +198,7 @@ export default function DestinationsSection() {
                           sizes="(max-width: 768px) 280px, 340px"
                           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
-                        <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-[14px] text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
+                        <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
                           {dest.region}
                         </div>
                       </div>
@@ -224,13 +230,16 @@ export default function DestinationsSection() {
               </div>
 
               {/* Duplicate Track for Seamless Infinite Loop */}
-              <div className="flex gap-6 shrink-0 pr-6 animate-marquee-infinite" aria-hidden="true">
+              <div
+                className="flex gap-6 shrink-0 pr-6 animate-marquee-infinite"
+                aria-hidden="true"
+              >
                 {marqueePool.map((dest, idx) => (
                   <div
                     key={`track2-${dest.id}-${idx}`}
                     className="w-[280px] sm:w-[320px] lg:w-[340px] shrink-0"
                   >
-                    <div className="group flex flex-col h-full rounded-3xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
+                    <div className="group flex flex-col h-full rounded-xl overflow-hidden bg-white border border-zinc-200 transition-all duration-300 hover:shadow-xl hover:border-[#0552A2]/40">
                       <div className="relative h-60 w-full overflow-hidden bg-[#17212B]">
                         <Image
                           src={dest.imageUrl}
@@ -239,7 +248,7 @@ export default function DestinationsSection() {
                           sizes="(max-width: 768px) 280px, 340px"
                           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
-                        <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-[14px] text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
+                        <div className="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide text-[#0552A2] border border-[#0552A2]/10 shadow-[0_4px_14px_-2px_rgba(15,42,74,0.12)]">
                           {dest.region}
                         </div>
                       </div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="bg-white text-[#17212B] pt-6 md:pt-8 pb-12 border-t border-zinc-200 select-none overflow-x-hidden">
-      <div className="container mx-auto px-4 sm:px-6 max-w-7xl w-full">
+      <div className="w-full px-3.5 sm:px-6 md:px-8">
         {/* Main Footer Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10 pb-12 border-b border-zinc-100">
           {/* Brand & Mission Column */}
@@ -30,7 +30,7 @@ export default function Footer() {
               {/* Description & Badge (Takes remaining width with flex: 1, min-width: 0 and wraps naturally) */}
               <div className="flex-1 min-w-0">
                 <p className="text-[#5A6578] text-xs sm:text-sm leading-relaxed">
-                  Naturally Nepal — Once is Not Enough. Dedicated to promoting sustainable Himalayan travel, authentic cultural heritage, and safe alpine expeditions across Nepal.
+                  Naturally Nepal: Once is Not Enough. Dedicated to promoting sustainable Himalayan travel, authentic cultural heritage, and safe alpine expeditions across Nepal.
                 </p>
                 {/* <div className="flex items-center gap-2 mt-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#EC1F27] animate-pulse shrink-0" />
