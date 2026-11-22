@@ -182,19 +182,9 @@ export default function LeftSidebar({
       >
         {/* Sticky Header / Toggle Bar */}
         <div
-          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-2.5 flex items-center h-11 shrink-0 ${collapsed ? 'justify-center' : 'justify-between'
+          className={`sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-2.5 flex items-center h-11 shrink-0 ${collapsed ? 'justify-center' : 'justify-end'
             }`}
         >
-          {/* Header Label */}
-          <div
-            className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100 pl-1'
-              }`}
-          >
-            <span className="text-[10px] font-mono font-bold tracking-wider text-slate-400 uppercase whitespace-nowrap">
-              Navigation
-            </span>
-          </div>
-
           {/* Toggle Button: Smooth rotation & hover transition */}
           <button
             onClick={() => onCollapsedChange(!collapsed)}

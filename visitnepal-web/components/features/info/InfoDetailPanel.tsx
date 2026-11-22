@@ -1019,10 +1019,7 @@ export default function InfoDetailPanel({
         {/* Floating open trigger */}
         <button
           onClick={() => {
-            setFloatingChatOpen(!floatingChatOpen);
-            if (setRightCollapsed) {
-              setRightCollapsed(false);
-            }
+            setFloatingChatOpen((prev) => !prev);
           }}
           style={{
             background: 'linear-gradient(135deg, #0552A2 0%, #044080 100%)',

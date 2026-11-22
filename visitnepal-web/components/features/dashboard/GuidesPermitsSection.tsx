@@ -1,15 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTravelStore, Permit, Guide } from '@/store/useTravelStore';
+import {
+  CheckCircle2,
+  Check,
+  Star,
+  ShieldCheck,
+  ArrowRight,
+  X,
+  UserCheck,
+  Calendar,
+  Languages
+} from 'lucide-react';
 
 interface GuidesPermitsSectionProps {
   activeId: string;
+  onNavigate?: (id: string) => void;
 }
 
-export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionProps) {
+export default function GuidesPermitsSection({ activeId, onNavigate }: GuidesPermitsSectionProps) {
   const { guides, permits, addPermit, addBooking } = useTravelStore();
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   // Form states
   const [applicantName, setApplicantName] = useState('Alex Mercer');
@@ -21,7 +39,7 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStep, setSubmitStep] = useState(0); // 0: None, 1: Hashing, 2: Verification, 3: Completed
-  const [hiredGuide, setHiredGuide] = useState<Guide | null>(null);
+  const [hiredGuideData, setHiredGuideData] = useState<{ guide: Guide; invoiceNo: string } | null>(null);
 
   const containerVariants: any = {
     hidden: { opacity: 0, y: 15 },
@@ -74,14 +92,11 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
       date: `${startDate} - ${endDate}`,
       details: `Languages: ${guide.languages.join(', ')}. Full navigation support activated.`,
       cost: guide.pricePerDay * 10, // 10 days
-      status: 'Pending',
+      status: 'Confirmed',
       invoiceNo: invNo
     });
 
-    setHiredGuide(guide);
-    setTimeout(() => {
-      setHiredGuide(null);
-    }, 2000);
+    setHiredGuideData({ guide, invoiceNo: invNo });
   };
 
   return (
@@ -143,16 +158,122 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
             ))}
           </motion.div>
 
-          {hiredGuide && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-              <div className="bg-white border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center">
-                <span className="text-2xl mb-1 block">🧗</span>
-                <h4 className="text-sm font-bold text-[#17212B]">Guide Application Recieved</h4>
-                <p className="text-xs text-[#475569] mt-1.5 leading-relaxed">
-                  You have successfully booked {hiredGuide.name}. Verification invoice logged in Account.
-                </p>
-              </div>
-            </div>
+          {mounted && createPortal(
+            <AnimatePresence>
+              {hiredGuideData && (
+                <div 
+                  onClick={() => setHiredGuideData(null)}
+                  className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
+                >
+                  <motion.div 
+                    onClick={(e) => e.stopPropagation()}
+                    initial={{ opacity: 0, scale: 0.95, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 12 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                    className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl max-w-md w-full relative my-auto overflow-hidden text-center"
+                  >
+                    {/* Close Button */}
+                    <button
+                      onClick={() => setHiredGuideData(null)}
+                      className="absolute top-4 right-4 h-8 w-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer"
+                      aria-label="Close"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+
+                    {/* Animated Success Badge */}
+                    <div className="h-14 w-14 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto mb-3.5 shadow-xs">
+                      <Check className="h-7 w-7" strokeWidth={3} />
+                    </div>
+
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-emerald-700 uppercase bg-emerald-100/80 border border-emerald-200 px-3 py-1 rounded-full">
+                      Guide Booking Confirmed
+                    </span>
+
+                    <h3 className="text-lg font-black text-[#17212B] mt-2.5 tracking-tight">
+                      Guide Application Received
+                    </h3>
+
+                    <p className="text-xs text-[#475569] mt-1 max-w-xs mx-auto leading-relaxed">
+                      You have successfully booked <span className="font-bold text-[#17212B]">{hiredGuideData.guide.name}</span>. Verification invoice logged in Account.
+                    </p>
+
+                    {/* Guide Card Mini Preview */}
+                    <div className="bg-slate-50 rounded-2xl p-3.5 border border-slate-200/80 my-4 text-left flex flex-col gap-2.5">
+                      <div className="flex items-center gap-3 pb-2.5 border-b border-slate-200/70">
+                        <div className="relative h-11 w-11 rounded-xl overflow-hidden border border-slate-200 shrink-0">
+                          <img 
+                            src={hiredGuideData.guide.avatar} 
+                            alt={hiredGuideData.guide.name} 
+                            className="h-full w-full object-cover" 
+                          />
+                          <span className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="text-xs font-bold text-[#17212B] truncate">{hiredGuideData.guide.name}</h4>
+                            <ShieldCheck className="h-3.5 w-3.5 text-[#0552A2] shrink-0" />
+                          </div>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className="text-[10px] font-mono text-[#0552A2] font-semibold">{hiredGuideData.guide.type}</span>
+                            <span className="text-slate-300">•</span>
+                            <span className="text-[10px] text-amber-600 font-bold flex items-center gap-0.5">
+                              <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+                              {hiredGuideData.guide.rating} ({hiredGuideData.guide.experience} yrs exp)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Summary Ledger */}
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-400 font-mono text-[10px] uppercase">Invoice No</span>
+                        <span className="font-mono font-bold text-[#0552A2] text-[11px]">{hiredGuideData.invoiceNo}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-slate-600">
+                        <span className="text-slate-500">Service Window</span>
+                        <span className="font-semibold text-[#17212B] text-[11px]">10 Days Dedicated Trek</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-slate-600">
+                        <span className="text-slate-500">Languages</span>
+                        <span className="font-semibold text-[#17212B] text-[11px]">{hiredGuideData.guide.languages.join(', ')}</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2 border-t border-slate-200/70 text-xs">
+                        <span className="font-bold text-[#17212B]">Daily Rate</span>
+                        <span className="text-sm font-bold text-[#0552A2]">
+                          ${hiredGuideData.guide.pricePerDay}
+                          <span className="text-[10px] font-normal text-slate-400"> / day</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex flex-col sm:flex-row gap-2.5 w-full pt-1">
+                      <button
+                        onClick={() => {
+                          setHiredGuideData(null);
+                          if (onNavigate) {
+                            onNavigate('bookings');
+                          }
+                        }}
+                        className="flex-1 py-2.5 px-4 rounded-full bg-[#0552A2] hover:bg-[#044080] text-white text-xs font-bold shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-98"
+                      >
+                        <span>View in My Bookings</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => setHiredGuideData(null)}
+                        className="py-2.5 px-5 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition-all cursor-pointer"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>,
+            document.body
           )}
         </div>
       )}
@@ -283,28 +404,31 @@ export default function GuidesPermitsSection({ activeId }: GuidesPermitsSectionP
           </div>
 
           {/* Hashing steps portal overlay */}
-          <AnimatePresence>
-            {isSubmitting && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white border border-[#92C4EA]/40 p-6 rounded-3xl shadow-xl max-w-sm text-center w-full"
-                >
-                  <div className="flex flex-col items-center gap-3">
-                    <span className="h-6 w-6 rounded-full border-2 border-t-transparent border-[#0552A2] animate-spin" />
-                    <h4 className="text-xs font-mono font-bold text-[#17212B] uppercase mt-2">
-                      {submitStep === 1 && '1/3 Generating Crypto Hash...'}
-                      {submitStep === 2 && '2/3 Querying Immigration Gateway...'}
-                      {submitStep === 3 && '3/3 Permit Registered Success!'}
-                    </h4>
-                    <p className="text-[10px] text-[#475569]">Connecting with Government Registry server nodes...</p>
-                  </div>
-                </motion.div>
-              </div>
-            )}
-          </AnimatePresence>
+          {mounted && createPortal(
+            <AnimatePresence>
+              {isSubmitting && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="bg-white border border-slate-200 p-6 rounded-3xl shadow-2xl max-w-sm text-center w-full my-auto"
+                  >
+                    <div className="flex flex-col items-center gap-3">
+                      <span className="h-7 w-7 rounded-full border-2 border-t-transparent border-[#0552A2] animate-spin" />
+                      <h4 className="text-xs font-mono font-bold text-[#17212B] uppercase mt-2">
+                        {submitStep === 1 && '1/3 Generating Crypto Hash...'}
+                        {submitStep === 2 && '2/3 Querying Immigration Gateway...'}
+                        {submitStep === 3 && '3/3 Permit Registered Success!'}
+                      </h4>
+                      <p className="text-[10px] text-[#475569]">Connecting with Government Registry server nodes...</p>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>,
+            document.body
+          )}
         </div>
       )}
     </motion.div>

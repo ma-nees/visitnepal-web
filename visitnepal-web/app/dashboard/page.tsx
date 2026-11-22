@@ -298,7 +298,7 @@ function DashboardContent() {
       return <StaysSection activeId={active} />;
     }
     if (['guides', 'permits'].includes(active)) {
-      return <GuidesPermitsSection activeId={active} />;
+      return <GuidesPermitsSection activeId={active} onNavigate={handleActiveChange} />;
     }
     if (['login', 'bookings', 'pasttrips', 'messages', 'customize'].includes(active)) {
       return <AccountSection activeId={active} />;
@@ -959,8 +959,7 @@ function DashboardContent() {
 
         <button
           onClick={() => {
-            setFloatingChatOpen(!floatingChatOpen);
-            setRightCollapsed(false);
+            setFloatingChatOpen((prev) => !prev);
           }}
           className="hidden sm:flex h-12 w-12 items-center justify-center rounded-full bg-[#0552A2] text-white shadow-xl hover:bg-[#044080] transition-all cursor-pointer relative"
           title="Expedition Messenger"

@@ -230,59 +230,59 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
           {/* Left: Personalized Greeting & Primary CTAs */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span className="text-[10px] font-bold text-[#92C4EA] uppercase tracking-wider font-mono">
-                  Visit Nepal Personal Portal
-                </span>
+              <span className="text-[10px] font-bold text-[#92C4EA] uppercase tracking-wider font-mono">
+                Visit Nepal Personal Portal
+              </span>
 
-                <span
-                  style={{ backgroundColor: '#FDB716', color: '#0B2240' }}
-                  className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full shadow-2xs"
-                >
-                  Passport US98127398
-                </span>
-                <span
-                  style={{ backgroundColor: '#FDB716', color: '#0B2240' }}
-                  className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full shadow-2xs"
-                >
-                  Explorer Gold
-                </span>
-              </div>
-
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold font-serif text-white tracking-tight leading-snug">
-                {greeting}, {userName}.
-              </h1>
-              <p className="text-xs text-white/85 mt-0.5 max-w-xl leading-relaxed">
-                Your next Himalayan journey begins here. You have <strong className="text-[#FDB716]">{UPCOMING_TRIPS.length} confirmed expeditions</strong> lined up across Nepal.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex items-center gap-2.5 mt-2.5 flex-wrap">
-                <button
-                  onClick={() => onNavigate?.('customize')}
-                  className="px-4 py-2 rounded-full bg-white text-[#0552A2] text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-[#F2F8FD] hover:shadow-sm flex items-center justify-center gap-2 cursor-pointer shrink-0"
-                >
-                  <SlidersHorizontal className="h-3.5 w-3.5" />
-                  <span>Plan a New Trip</span>
-                </button>
-
-                <button
-                  onClick={() => onNavigate?.('explore')}
-                  className="px-4 py-2 rounded-full bg-white/10 border border-white/25 text-white text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-white/20 flex items-center justify-center gap-2 cursor-pointer shrink-0"
-                >
-                  <Compass className="h-3.5 w-3.5" />
-                  <span>Explore Destinations</span>
-                </button>
-              </div>
+              <span
+                style={{ backgroundColor: '#FDB716', color: '#0B2240' }}
+                className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full shadow-2xs"
+              >
+                Passport US98127398
+              </span>
+              <span
+                style={{ backgroundColor: '#FDB716', color: '#0B2240' }}
+                className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full shadow-2xs"
+              >
+                Explorer Gold
+              </span>
             </div>
 
-            {/* Right: Seamless Compact Flight Route Animation to Nepal (No unusual space) */}
-            <div className="shrink-0 flex items-center justify-center self-center w-full md:w-[320px] lg:w-[370px] overflow-hidden">
-              <FlightRouteAnimation
-                variant="banner"
-                destinationLabel="Nepal"
-                onDestinationClick={() => onNavigate?.('explore')}
-              />
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold font-serif text-white tracking-tight leading-snug">
+              {greeting}, {userName}.
+            </h1>
+            <p className="text-xs text-white/85 mt-0.5 max-w-xl leading-relaxed">
+              Your next Himalayan journey begins here. You have <strong className="text-[#FDB716]">{UPCOMING_TRIPS.length} confirmed expeditions</strong> lined up across Nepal.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2.5 mt-2.5 flex-wrap">
+              <button
+                onClick={() => onNavigate?.('customize')}
+                className="px-4 py-2 rounded-full bg-white text-[#0552A2] text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-[#F2F8FD] hover:shadow-sm flex items-center justify-center gap-2 cursor-pointer shrink-0"
+              >
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                <span>Plan a New Trip</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate?.('explore')}
+                className="px-4 py-2 rounded-full bg-white/10 border border-white/25 text-white text-xs uppercase tracking-wider font-bold transition-all duration-200 hover:bg-white/20 flex items-center justify-center gap-2 cursor-pointer shrink-0"
+              >
+                <Compass className="h-3.5 w-3.5" />
+                <span>Explore Destinations</span>
+              </button>
             </div>
+          </div>
+
+          {/* Right: Seamless Compact Flight Route Animation to Nepal (No unusual space) */}
+          <div className="shrink-0 flex items-center justify-center self-center w-full md:w-[320px] lg:w-[370px] overflow-hidden">
+            <FlightRouteAnimation
+              variant="banner"
+              destinationLabel="Nepal"
+              onDestinationClick={() => onNavigate?.('explore')}
+            />
+          </div>
         </div>
       </div>
 
