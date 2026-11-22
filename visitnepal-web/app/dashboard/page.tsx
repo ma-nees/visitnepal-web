@@ -769,7 +769,7 @@ function DashboardContent() {
               className="flex-1 flex flex-col min-w-0 relative bg-white transition-[margin,width] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
               {/* Context breadcrumb toolbar */}
-              <div className="h-10 shrink-0 flex items-center justify-between px-3 sm:px-4 bg-white border-b border-slate-200 select-none relative z-20">
+              <div className="h-11 shrink-0 flex items-center justify-between px-3 sm:px-4 bg-white border-b border-slate-200 select-none relative z-20">
                 <div className="flex items-center gap-2 text-xs font-mono text-slate-400 min-w-0">
                   <span className="uppercase tracking-wider font-semibold text-slate-500 truncate">{activeDetails.groupTitle}</span>
                   <span className="text-slate-300 shrink-0">/</span>

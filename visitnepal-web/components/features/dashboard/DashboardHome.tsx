@@ -30,7 +30,6 @@ import {
   FileCheck,
   UserCheck,
   Sun,
-  CloudSun,
   Wind,
   Check,
   X
@@ -49,6 +48,7 @@ import {
   WishlistItem,
   INITIAL_WISHLIST,
 } from './mockDashboardData';
+import FlightRouteAnimation from './FlightRouteAnimation';
 
 interface DashboardHomeProps {
   onNavigate?: (id: string) => void;
@@ -289,46 +289,6 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 </button>
               </div>
             </div>
-
-          {/* Right: Contextual Travel Telemetry Card */}
-          <div className="w-full xl:w-64 shrink-0 bg-white rounded-xl p-3 border border-[#0552A2]/10 shadow-xs flex flex-col justify-between gap-1.5 text-slate-800">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-[#0552A2] flex items-center gap-1.5">
-                <span className="h-4.5 w-4.5 rounded-[5px] bg-[#F2F8FD] border border-[#0552A2]/10 flex items-center justify-center">
-                  <CloudSun className="h-3 w-3 text-[#0552A2]" />
-                </span>
-                <span>Station Telemetry</span>
-              </span>
-              <span className="text-[10px] text-[#64748B] font-medium">
-                Pokhara (822m)
-              </span>
-            </div>
-
-            <div className="flex items-baseline justify-between">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-base font-bold tracking-tight text-[#17212B]">18°C</span>
-                <span className="text-[10px] text-[#64748B]">Partly Cloudy</span>
-              </div>
-              <span className="text-[9px] font-bold text-white bg-emerald-500 px-2 py-0.5 rounded-full">
-                Window: Clear
-              </span>
-            </div>
-
-            <div className="pt-1.5 border-t border-[#0552A2]/8 grid grid-cols-3 gap-1.5 text-[9px] text-[#64748B] text-center">
-              <div>
-                <span className="text-[#94A3B8] block text-[8px]">Wind</span>
-                <span className="font-semibold text-[#17212B] block truncate">8 km/h NW</span>
-              </div>
-              <div>
-                <span className="text-[#94A3B8] block text-[8px]">Humidity</span>
-                <span className="font-semibold text-[#17212B] block">62%</span>
-              </div>
-              <div>
-                <span className="text-[#94A3B8] block text-[8px]">UV Index</span>
-                <span className="font-semibold text-[#17212B] block">Moderate</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -614,23 +574,23 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
 
           {/* 3.3 RECOMMENDED FOR YOU (EDITORIAL DISCOVERY) */}
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-5 gap-3">
-              <div>
+            <div className="flex flex-wrap items-end justify-between mb-4 sm:mb-5 gap-3">
+              <div className="shrink-0">
                 <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider font-bold text-[#0552A2] block mb-0.5">
                   Curated For Your Profile ({filteredRecommendations.length})
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B]">
+                <h2 className="text-xl sm:text-2xl font-bold font-serif text-[#17212B] whitespace-nowrap">
                   Recommended For You
                 </h2>
               </div>
 
               {/* Category Filter Pills */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none max-w-full">
+              <div className="flex items-center gap-1.5 flex-wrap">
                 {['All', 'Heritage', 'High Altitude', 'Wildlife', 'Scenic', 'Hidden Gem'].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveRecCategory(cat)}
-                    className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-colors shrink-0 cursor-pointer ${activeRecCategory === cat
+                    className={`text-xs px-3 py-1 sm:py-1.5 rounded-full font-semibold transition-colors cursor-pointer shrink-0 ${activeRecCategory === cat
                       ? 'bg-[#0552A2] text-white shadow-xs'
                       : 'bg-white border border-zinc-200/80 text-[#4B5563] hover:border-[#0552A2]/40 hover:text-[#0552A2]'
                       }`}
