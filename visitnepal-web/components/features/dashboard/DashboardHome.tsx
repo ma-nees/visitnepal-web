@@ -240,22 +240,11 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
       {/* =========================================================================
           SECTION 1: DASHBOARD WELCOME & CONTEXTUAL TELEMETRY BANNER
       ========================================================================= */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0B2240] via-[#0552A2] to-[#1D6FD6] text-white shadow-md p-3.5 sm:p-4 md:p-5">
-        <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#92C4EA]/15 blur-3xl" />
+      <div className="relative overflow-hidden rounded-2xl bg-[#0552A2] text-white shadow-md p-3.5 sm:p-4 md:p-5">
         <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-4 sm:gap-5">
           {/* Left: Personalized Greeting & Primary CTAs */}
-          <div className="flex items-start gap-3.5 sm:gap-4 flex-1 min-w-0">
-            <div className="relative h-11 w-11 sm:h-12 sm:w-12 rounded-full overflow-hidden shrink-0 border-2 border-white/50 shadow-sm mt-0.5">
-              <Image
-                src={currentUser?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200'}
-                alt={userName}
-                fill
-                className="object-cover"
-              />
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
                 <span className="text-[10px] font-bold text-[#92C4EA] uppercase tracking-wider font-mono">
                   Visit Nepal Personal Portal
                 </span>
@@ -300,7 +289,6 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 </button>
               </div>
             </div>
-          </div>
 
           {/* Right: Contextual Travel Telemetry Card */}
           <div className="w-full xl:w-64 shrink-0 bg-white rounded-xl p-3 border border-[#0552A2]/10 shadow-xs flex flex-col justify-between gap-1.5 text-slate-800">
@@ -1056,7 +1044,7 @@ export default function DashboardHome({ onNavigate }: DashboardHomeProps) {
             </div>
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
